@@ -1,0 +1,17 @@
+int	iMenuID
+string_var sUITile
+
+begin Function {iMenuID}
+	
+	if GetActiveUIComponentID == 50																; If Local Map icon selected
+		sUITile = GetActiveUIComponentFullName													; Get active tile path
+		if GetUIFloatAlt (sUITile + "\_ShowName") == 1											; If name should be visible
+			SetUIStringAlt "MapMenu\_LMO+Name" (GetUIString (sUITile + "\_Name"))				; Update active icon name
+			SetUIFloatAlt "MapMenu\_LMO+Focus" 1												; Display name
+		endif
+		sv_Destruct sUITile
+	else
+		SetUIFloatAlt "MapMenu\_LMO+Focus" 0													; Hide name
+	endif
+	
+end

@@ -1,0 +1,41 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://qconsulting.ca/fo3/ModConfig5.0.xsd">
+	<moduleName>Local Map Overhaul</moduleName>
+	<requiredInstallFiles>
+		<folder source="Required" destination="" />
+	</requiredInstallFiles>
+	<installSteps order="Explicit">
+		<installStep name="Local Map Overhaul">
+			<optionalFileGroups order="Explicit">
+				<group name="Version" type="SelectExactlyOne">
+					<plugins order="Explicit">
+						<plugin name="Lite">
+							<description>Select if you want the Lite Version of Local Map Overhaul.&#13;&#10;
+ - Slim and Efficient
+ - Actor Icons (NPC/Creatures)
+ - Limited Configuration</description>
+							<files>
+								<folder source="Main Files\Lite" destination="" priority="0" />
+							</files>
+							<typeDescriptor>
+								<type name="Optional" />
+							</typeDescriptor>
+						</plugin>
+						<plugin name="Full">
+							<description>Select if you want the Full Version of Local Map Overhaul.&#13;&#10;
+ - Full Icon Suite
+ - ySI - Sorting Icon Integration
+ - KEYWORDs Support
+ - In Depth Configuration</description>
+							<files>
+								<folder source="Main Files\Full" destination="" priority="0" />
+							</files>
+							<typeDescriptor>
+								<type name="Recommended" />
+							</typeDescriptor>
+						</plugin>
+					</plugins>
+				</group>
+			</optionalFileGroups>
+		</installStep>
+	</installSteps>
+</config>

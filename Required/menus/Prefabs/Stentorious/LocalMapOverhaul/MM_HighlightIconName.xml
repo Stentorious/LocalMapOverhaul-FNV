@@ -1,0 +1,19 @@
+<text name="MM_HighlightNPCName">
+	<visible>
+		<copy src="io()" trait="_LMO+Focus" />
+	</visible>
+	<x>
+		<copy src="sibling(MM_HighlightLocationName)" trait="x" />
+	</x>
+	<y>
+		<copy src="sibling(MM_HighlightLocationName)" trait="y" />
+	</y>
+	<font>
+		<copy src="sibling(MM_HighlightLocationName)" trait="font" />
+	</font>
+	<string>
+		<copy src="io()" trait="_LMO+Name" />
+	</string>
+	<justify> &center; </justify>
+	<clips> 1 </clips>
+</text>

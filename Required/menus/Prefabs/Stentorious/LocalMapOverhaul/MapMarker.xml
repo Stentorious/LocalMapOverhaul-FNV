@@ -1,0 +1,36 @@
+<width>
+	<copy src="parent()" trait="user0" />
+	<min> 60 </min>
+	<mul>
+		<copy> 0.4 </copy>
+		<onlyif src="me()" trait="_selected" />
+		<add> 1 </add>
+	</mul>
+	<min> 100 </min>
+</width>
+
+<zoom>
+	<copy src="me()" trait="width" />
+	<div>
+		<copy src="child(dummy)" trait="filewidth" />
+		<mul> 0.546875 </mul>
+	</div>
+	<mul> 100 </mul>
+</zoom>
+
+<cropx>
+	<copy> 0.21875 </copy>
+	<mul src="child(dummy)" trait="filewidth" />
+	<mul src="me()" trait="zoom" />
+	<div> 100 </div>
+</cropx>
+
+<cropy>
+	<copy src="me()" trait="cropx" />
+</cropy>
+
+<image name="dummy">
+	<filename>
+		<copy src="parent()" trait="filename" />
+	</filename>
+</image>

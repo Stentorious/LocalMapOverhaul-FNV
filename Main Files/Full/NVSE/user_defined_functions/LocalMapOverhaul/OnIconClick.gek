@@ -1,0 +1,33 @@
+int	iMenuID
+int	iTileID
+int	iType
+int iBitExtra
+ref rRef
+ref rTemp
+string_var sUITile
+
+begin Function {iMenuID, iTileID, sUITile}
+
+	sUITile = GetActiveUIComponentFullName						; Get active tile path
+	if GetUIFloatAlt (sUITile + "\_ShowName") == 1				; If name should be visible
+		rRef = StringToRef (GetUIString (sUITile + "\_RefID"))	; Get icon ref
+		Goo1.AuxVarSetRef "*LocalMap_Ref" rRef
+		iType = rRef.GetType
+		iBitExtra = Goo1.AuxVarGetFlt "*LocalMap_INI" 4
+		if eval iType == 23 && rRef.GetLocked < 2 && (GetBit iBitExtra 0 || (GetBit iBitExtra 1 && Player.HasPerk ComputerWhiz))
+			
+			MessageBoxExAlt (begin function {int iButton} 
+				if iButton == 0
+					rTemp = Goo1.AuxVarGetRef "*LocalMap_Ref"
+					rTemp.Activate Player
+					if eval rTemp.GetLocked == 0 || (rTemp.GetLocked && ((rTemp.GetLockLevel) * 25) <= Player.GetAV Science)
+						TogglePipBoy
+					endif
+				endif
+			end) "^Remote Access^Access %n?|%z|%z" rRef (GetStringGameSetting sOk) (GetStringGameSetting sCancel)
+			
+		endif
+	endif
+	sv_Destruct sUITile
+
+end

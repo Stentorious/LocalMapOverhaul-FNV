@@ -1,0 +1,3 @@
+<visible>
+    <not src="io()" trait="_LMO+Focus" />
+</visible>

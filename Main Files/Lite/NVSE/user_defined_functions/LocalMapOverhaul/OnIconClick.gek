@@ -1,0 +1,14 @@
+int	iMenuID
+int	iTileID
+ref rIcon
+string_var sUITile
+
+begin Function {iMenuID, iTileID, sUITile}
+
+	sUITile = GetActiveUIComponentFullName						; Get active tile path
+	if GetUIFloatAlt (sUITile + "\_ShowName") == 1				; If name should be visible
+		rIcon = StringToRef (GetUIString (sUITile + "\_RefID"))	; Get icon ref
+	endif
+	sv_Destruct sUITile
+
+end

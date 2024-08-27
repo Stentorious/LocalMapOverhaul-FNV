@@ -1,0 +1,74 @@
+{"tags": [
+
+	{ "priority": 100, "tag": "(dla1)", "formType": 21 }, 								/* Activator */ 
+	{ "priority": 100, "tag": "(dlb1)", "formType": 23 }, 								/* Terminal */ 
+	{ "priority": 100, "tag": "(hhb1)", "formType": 27 }, 								/* Container */ 
+	{ "priority": 200, "tag": "(jfc1)", "mod": "FalloutNV.esm", "form": "075005" }, 	/* Workbench */ 
+	{ "priority": 200, "tag": "(jfb1)", "mod": "FalloutNV.esm", "form": "15361F" }, 	/* Reloading Bench */ 
+	{ "priority": 200, "tag": "(jba1)", "mod": "FalloutNV.esm", "form": "1017C6" }, 	/* Sunset Sarsaparilla Cap */
+	
+	/* Water */ 
+	{ "priority": 100, "tag": "(jda2)", "formType": 35 },
+	{ "priority": 100, "tag": "(jda2)", "formType": 78 },
+	{ "priority": 200, "tag": "(jda2)", "mod": "FalloutNV.esm", "form": [ "020D73", "09D785", "09D786", "0ABF66", "0CAE69", "0FEB9F", "123C8E", "154351", "165C3A", "165C3B", "1682A0", "173360", "173361", "02A2AF", "02A2B0", "0A24F0", "0A24F2", "014AB3", "01E017", "020D6F", "020D72", "02A2B1", "0D7C2E", "1699B6", "01566B", "01E75F", "01E766", "02A2B2", "03956A", "0834D8", "0B39A3" ] },
+	{ "priority": 200, "tag": "(jda2)", "mod": "DeadMoney.esm", "form": [ "0139CC", "010ABF", "0139C4" ] },
+	{ "priority": 200, "tag": "(jda2)", "mod": "HonestHearts.esm", "form": "010342" },
+	{ "priority": 200, "tag": "(jda2)", "mod": "OldWorldBlues.esm", "form": [ "00BEB6", "00BEB7", "00BEB8", "00BEB9", "013A5A" ] },
+	{ "priority": 200, "tag": "(jda2)", "mod": "Fallout3.esm", "form": [ "01E75F", "01E766", "02A2B1", "02A2B2", "02B428", "01E017", "01566B", "0B39A3", "014AB3", "02A2B0" ] },	
+	
+	/* Cooking */ 
+	{ "priority": 200, "tag": "(dhc1)", "mod": "FalloutNV.esm", "form": [ "13E3FA", "13E3FC", "13E3FD", "13E3FE", "164257" ] },
+	{ "priority": 200, "tag": "(dhc1)", "mod": "DeadMoney.esm", "form": "011219" },
+	{ "priority": 200, "tag": "(dhc1)", "mod": "HonestHearts.esm", "form": [ "009946", "009947", "011304" ] },
+	{ "priority": 200, "tag": "(dhc1)", "mod": "OldWorldBlues.esm", "form": "00C7DD" },
+	{ "priority": 200, "tag": "(dhc1)", "mod": "TaleOfTwoWastelands.esm", "form": [ "008513", "008514", "008E4B" ] },
+
+	/* Plant */ 
+	{ "priority": 200, "tag": "(dha2)", "mod": "FalloutNV.esm", "form": [ "0E9ACF", "15F0EF", "15F0ED", "15F0EE", "15D433", "1093CF", "0FB0EE", "1093CE", "10AB6D", "10AB71", "10AB6F", "15EB43", "15EB41", "15EB42" ] },
+	{ "priority": 200, "tag": "(dha2)", "mod": "HonestHearts.esm", "form": [ "0112F8", "0094B8" ] },
+	{ "priority": 200, "tag": "(dha2)", "mod": "OldWorldBlues.esm", "form": "01213D" },
+	{ "priority": 200, "tag": "(dha2)", "mod": "PointLookout.esm", "form": [ "004269", "00426A", "00426D", "00426E", "0051A7", "007030" ] },
+	{ "priority": 200, "tag": "(dha2)", "mod": "TaleOfTwoWastelands.esm", "form": [ "018105", "008593", "008594", "008595", "008596", "01806A", "00CD2B", "00CD2C", "00CD2D", "00CD2E", "00CD2F", "00CD30", "0080B9", "0080BA", "0080BB", "0080BC" ] },
+	
+	/* Bobblehead */ 
+	{ "priority": 200, "tag": "(jdb2)", "mod": "Fallout3.esm", "form": [ "0416B3", "0416B4", "0416B5", "0416B6", "0416B7", "0416B8", "0416B9", "0416BA", "0416BB", "0416BC", "0416BD", "0416BE", "0416BF", "0416C0", "0416C1", "0416C2", "0416C3", "0416C4", "0416C5", "0416C7", "0416B1", "0A8ED8" ] },
+	{ "priority": 200, "tag": "(jdb2)", "mod": "PointLookout.esm", "form": [ "00C079", "00C07B", "00ED2E", "00E272", "00ED26", "00C08A", "00ED2A" ] },
+	{ "priority": 200, "tag": "(jdb2)", "mod": "TaleOfTwoWastelands.esm", "form": [ "009220", "009254" ] },
+
+	/* Casino */ 
+	{ "priority": 200, "tag": "(jdb0)", "mod": "FalloutNV.esm", "form": [ "139FE2", "15CB95", "16150A", "16150C", "162026", "162028", "1210BC", "14C136", "1614D8", "16150B", "161E43", "16206F" ] },
+	{ "priority": 200, "tag": "(jdb0)", "mod": "DeadMoney.esm", "form": [ "00E1DE", "00C4CF" ] },
+	
+	/* Poker */ 
+	{ "priority": 200, "tag": "(jde1)", "mod": "FalloutNV.esm", "form": [ "145C84", "1614D2", "16150D", "161E44", "16206C" ] },
+	{ "priority": 200, "tag": "(jde1)", "mod": "DeadMoney.esm", "form": "00D95A" },
+
+	/* Mine */ 
+	{ "priority": 200, "tag": "(fjc1)", "mod": "FalloutNV.esm", "form": [ "0043FA", "033C4B", "0403D8", "059449", "109A0D", "130043" ] },
+	{ "priority": 200, "tag": "(fjc1)", "mod": "OldWorldBlues.esm", "form": "00E5C1" },
+	{ "priority": 200, "tag": "(fjc1)", "mod": "LonesomeRoad.esm", "form": "0076E9" },
+	{ "priority": 200, "tag": "(fjc1)", "mod": "GunRunnersArsenal.esm", "form": [ "0008EF", "000A91" ] },
+	{ "priority": 200, "tag": "(fjc1)", "mod": "Zeta.esm", "form": [ "001F74", "006FC1", "0076C9" ] },
+	{ "priority": 200, "tag": "(fjc1)", "mod": "TaleOfTwoWastelands.esm", "form": "008B8B" },
+	
+	/* Radio */ 
+	{ "priority": 200, "tag": "(hlb2)", "mod": "FalloutNV.esm", "form": [ "02942E", "0842B9", "0ACD55", "10418C", "1343EB", "14ADB7", "152BEA", "152BED", "152BEE", "152BEF", "152BF0", "152BF1", "0770C5", "0CD21B", "0EB3F2", "101F43", "109085", "14B3ED", "153738", "16B668" ] },
+	{ "priority": 200, "tag": "(hlb2)", "mod": "DeadMoney.esm", "form": [ "00E424", "00E426", "006E8C", "01394B", "005259", "006E94", "00F229", "010E88" ] },
+	{ "priority": 200, "tag": "(hlb2)", "mod": "Fallout3.esm", "form": [ "0842BC", "0842CA", "0842FC", "0842FD", "0842FE", "0842FF", "084303", "084304", "09DEE3", "01A32F", "02B803", "02CC3F", "031425", "031426", "0328FC", "054E8B", "059BB2", "0770C4"  ] },
+	{ "priority": 200, "tag": "(hlb2)", "mod": "Anchorage.esm", "form": "0013FB" },
+	{ "priority": 200, "tag": "(hlb2)", "mod": "PointLookout.esm", "form": "0041FB" },
+	{ "priority": 200, "tag": "(hlb2)", "mod": "TaleOfTwoWastelands.esm", "form": "004C5B" },
+
+	/* Ash Pile */ 
+	{ "priority": 200, "tag": "(jhb1)", "mod": "FalloutNV.esm", "form": [ "00001B", "000022" ] },
+	{ "priority": 200, "tag": "(jhb1)", "mod": "TaleOfTwoWastelands.esm", "form": [ "02DAD1", "02DAD2", "015084" ] },
+
+	/* Collectable */ 
+	{ "priority": 200, "tag": "(jdb2)", "mod": "DeadMoney.esm", "form": "007486" },		/* Dean's Stash */
+	{ "priority": 200, "tag": "(jdb2)", "mod": "HonestHearts.esm", "form": "00B4AC" },	/* Survival Cache */ 
+	{ "priority": 200, "tag": "(jdb2)", "mod": "LonesomeRoad.esm", "form": "007486" },	/* Warhead */ 
+	{ "priority": 200, "tag": "(jdb2)", "mod": "LonesomeRoad.esm", "form": "00DC64" },	/* RALPHIE Poster */ 
+	{ "priority": 200, "tag": "(jdb2)", "mod": "ThePitt.esm", "form": "00619F" },		/* Steel Ingot */ 
+	{ "priority": 200, "tag": "(jdb2)", "mod": "Anchorage.esm", "form": "00B4DA" }		/* Intel Briefcase */ 
+	
+]}

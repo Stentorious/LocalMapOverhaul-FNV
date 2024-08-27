@@ -1,0 +1,216 @@
+; Local Map Overhaul Full 1.4 - Stentorious
+if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1																	; On game restart
+	Goo1.AuxVarSetFlt "*LocalMap_Init" 1
+	; Check for requirements
+	if GetNVSEVersion > 5 && GetNVSERevision > 2 && GetNVSEBeta > 2											; xNVSE				
+	else
+		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall xNVSE 6.3.3+."
+		return
+	endif 
+	if GetPluginVersion "JohnnyGuitarNVSE" < 390															; JohnnyGuitar NVSE	
+		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest JohnnyGuitar NVSE plugin."
+		return
+	endif
+	if GetPluginVersion "ShowOffNVSE Plugin" < 180															; ShowOff NVSE
+		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest ShowOff NVSE plugin."
+		return
+	endif
+	if GetPluginVersion "yUI" < 140																			; yUI - User Ynterface
+		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest yUI - User Ynterface plugin."
+		return
+	endif
+	if FileExists "menus\ySI\ySI.xml" == 0																	; ySI - Sorting Ycons
+		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest ySI - Sorting Ycons."
+		return
+	endif
+
+	SetUIFloatAlt "MapMenu\_LMO+Dist" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat "General:fIconRadius" "Stentorious\LocalMapOverhaul.ini"))) * 69.99104)													; Set icon visibility radius
+	SetNumericGameSetting "fSeenDataUpdateRadius" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat "General:fFogOfWarRadius" "Stentorious\LocalMapOverhaul.ini"))) * 69.99104)									; Set fog of war radius
+	
+	if GetINIFloat "General:bPerceptionCalc" "Stentorious\LocalMapOverhaul.ini" == 1																													; If perception calc enabled
+		SetUIFloatAlt "MapMenu\_LMO+DistMode" 1																																							; Set perception calc UI flag
+		SetOnActorValueChangeEventHandler 1 ({int iAVCode, float fOldValue, float fNewValue} => SetUIFloatAlt "MapMenu\_LMO+PlrAV6" (GetMaxOf 1 (GetMinOf 10 (Player.GetActorValue Perception)))) 0 6	; Register perception change event
+	endif
+	if GetINIFloat "General:bHeightIndicator" "Stentorious\LocalMapOverhaul.ini" == 1																													; If height indicator enabled
+		SetUIFloatAlt "MapMenu\_LMO+Height" 1																																							; Set height indicator UI flag
+	endif
+	if GetINIFloat "General:bFadeAlpha" "Stentorious\LocalMapOverhaul.ini" == 1																															; If alpha fade enabled
+		SetUIFloatAlt "MapMenu\_LMO+Fade" 1																																								; Set alpha fade UI flag
+	endif
+	if GetINIFloat "Actors:bHostileColor" "Stentorious\LocalMapOverhaul.ini" == 1																														; If hostile NPC color enabled
+		SetUIFloatAlt "MapMenu\_LMO+Color2" 2																																							; Set hostile NPC color UI flag
+	endif
+
+	; Ash pile handling (Unused)
+	;AssignKeyword DefaultAshPile1 "LocalMapIcon"															; Assign keywords
+	;AssignKeyword DefaultAshPile2 "LocalMapIcon"
+	;AssignKeyword DefaultAshPile1 "LocalMapIconNPC"
+	;AssignKeyword DefaultAshPile2 "LocalMapIconNPC"
+	;if eval IsModLoaded "TaleOfTwoWastelands.esm"
+	;	AssignKeyword (EditorIDToFormID "TTWAshPile1") "LocalMapIcon"
+	;	AssignKeyword (EditorIDToFormID "TTWAshPile2") "LocalMapIcon"
+	;	AssignKeyword (EditorIDToFormID "TTWAshPile3") "LocalMapIcon"
+	;	AssignKeyword (EditorIDToFormID "TTWAshPile1") "LocalMapIconNPC"
+	;	AssignKeyword (EditorIDToFormID "TTWAshPile2") "LocalMapIconNPC"
+	;	AssignKeyword (EditorIDToFormID "TTWAshPile3") "LocalMapIconNPC"
+	;endif
+	
+	if GetINIFloat "Icons:bCraftingStation" "Stentorious\LocalMapOverhaul.ini" == 1							; If crafting station icons enabled
+		AssignKeyword WorkBench "LocalMapIcon"																; Assign keywords
+		AssignKeyword ReloadingBench "LocalMapIcon"
+		AssignKeyword CampfireCrafting01 "LocalMapIcon"
+		AssignKeyword CampfireCrafting02 "LocalMapIcon"
+		AssignKeyword CampfireCrafting03 "LocalMapIcon"
+		AssignKeyword CampfireCrafting04 "LocalMapIcon"
+		AssignKeyword VCG03CampfireCrafting03 "LocalMapIcon"
+		if eval IsModLoaded "DeadMoney.esm"
+			AssignKeyword (EditorIDToFormID "NVDLC01CraftingOven") "LocalMapIcon"
+		endif
+		if eval IsModLoaded "HonestHearts.esm"
+			AssignKeyword (EditorIDToFormID "NVDLC02Campfire01") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC02Campfire02") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC02CraftingOven01") "LocalMapIcon"
+		endif
+		if eval IsModLoaded "OldWorldBlues.esm"
+			AssignKeyword (EditorIDToFormID "NVDLC03HotPlate") "LocalMapIcon"
+		endif
+		if eval IsModLoaded "TaleOfTwoWastelands.esm"
+			AssignKeyword (EditorIDToFormID "TTWCampGrillCrafting01") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "TTWGrillBBQDirtyCrafting") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "TTWGrillBBQCleanCrafting") "LocalMapIcon"
+		endif
+	endif
+	
+	int iBitMask = 0																						; Init item icon bitmask
+	
+	if GetINIFloat "Icons:bSkillBook" "Stentorious\LocalMapOverhaul.ini" == 1								; If skill book icons enabled
+		AssignKeyword BookSkillBarter "LocalMapIcon"														; Assign keywords
+		AssignKeyword BookSkillBigGuns "LocalMapIcon"
+		AssignKeyword BookSkillEnergyWeapons "LocalMapIcon"
+		AssignKeyword BookSkillExplosives "LocalMapIcon"
+		AssignKeyword BookSkillGuns "LocalMapIcon"
+		AssignKeyword BookSkillLockpicking "LocalMapIcon"
+		AssignKeyword BookSkillMedicine "LocalMapIcon"
+		AssignKeyword BookSkillMelee "LocalMapIcon"
+		AssignKeyword BookSkillRepair "LocalMapIcon"
+		AssignKeyword BookSkillScience "LocalMapIcon"
+		AssignKeyword BookSkillSneak "LocalMapIcon"
+		AssignKeyword BookSkillSpeech "LocalMapIcon"
+		AssignKeyword BookSkillSurvival "LocalMapIcon"
+		AssignKeyword BookSkillUnarmed "LocalMapIcon"
+		if eval IsModLoaded "TaleOfTwoWastelands.esm"
+			AssignKeyword (EditorIDToFormID "DLC04GhoulEcologyBook") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "DLC04MirelurkEcologyBook") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "TTWBookSkillBarterVault101d") "LocalMapIcon"
+		endif
+		iBitMask += 1																						; Update item icon bitmask (Bit 0)
+	endif
+
+	if GetINIFloat "Icons:bSkillMagazine" "Stentorious\LocalMapOverhaul.ini" == 1							; If skill magazine icons enabled
+		AssignKeyword MagazineNVBarter "LocalMapIcon"														; Assign keywords
+		AssignKeyword MagazineNVCritical "LocalMapIcon"
+		AssignKeyword MagazineNVEnergyWeapons "LocalMapIcon"
+		AssignKeyword MagazineNVExplosives "LocalMapIcon"
+		AssignKeyword MagazineNVGuns "LocalMapIcon"
+		AssignKeyword MagazineNVLockpick "LocalMapIcon"
+		AssignKeyword MagazineNVMedicine "LocalMapIcon"
+		AssignKeyword MagazineNVMeleeWeapons "LocalMapIcon"
+		AssignKeyword MagazineNVRepair "LocalMapIcon"
+		AssignKeyword MagazineNVScience "LocalMapIcon"
+		AssignKeyword MagazineNVSneak "LocalMapIcon"
+		AssignKeyword MagazineNVSpeech "LocalMapIcon"
+		AssignKeyword MagazineNVSurvival "LocalMapIcon"
+		AssignKeyword MagazineNVUnarmed "LocalMapIcon"
+	endif
+
+	if GetINIFloat "Icons:bCollectable" "Stentorious\LocalMapOverhaul.ini" == 1								; If collectable icons enabled
+		AssignKeyword NVStarBottleCap "LocalMapIcon"														; Assign keywords
+		AssignKeyword SnowglobeFortmormon "LocalMapIcon"
+		AssignKeyword SnowglobeMtCharleston "LocalMapIcon"
+		AssignKeyword SnowglobeHooverDam "LocalMapIcon"
+		AssignKeyword SnowglobeGoodsprings "LocalMapIcon"
+		AssignKeyword SnowglobeTestSite "LocalMapIcon"
+		AssignKeyword SnowglobeNellis "LocalMapIcon"
+		AssignKeyword SnowglobeTheStrip "LocalMapIcon"
+		if eval IsModLoaded "DeadMoney.esm"
+			AssignKeyword (EditorIDToFormID "NVDLC01Snowglobe") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC01DeanSecretStash") "LocalMapIcon"
+		endif
+		if eval IsModLoaded "HonestHearts.esm"
+			AssignKeyword (EditorIDToFormID "NVDLC02SnowGlobe") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC02DuffleBagFORCHALLENGE") "LocalMapIcon"
+		endif
+		if eval IsModLoaded "OldWorldBlues.esm"
+			AssignKeyword (EditorIDToFormID "NVDLC03SnowGlobe") "LocalMapIcon"
+		endif
+		if eval IsModLoaded "LonesomeRoad.esm"
+			AssignKeyword (EditorIDToFormID "NVDLC04Snowglobe") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC04Warhead") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC04RALPHIEPosterActivator") "LocalMapIcon"
+		endif
+		if eval IsModLoaded "TaleOfTwoWastelands.esm"
+			AssignKeyword (EditorIDToFormID "BobbleheadAGL") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadBART") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadBGUN") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadCHA") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadEND") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadERGW") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadEXPL") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadINT") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadLOCK") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadLUK") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadMEDI") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadMELE") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadPER") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadREPR") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadSCNC") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadSGUN") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadSNEK") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadSPCH") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadSTR") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadSUR") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "BobbleheadUARM") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "DLC01SteelPlateActivator") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "DLC02FF004Briefcase") "LocalMapIcon"
+		endif
+		iBitMask += 128																						; Update item icon bitmask (Bit 7)
+	endif
+	
+	iBitMask += 2 * (eval (GetINIFloat "Icons:bNote" "Stentorious\LocalMapOverhaul.ini" == 1))				; If note icons enabled 		Update item icon bitmask (Bit 1)
+	iBitMask += 4 * (eval (GetINIFloat "Icons:bKey" "Stentorious\LocalMapOverhaul.ini" == 1))				; If key icons enabled 			Update item icon bitmask (Bit 2)
+	iBitMask += 8 * (eval (GetINIFloat "Icons:bUnique" "Stentorious\LocalMapOverhaul.ini" == 1))			; If unique item icons enabled 	Update item icon bitmask (Bit 3)
+	iBitMask += 16 * (eval (GetINIFloat "Icons:bQuest" "Stentorious\LocalMapOverhaul.ini" == 1))			; If quest item icons enabled 	Update item icon bitmask (Bit 4)
+	iBitMask += 32 * (eval (GetINIFloat "Icons:bMine" "Stentorious\LocalMapOverhaul.ini" == 1))				; If mine icons enabled			Update item icon bitmask (Bit 5)
+	iBitMask += 64 * (eval (GetINIFloat "Icons:bLockedContainer" "Stentorious\LocalMapOverhaul.ini" == 1))	; If container icons enabled	Update item icon bitmask (Bit 6)
+	iBitMask += 256 * (eval (GetINIFloat "Icons:bTerminal" "Stentorious\LocalMapOverhaul.ini" == 1))		; If terminal icons enabled		Update item icon bitmask (Bit 8)
+	iBitMask += 512 * (eval (GetINIFloat "Icons:bDoor" "Stentorious\LocalMapOverhaul.ini" == 1))			; If door icons enabled			Update item icon bitmask (Bit 9)
+	Goo1.AuxVarSetFlt "*LocalMap_INI" iBitMask 0															; Cache item icon bitmask
+	
+	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat "Actors:iNameVisibility" "Stentorious\LocalMapOverhaul.ini"))) 1	; Cache NPC name mode
+	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat "Actors:iMode" "Stentorious\LocalMapOverhaul.ini"))) 2			; Cache NPC icon mode
+	
+	iBitMask = 0																							; Init NPC icon bitmask
+	iBitMask += 1 * (eval (GetINIFloat "Actors:bVendor" "Stentorious\LocalMapOverhaul.ini" == 1))			; If vendor icons enabled 		Update NPC icon bitmask (Bit 0)
+	iBitMask += 2 * (eval (GetINIFloat "Actors:bHideEmptyCorpses" "Stentorious\LocalMapOverhaul.ini" == 1))	; If hide empty corpses			Update NPC icon bitmask (Bit 1)
+	Goo1.AuxVarSetFlt "*LocalMap_INI" iBitMask 3															; Cache NPC icon bitmask
+
+	iBitMask = 0																							; Init extra options bitmask
+	iBitMask += 1 * (eval (GetINIFloat "Extra:bRemoteTerminals" "Stentorious\LocalMapOverhaul.ini" == 1))	; If remote terminal mode 1 	Update extra options bitmask (Bit 0)
+	iBitMask += 2 * (eval (GetINIFloat "Extra:bRemoteTerminals" "Stentorious\LocalMapOverhaul.ini" == 2))	; If remote terminal mode 2 	Update extra options bitmask (Bit 1)
+	Goo1.AuxVarSetFlt "*LocalMap_INI" iBitMask 4															; Cache extra options bitmask
+
+endif
+
+; On game load
+; Check for requirements
+if GetNVSEVersion > 5 && GetNVSERevision > 2 && GetNVSEBeta > 2
+else
+	return
+endif 
+if eval GetPluginVersion "JohnnyGuitarNVSE" < 390 || GetPluginVersion "ShowOffNVSE Plugin" < 180 || GetPluginVersion "yUI" < 140 || FileExists "menus\ySI\ySI.xml" == 0
+	return
+endif
+
+SetOnMenuOpenEventHandler (CompileScript "LocalMapOverhaul\OnMenuOpen1023.gek") 1 1023						; Register MapMenu open event
+SetOnMouseoverChangeEventHandler (CompileScript "LocalMapOverhaul\OnMouseover1023.gek") 1 1023				; Register icon mouseover event
+SetOnMenuClickEventHandler (CompileScript "LocalMapOverhaul\OnIconClick.gek") 1 "MapMenu#50"				; Register icon click event
