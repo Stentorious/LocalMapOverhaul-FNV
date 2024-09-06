@@ -39,6 +39,7 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 	endif
 
 	; Actor settings
+	SetUIFloatAlt "MapMenu\_LMO+Color0" 4
 	if GetINIFloat "Actors:bHostileColor" "Stentorious\LocalMapOverhaul.ini" == 1
 		SetUIFloatAlt "MapMenu\_LMO+Color2" 2
 	endif
