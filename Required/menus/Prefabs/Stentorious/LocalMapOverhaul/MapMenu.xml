@@ -1,38 +1,40 @@
-<_LMO+Dist>0</_LMO+Dist>
-<_LMO+DistMode>0</_LMO+DistMode>
-<_LMO+Deg>0</_LMO+Deg>
-<_LMO+Fade>0</_LMO+Fade>
-<_LMO+Focus>0</_LMO+Focus>
-<_LMO+Height>0</_LMO+Height>
-<_LMO+Name>0</_LMO+Name>
-<_LMO+PlrX>0</_LMO+PlrX>
-<_LMO+PlrY>0</_LMO+PlrY>
-<_LMO+PlrZ>0</_LMO+PlrZ>
-<_LMO+PlrAV6>0</_LMO+PlrAV6>
-
+<_LMO+Dist> 0 </_LMO+Dist>
+<_LMO+DistMode> 0 </_LMO+DistMode>
+<_LMO+Deg> 0 </_LMO+Deg>
+<_LMO+Fade> 0 </_LMO+Fade>
+<_LMO+Focus> 0 </_LMO+Focus>
+<_LMO+Height> 0 </_LMO+Height>
+<_LMO+Name> 0 </_LMO+Name>
+<_LMO+PlrX> 0 </_LMO+PlrX>
+<_LMO+PlrY> 0 </_LMO+PlrY>
+<_LMO+PlrZ> 0 </_LMO+PlrZ>
+<_LMO+PlrAV6> 0 </_LMO+PlrAV6>
 <_LMO+DistCalc>
-	<copy>0</copy>
-	<add src="io()" trait="_LMO+Dist"/> <onlyifnot src="io()" trait="_LMO+DistMode"/>
+	<copy> 0 </copy>
+	<add src="io()" trait="_LMO+Dist" />
+	<onlyifnot src="io()" trait="_LMO+DistMode" />
 	<add>
-		<copy src="io()" trait="_LMO+Dist"/>
-		<div>1680</div>
+		<copy src="io()" trait="_LMO+Dist" />
+		<div> 1680 </div>
 		<mul>
-			<copy><log><copy src="io()" trait="_LMO+PlrAV6"/></log></copy>
-			<div><log>4</log></div>
-			<mul>1000</mul>
-			<add>1100</add>
-			<div>1.65</div>
+			<log src="io()" trait="_LMO+PlrAV6" />
+			<div> <log> 4 </log> </div>
+			<mul> 1000 </mul>
+			<add> 1100 </add>
+			<div> 1.65 </div>
 		</mul>
-		<onlyif> <copy src="io()" trait="_LMO+DistMode"/> <eq> 1 </eq> </onlyif>
+		<onlyif>
+			<copy src="io()" trait="_LMO+DistMode" />
+			<eq> 1 </eq>
+		</onlyif>
 	</add>
 </_LMO+DistCalc>
-
 <_LMO+Color0>
 	<copy> 0 </copy>
-	<add src="io()" trait="systemcolor"/> <onlyifnot src="io()" trait="_ySIColorFulIconsFix"/>
+	<add src="io()" trait="systemcolor" />
+	<onlyifnot src="io()" trait="_ySIColorFulIconsFix" />
 </_LMO+Color0>
-
-<_LMO+Color2>&pipboy;</_LMO+Color2>
+<_LMO+Color2> &pipboy; </_LMO+Color2>
 
 <template name="Map_Icons">
 	<rect name="Map_Icons">
@@ -47,394 +49,264 @@
 <template name="Icon_Template">
 	<hotrect name="Icon_Template">
 		<id> 50 </id>
-		<visible> <copy src="io()" trait="_LMO+DistCalc"/> <gte> <copy src="me()" trait="_Dist"/> </gte> </visible>
-		<zoom> &scale; </zoom>
-		<target> <copy src="me()" trait="_ShowName"/> </target>
+		<visible>
+			<copy src="io()" trait="_LMO+DistCalc" />
+			<gte> <copy src="me()" trait="_Dist" /> </gte>
+		</visible>
 		<locus> 1 </locus>
-		<clips> 1 </clips>
-		<depth> 
-			<copy src="me()" trait="_DepthMod"/>
-			<add> <copy> 6 </copy> <onlyif src="me()" trait="mouseover"/> </add>
-		</depth>
-		
-		<_PosX>0</_PosX>
-		<_PosY>0</_PosY>
-		<_PosZ>0</_PosZ>
-		<_Deg>-1</_Deg>
-		<_Dist>0</_Dist>
-		<_Hostile>-1</_Hostile>
-		<_Name>0</_Name>
-		<_ShowName>1</_ShowName>
-		<_RefID>0</_RefID>
-		<_DepthMod>0</_DepthMod>
-		
-		<_PosXOffset>
-			<copy src="me()" trait="_PosX"/>
-			<sub src="io()" trait="_LMO+PlrX"/>
-			<mul>0.0000489</mul>
-		</_PosXOffset>
-		
-		<_PosYOffset>
-			<copy src="me()" trait="_PosY"/>
-			<sub src="io()" trait="_LMO+PlrY"/>
-			<mul>0.0000489</mul>
-		</_PosYOffset>
-		
-		<_PosZOffset>
-			<copy src="me()" trait="_PosZ"/>
-			<sub src="io()" trait="_LMO+PlrZ"/>
-		</_PosZOffset>
-		
-		<_DegOffset>
-			<add src="io()" trait="_LMO+Deg"/>
-			<sub src="me()" trait="_Deg"/>
-			<div> 360 </div>
-		</_DegOffset>	
-
-		<_Level>
-			<copy>0</copy>
-			<add> <copy>1</copy> <onlyif> <copy src="me()" trait="_PosZOffset"/> <gt> 175 </gt> </onlyif> </add>
-			<add> <copy>2</copy> <onlyif> <copy src="me()" trait="_PosZOffset"/> <lt> -175 </lt> </onlyif> </add>
-		</_Level>
-		
-		<_x>
-			<copy src="MM_LocalMapCursor" trait="_x"/>
+		<depth>
+			<copy src="me()" trait="_DepthMod" />
 			<add>
-				<copy src="me()" trait="_PosXOffset"/>
-				<mul> <cos src="io()" trait="_LMO+Deg"/> </mul>		
+				<copy> 6 </copy>
+				<onlyif src="me()" trait="mouseover" />
 			</add>
-			<sub>
-				<copy src="me()" trait="_PosYOffset"/>
-				<mul> <sin src="io()" trait="_LMO+Deg"/> </mul>		
-			</sub>	
-		</_x>
-		<_y>
-			<copy src="MM_LocalMapCursor" trait="_y"/>
-			<sub>
-				<add>
-					<copy src="me()" trait="_PosXOffset"/>
-					<mul> <sin src="io()" trait="_LMO+Deg"/> </mul>		
-				</add>
-				<add>
-					<copy src="me()" trait="_PosYOffset"/>
-					<mul> <cos src="io()" trait="_LMO+Deg"/> </mul>		
-				</add>				
-			</sub>
-		</_y>
-		
+		</depth>
 		<x>
-			<copy src="me" trait="_x"/>
-			<mul src="MM_LocalMap_ParentImage" trait="width"/>
-			<add src="MM_LocalMap_ParentImage" trait="x"/>
+			<copy src="me" trait="_x" />
+			<mul src="MM_LocalMap_ParentImage" trait="width" />
+			<add src="MM_LocalMap_ParentImage" trait="x" />
 			<sub>
-				<copy src="me" trait="width"/>
+				<copy src="me" trait="width" />
 				<div> 2 </div>
 			</sub>
 		</x>
 		<y>
-			<copy src="me" trait="_y"/>
-			<mul src="MM_LocalMap_ParentImage" trait="height"/>
-			<add src="MM_LocalMap_ParentImage" trait="y"/>
+			<copy src="me" trait="_y" />
+			<mul src="MM_LocalMap_ParentImage" trait="height" />
+			<add src="MM_LocalMap_ParentImage" trait="y" />
 			<sub>
-				<copy src="me" trait="height"/>
+				<copy src="me" trait="height" />
 				<div> 2 </div>
 			</sub>
 		</y>
-
 		<width>
-			<copy src="MM_LocalMap_ParentImage" trait="user0"/>
+			<copy src="MM_LocalMap_ParentImage" trait="user0" />
 			<min> 32 </min>
 			<mul>
 				<copy> 0.4 </copy>
-				<onlyif src="me()" trait="mouseover"/>
+				<onlyif src="me()" trait="mouseover" />
 				<add> 1 </add>
 			</mul>
 			<min> 48 </min>
 		</width>
-		<height> <copy src="me()" trait="width"/> </height>
-		
+		<height> <copy src="me()" trait="width" /> </height>
+		<zoom> &scale; </zoom>
+		<clips> 1 </clips>
+		<target> <copy src="me()" trait="_ShowName" /> </target>
 		<clicksound> UIMenuPrevNext </clicksound>
 		<mouseoversound> UIPipBoyHighlight </mouseoversound>
 		<filename> Interface\Stentorious\LocalMapOverhaul\Actor.dds </filename>
-		
-		<image name="Icon">
-			
-			<visible> <copy src="parent()" trait="visible"/> </visible>
 
-			<alpha> 
-				<copy>0</copy>
-				<add>255</add>
-				<sub>
-					<copy src="parent()" trait="_Dist"/>
-					<pow>6</pow>
-					<div>
-						<copy src="io()" trait="_LMO+DistCalc"/>
-						<pow>6</pow>
-					</div>
-					<mul>255</mul>
-					<onlyif> <copy src="io()" trait="_LMO+Fade"/> <eq> 1 </eq> </onlyif>
-				</sub>
-				<max>0</max>
-				<min>255</min>			
-			</alpha>
-
-			<brightness> 255 </brightness>
-			
-			<zoom> &scale; </zoom>
-			
-			<x>	0 </x>
-			<y> 0 </y>	
-			<rotateangle> <copy> 6.2831 </copy> <mul src="parent()" trait="_DegOffset"/> <onlyifnot> <copy src="parent()" trait="_Deg"/> <eq> -1 </eq> </onlyifnot> </rotateangle>
-			<Rotateaxisx> <copy src="me()" trait="width"/> <div> 2 </div> </Rotateaxisx> 
-			<Rotateaxisy> <copy src="me()" trait="height"/> <div> 2 </div> </Rotateaxisy>	
-			
-			<height> <copy src="parent()" trait="height"/> </height>
-			<width> <copy src="parent()" trait="width"/> </width>
-			<filename> <copy src="parent()" trait="filename"/> </filename>
-			
-			<systemcolor> 
-				<copy> 0 </copy>
-				<add> <copy src="io()" trait="_LMO+Color0"/> <onlyif> <copy src="parent()" trait="_Hostile"/> <eq> -1 </eq> </onlyif> </add> 
-				<add> <copy> &pipboy; </copy> <onlyif> <copy src="parent()" trait="_Hostile"/> <eq> 0 </eq> </onlyif> </add> 
-				<add> <copy src="io()" trait="_LMO+Color2"/> <onlyif> <copy src="parent()" trait="_Hostile"/> <eq> 1 </eq> </onlyif> </add> 
-			</systemcolor>
-	
-		</image>
-		
-		<image name="DropShadow">
-			
-			<visible> <copy src="sibling(Icon)" trait="visible"/> </visible>
-			<alpha> <copy src="sibling(Icon)" trait="alpha"/> <div> 2 </div> </alpha>
-			<brightness> <copy src="sibling(Icon)" trait="brightness" /> </brightness>
-			
-			<depth> -1 </depth>
-			<zoom> &scale; </zoom>
-			
-			<x>	1 </x>
-			<y> 1 </y>
-			<rotateangle> <copy src="sibling(Icon)" trait="rotateangle"/> </rotateangle>
-			<Rotateaxisx> <copy src="sibling(Icon)" trait="Rotateaxisx"/> </Rotateaxisx> 
-			<Rotateaxisy> <copy src="sibling(Icon)" trait="Rotateaxisy"/> </Rotateaxisy>
-			
-			<height> <copy src="parent()" trait="height"/> </height>
-			<width> <copy src="parent()" trait="width"/> </width>
-			<filename> <copy src="sibling(icon)" trait="filename"/> </filename>
-			
-			<systemcolor> 0 </systemcolor>
-			<red>0</red>
-			<green>0</green>
-			<blue>0</blue>
-		
-		</image>
-		
-		<image name="HeightIndicator">
-			
-			<visible> <copy src="parent()" trait="_Level"/> <gt> 0 </gt> </visible>
-			<alpha> <copy src="sibling(Icon)" trait="alpha"/> </alpha>
-			<brightness> <copy src="sibling(Icon)" trait="brightness" /> </brightness>
-			<zoom> &scale; </zoom>
-			<x>
-				<copy src="sibling(Icon)" trait="width"/> <div>2</div>
-				<sub>
-					<copy src="me()" trait="width"/> <div>2</div>
-				</sub>
-			</x>
-			<y> <copy> 0 </copy> <sub src="me()" trait="height"/> </y>	
-			<height> <copy src="sibling(Icon)" trait="height"/> <div>4</div> </height>
-			<width> <copy src="me()" trait="height"/> </width>
-			
-			<rotateangle>
-				<copy>0</copy>
-				<add> <copy>3.1416</copy> <onlyif> <copy src="parent()" trait="_Level"/> <eq> 2 </eq> </onlyif> </add>
-			</rotateangle>
-			<Rotateaxisx> <copy src="me()" trait="width"/> <div> 2 </div> </Rotateaxisx> 
-			<Rotateaxisy> <copy src="me()" trait="x"/> <mul> 2 </mul> </Rotateaxisy>			
-			
-			<systemcolor> &pipboy; </systemcolor>
-			<filename> Interface\Stentorious\LocalMapOverhaul\HeightIndicator.dds </filename>
-			
-		</image>
-		
-	</hotrect>
-</template>
-
-<template name="Door_Template">
-	<hotrect name="Door_Template">
-		<id> 50 </id>
-		<visible> <copy src="io()" trait="_LMO+DistCalc"/> <gte> <copy src="me()" trait="_Dist"/> </gte> </visible>
-		<zoom> &scale; </zoom>
-		<target> 1 </target>
-		<locus> 1 </locus>
-		<clips> 1 </clips>
-		<depth> 
-			<copy src="me()" trait="_DepthMod"/>
-			<add> <copy> 6 </copy> <onlyif src="me()" trait="mouseover"/> </add>
-		</depth>
-		
-		<_PosX>0</_PosX>
-		<_PosY>0</_PosY>
-		<_PosZ>0</_PosZ>
-		<_Dist>0</_Dist>
-		<_Name>0</_Name>
-		<_ShowName>1</_ShowName>
-		<_RefID>0</_RefID>
-		<_DepthMod>0</_DepthMod>
-		
+		<_PosX> 0 </_PosX>
+		<_PosY> 0 </_PosY>
+		<_PosZ> 0 </_PosZ>
+		<_Deg> -1 </_Deg>
+		<_Dist> 0 </_Dist>
+		<_Hostile> -1 </_Hostile>
+		<_Name> 0 </_Name>
+		<_ShowName> 1 </_ShowName>
+		<_RefID> 0 </_RefID>
+		<_DepthMod> 0 </_DepthMod>
 		<_PosXOffset>
-			<copy src="me()" trait="_PosX"/>
-			<sub src="io()" trait="_LMO+PlrX"/>
-			<mul>0.0000489</mul>
+			<copy src="me()" trait="_PosX" />
+			<sub src="io()" trait="_LMO+PlrX" />
+			<mul> 0.0000489 </mul>
 		</_PosXOffset>
-		
 		<_PosYOffset>
-			<copy src="me()" trait="_PosY"/>
-			<sub src="io()" trait="_LMO+PlrY"/>
-			<mul>0.0000489</mul>
+			<copy src="me()" trait="_PosY" />
+			<sub src="io()" trait="_LMO+PlrY" />
+			<mul> 0.0000489 </mul>
 		</_PosYOffset>
-		
 		<_PosZOffset>
-			<copy src="me()" trait="_PosZ"/>
-			<sub src="io()" trait="_LMO+PlrZ"/>
+			<copy src="me()" trait="_PosZ" />
+			<sub src="io()" trait="_LMO+PlrZ" />
 		</_PosZOffset>
-
+		<_DegOffset>
+			<add src="io()" trait="_LMO+Deg" />
+			<sub src="me()" trait="_Deg" />
+			<div> 360 </div>
+		</_DegOffset>
 		<_Level>
-			<copy>0</copy>
-			<add> <copy>1</copy> <onlyif> <copy src="me()" trait="_PosZOffset"/> <gt> 175 </gt> </onlyif> </add>
-			<add> <copy>2</copy> <onlyif> <copy src="me()" trait="_PosZOffset"/> <lt> -175 </lt> </onlyif> </add>
-		</_Level>
-		
-		<_x>
-			<copy src="MM_LocalMapCursor" trait="_x"/>
+			<copy> 0 </copy>
 			<add>
-				<copy src="me()" trait="_PosXOffset"/>
-				<mul> <cos src="io()" trait="_LMO+Deg"/> </mul>		
+				<copy> 1 </copy>
+				<onlyif>
+					<copy src="me()" trait="_PosZOffset" />
+					<gt> 175 </gt>
+				</onlyif>
+			</add>
+			<add>
+				<copy> 2 </copy>
+				<onlyif>
+					<copy src="me()" trait="_PosZOffset" />
+					<lt> -175 </lt>
+				</onlyif>
+			</add>
+		</_Level>
+		<_x>
+			<copy src="MM_LocalMapCursor" trait="_x" />
+			<add>
+				<copy src="me()" trait="_PosXOffset" />
+				<mul> <cos src="io()" trait="_LMO+Deg" /> </mul>
 			</add>
 			<sub>
-				<copy src="me()" trait="_PosYOffset"/>
-				<mul> <sin src="io()" trait="_LMO+Deg"/> </mul>		
-			</sub>	
+				<copy src="me()" trait="_PosYOffset" />
+				<mul> <sin src="io()" trait="_LMO+Deg" /> </mul>
+			</sub>
 		</_x>
 		<_y>
-			<copy src="MM_LocalMapCursor" trait="_y"/>
+			<copy src="MM_LocalMapCursor" trait="_y" />
 			<sub>
 				<add>
-					<copy src="me()" trait="_PosXOffset"/>
-					<mul> <sin src="io()" trait="_LMO+Deg"/> </mul>		
+					<copy src="me()" trait="_PosXOffset" />
+					<mul> <sin src="io()" trait="_LMO+Deg" /> </mul>
 				</add>
 				<add>
-					<copy src="me()" trait="_PosYOffset"/>
-					<mul> <cos src="io()" trait="_LMO+Deg"/> </mul>		
-				</add>				
+					<copy src="me()" trait="_PosYOffset" />
+					<mul> <cos src="io()" trait="_LMO+Deg" /> </mul>
+				</add>
 			</sub>
 		</_y>
 
-		<x>
-			<copy src="me" trait="_x"/>
-			<mul src="MM_LocalMap_ParentImage" trait="width"/>
-			<add src="MM_LocalMap_ParentImage" trait="x"/>
-			<sub>
-				<copy src="me" trait="width"/>
-				<div> 2 </div>
-			</sub>
-		</x>
-		<y>
-			<copy src="me" trait="_y"/>
-			<mul src="MM_LocalMap_ParentImage" trait="height"/>
-			<add src="MM_LocalMap_ParentImage" trait="y"/>
-			<sub>
-				<copy src="me" trait="height"/>
-				<div> 2 </div>
-			</sub>
-		</y>
-
-		<width>
-			<copy src="MM_LocalMap_ParentImage" trait="user0"/>
-			<min> 60 </min>
-			<mul>
-				<copy> 0.4 </copy>
-				<onlyif src="me()" trait="mouseover"/>
-				<add> 1 </add>
-			</mul>
-			<min> 100 </min>
-		</width>
-		<height> <copy src="me()" trait="width"/> </height>
-		
-		<clicksound> UIMenuPrevNext </clicksound>
-		<mouseoversound> UIPipBoyHighlight </mouseoversound>
-		<filename> Interface\Stentorious\LocalMapOverhaul\Actor.dds </filename>
-		
 		<image name="Icon">
-			
-			<visible> <copy src="parent()" trait="visible"/> </visible>
-
-			<alpha> 
-				<copy>0</copy>
+			<visible> <copy src="parent()" trait="visible" /> </visible>
+			<alpha>
+				<copy> 0 </copy>
 				<add>255</add>
 				<sub>
-					<copy src="parent()" trait="_Dist"/>
-					<pow>6</pow>
+					<copy src="parent()" trait="_Dist" />
+					<pow> 6 </pow>
 					<div>
-						<copy src="io()" trait="_LMO+DistCalc"/>
-						<pow>6</pow>
+						<copy src="io()" trait="_LMO+DistCalc" />
+						<pow> 6 </pow>
 					</div>
-					<mul>255</mul>
-					<onlyif> <copy src="io()" trait="_LMO+Fade"/> <eq> 1 </eq> </onlyif>
+					<mul> 255 </mul>
+					<onlyif>
+						<copy src="io()" trait="_LMO+Fade" />
+						<eq> 1 </eq>
+					</onlyif>
 				</sub>
-				<max>0</max>
-				<min>255</min>			
+				<max> 0 </max>
+				<min> 255 </min>
 			</alpha>
-
-			<brightness> 255 </brightness>
-			
 			<x>	0 </x>
 			<y> 0 </y>
-
-			<zoom>
+			<Rotateaxisx>
 				<copy src="me()" trait="width" />
-				<div> 0.7 </div>
-			</zoom>
-			<cropx>
-				<copy> 28 </copy>
-				<mul src="me()" trait="zoom" />
-				<div> 100 </div>
-			</cropx>
-			<cropy> <copy src="me()" trait="cropx"/> </cropy>
-
-			<height> <copy src="parent()" trait="height"/> </height>
-			<width> <copy src="parent()" trait="width"/> </width>
-			<filename> <copy src="parent()" trait="filename"/> </filename>
-			
-			<systemcolor> <copy src="io()" trait="_LMO+Color0"/> </systemcolor>
-	
-		</image>
-		
-		<image name="HeightIndicator">
-			
-			<visible> <copy src="parent()" trait="_Level"/> <gt> 0 </gt> </visible>
-			<alpha> <copy src="sibling(Icon)" trait="alpha"/> </alpha>
-			<brightness> <copy src="sibling(Icon)" trait="brightness" /> </brightness>
+				<div> 2 </div>
+			</Rotateaxisx>
+			<Rotateaxisy>
+				<copy src="me()" trait="height" />
+				<div> 2 </div>
+			</Rotateaxisy>
+			<rotateangle>
+				<copy> 6.2831 </copy>
+				<mul src="parent()" trait="_DegOffset" />
+				<onlyifnot>
+					<copy src="parent()" trait="_Deg" />
+					<eq> -1 </eq>
+				</onlyifnot>
+			</rotateangle>
+			<height> <copy src="parent()" trait="height" /> </height>
+			<width> <copy src="parent()" trait="width" /> </width>
 			<zoom> &scale; </zoom>
+			<systemcolor>
+				<copy> 0 </copy>
+				<add>
+					<copy src="io()" trait="_LMO+Color0" />
+					<onlyif>
+						<copy src="parent()" trait="_Hostile" />
+						<eq> -1 </eq>
+					</onlyif>
+				</add>
+				<add>
+					<copy> &pipboy; </copy>
+					<onlyif>
+						<copy src="parent()" trait="_Hostile" />
+						<eq> 0 </eq>
+					</onlyif>
+				</add>
+				<add>
+					<copy src="io()" trait="_LMO+Color2" />
+					<onlyif>
+						<copy src="parent()" trait="_Hostile" />
+						<eq> 1 </eq>
+					</onlyif>
+				</add>
+			</systemcolor>
+			<brightness> 255 </brightness>
+			<filename> <copy src="parent()" trait="filename" /> </filename>
+		</image>
+
+		<image name="DropShadow">
+			<visible> <copy src="sibling(Icon)" trait="visible" /> </visible>
+			<alpha>
+				<copy src="sibling(Icon)" trait="alpha" />
+				<div> 2 </div>
+			</alpha>
+			<depth> -1 </depth>
+			<x>	1 </x>
+			<y> 1 </y>
+			<Rotateaxisx> <copy src="sibling(Icon)" trait="Rotateaxisx" /> </Rotateaxisx>
+			<Rotateaxisy> <copy src="sibling(Icon)" trait="Rotateaxisy" /> </Rotateaxisy>
+			<rotateangle> <copy src="sibling(Icon)" trait="rotateangle" /> </rotateangle>
+			<height> <copy src="parent()" trait="height" /> </height>
+			<width> <copy src="parent()" trait="width" /> </width>
+			<zoom> &scale; </zoom>
+			<systemcolor> 0 </systemcolor>
+			<red> 0 </red>
+			<green> 0 </green>
+			<blue> 0 </blue>
+			<brightness> <copy src="sibling(Icon)" trait="brightness" /> </brightness>
+			<filename> <copy src="sibling(icon)" trait="filename" /> </filename>
+		</image>
+
+		<image name="HeightIndicator">
+			<visible>
+				<copy src="parent()" trait="_Level" />
+				<gt> 0 </gt>
+			</visible>
+			<alpha> <copy src="sibling(Icon)" trait="alpha" /> </alpha>
 			<x>
-				<copy src="sibling(Icon)" trait="width"/> <div>2</div>
+				<copy src="sibling(Icon)" trait="width" />
+				<div> 2 </div>
 				<sub>
-					<copy src="me()" trait="width"/> <div>2</div>
+					<copy src="me()" trait="width" />
+					<div> 2 </div>
 				</sub>
 			</x>
-			<y> <copy> 0 </copy> <sub src="me()" trait="height"/> </y>	
-			<height> <copy src="sibling(Icon)" trait="height"/> <div>4</div> </height>
-			<width> <copy src="me()" trait="height"/> </width>
-			
+			<y>
+				<copy> 0 </copy>
+				<sub src="me()" trait="height" />
+			</y>
+			<Rotateaxisx>
+				<copy src="me()" trait="width" />
+				<div> 2 </div>
+			</Rotateaxisx>
+			<Rotateaxisy>
+				<copy src="me()" trait="x" />
+				<mul> 2 </mul>
+			</Rotateaxisy>
 			<rotateangle>
-				<copy>0</copy>
-				<add> <copy>3.1416</copy> <onlyif> <copy src="parent()" trait="_Level"/> <eq> 2 </eq> </onlyif> </add>
+				<copy> 0 </copy>
+				<add>
+					<copy> 3.1416 </copy>
+					<onlyif>
+						<copy src="parent()" trait="_Level" />
+						<eq> 2 </eq>
+					</onlyif>
+				</add>
 			</rotateangle>
-			<Rotateaxisx> <copy src="me()" trait="width"/> <div> 2 </div> </Rotateaxisx> 
-			<Rotateaxisy> <copy src="me()" trait="x"/> <mul> 2 </mul> </Rotateaxisy>			
-			
+			<height>
+				<copy src="sibling(Icon)" trait="height" />
+				<div> 4 </div>
+			</height>
+			<width> <copy src="me()" trait="height" /> </width>
+			<zoom> &scale; </zoom>
 			<systemcolor> &pipboy; </systemcolor>
+			<brightness> <copy src="sibling(Icon)" trait="brightness" /> </brightness>
 			<filename> Interface\Stentorious\LocalMapOverhaul\HeightIndicator.dds </filename>
-			
 		</image>
-		
+
 	</hotrect>
 </template>

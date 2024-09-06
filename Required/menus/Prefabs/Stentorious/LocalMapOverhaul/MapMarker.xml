@@ -8,7 +8,6 @@
 	</mul>
 	<min> 100 </min>
 </width>
-
 <zoom>
 	<copy src="me()" trait="width" />
 	<div>
@@ -17,14 +16,12 @@
 	</div>
 	<mul> 100 </mul>
 </zoom>
-
 <cropx>
 	<copy> 0.21875 </copy>
 	<mul src="child(dummy)" trait="filewidth" />
 	<mul src="me()" trait="zoom" />
 	<div> 100 </div>
 </cropx>
-
 <cropy> <copy src="me()" trait="cropx" /> </cropy>
 
 <image name="dummy">
