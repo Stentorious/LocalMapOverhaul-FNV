@@ -191,14 +191,14 @@
 			</alpha>
 			<x>	0 </x>
 			<y> 0 </y>
-			<Rotateaxisx>
+			<rotateaxisx>
 				<copy src="me()" trait="width" />
 				<div> 2 </div>
-			</Rotateaxisx>
-			<Rotateaxisy>
+			</rotateaxisx>
+			<rotateaxisy>
 				<copy src="me()" trait="height" />
 				<div> 2 </div>
-			</Rotateaxisy>
+			</rotateaxisy>
 			<rotateangle>
 				<copy> 6.2831 </copy>
 				<mul src="parent()" trait="_DegOffset" />
@@ -247,8 +247,8 @@
 			<depth> -1 </depth>
 			<x>	1 </x>
 			<y> 1 </y>
-			<Rotateaxisx> <copy src="sibling(Icon)" trait="Rotateaxisx" /> </Rotateaxisx>
-			<Rotateaxisy> <copy src="sibling(Icon)" trait="Rotateaxisy" /> </Rotateaxisy>
+			<rotateaxisx> <copy src="sibling(Icon)" trait="rotateaxisx" /> </rotateaxisx>
+			<rotateaxisy> <copy src="sibling(Icon)" trait="rotateaxisy" /> </rotateaxisy>
 			<rotateangle> <copy src="sibling(Icon)" trait="rotateangle" /> </rotateangle>
 			<height> <copy src="parent()" trait="height" /> </height>
 			<width> <copy src="parent()" trait="width" /> </width>
@@ -279,14 +279,14 @@
 				<copy> 0 </copy>
 				<sub src="me()" trait="height" />
 			</y>
-			<Rotateaxisx>
+			<rotateaxisx>
 				<copy src="me()" trait="width" />
 				<div> 2 </div>
-			</Rotateaxisx>
-			<Rotateaxisy>
+			</rotateaxisx>
+			<rotateaxisy>
 				<copy src="me()" trait="x" />
 				<mul> 2 </mul>
-			</Rotateaxisy>
+			</rotateaxisy>
 			<rotateangle>
 				<copy> 0 </copy>
 				<add>
