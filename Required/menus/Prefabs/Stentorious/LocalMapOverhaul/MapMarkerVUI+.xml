@@ -25,10 +25,6 @@
 </cropx>
 <cropy> <copy src="me()" trait="cropx" /> </cropy>
 
-<image name="dummy">
-	<filename> <copy src="parent()" trait="filename" /> </filename>
-</image>
-
 <image name="DropShadow">
 	<visible> <copy src="parent()" trait="visible" /> </visible>
 	<alpha>
@@ -42,7 +38,7 @@
 	<width> <copy src="parent()" trait="width" /> </width>
 	<zoom> <copy src="parent()" trait="zoom" /> </zoom>
 	<cropx> <copy src="parent()" trait="cropx" /> </cropx>
-	<cropy> <copy src="parent()" trait="cropy" /> </cropy>
+	<cropy> <copy src="parent()" trait="cropx" /> </cropy>
 	<systemcolor> 0 </systemcolor>
 	<red> 0 </red>
 	<green> 0 </green>

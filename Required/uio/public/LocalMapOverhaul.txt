@@ -14,6 +14,9 @@ true
 Stentorious\LocalMapOverhaul\MM_HighlightIconName.xml::MapMenu::MM_MapHighlightBox
 !#VUI+\hudcenteredtext.xml
 true
+Stentorious\LocalMapOverhaul\MapMarkerVUI+.xml::MapMenu::MapMarker
+#VUI+\hudcenteredtext.xml
+true
 Stentorious\LocalMapOverhaul\MapMarker.xml::MapMenu::MapMarker
 !#VUI+\hudcenteredtext.xml
 true
