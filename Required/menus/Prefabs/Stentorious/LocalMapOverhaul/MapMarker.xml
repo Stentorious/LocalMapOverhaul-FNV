@@ -25,12 +25,8 @@
 	<div> 100 </div>
 </cropx>
 
-<cropy>
-	<copy src="me()" trait="cropx" />
-</cropy>
+<cropy> <copy src="me()" trait="cropx" /> </cropy>
 
 <image name="dummy">
-	<filename>
-		<copy src="parent()" trait="filename" />
-	</filename>
+	<filename> <copy src="parent()" trait="filename" /> </filename>
 </image>
