@@ -1,17 +1,18 @@
 int	iMenuID
-string_var sUITile
+string_var sUIPath
 
 begin Function {iMenuID}
-	
-	if GetActiveUIComponentID == 50																; If Local Map icon selected
-		sUITile = GetActiveUIComponentFullName													; Get active tile path
-		if GetUIFloatAlt (sUITile + "\_ShowName") == 1											; If name should be visible
-			SetUIStringAlt "MapMenu\_LMO+Name" (GetUIString (sUITile + "\_Name"))				; Update active icon name
-			SetUIFloatAlt "MapMenu\_LMO+Focus" 1												; Display name
+
+	; Display icon name on mouseover
+	if GetActiveUIComponentID == 50
+		sUIPath = GetActiveUIComponentFullName
+		if GetUIFloatAlt (sUIPath + "\_ShowName") == 1
+			SetUIStringAlt "MapMenu\_LMO+Name" (GetUIString (sUIPath + "\_Name"))
+			SetUIFloatAlt "MapMenu\_LMO+Focus" 1
 		endif
-		sv_Destruct sUITile
+		sv_Destruct sUIPath
 	else
-		SetUIFloatAlt "MapMenu\_LMO+Focus" 0													; Hide name
+		SetUIFloatAlt "MapMenu\_LMO+Focus" 0
 	endif
-	
+
 end

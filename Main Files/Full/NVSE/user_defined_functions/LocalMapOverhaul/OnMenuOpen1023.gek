@@ -1,441 +1,331 @@
 int	iMenuID
-int	iTile
+int	iIndex
 int	iDist
 int	iName
 int iLocked
 int	iTemp
 int	iBitIcon
-int	iBitActor
-
-ref rRef
+int	iBitMask
+ref rIcon
 ref rTemp
-array_var aRef
+array_var aRefs
 array_var aForE
 array_var aTemp
-string_var sUITile
+string_var sUIPath
 string_var sTemp
 
 begin Function {iMenuID}
 
+	; Update player info
 	SetUIFloatAlt "MapMenu\_LMO+PlrX" (Player.GetPos X)
 	SetUIFloatAlt "MapMenu\_LMO+PlrY" (Player.GetPos Y)
 	SetUIFloatAlt "MapMenu\_LMO+PlrZ" (Player.GetPos Z)
 	SetUIFloatAlt "MapMenu\_LMO+PlrAV6" (GetMaxOf 1 (GetMinOf 10 (Player.GetActorValue Perception)))
 	SetUIFloatAlt "MapMenu\_LMO+Deg" (ABS (GetCellNorthRotation (Player.GPC)))
-	
+
+	; Get global settings
 	iBitIcon = Goo1.AuxVarGetFlt "*LocalMap_INI" 0
-	iBitActor = Goo1.AuxVarGetFlt "*LocalMap_INI" 3
 	iName = Goo1.AuxVarGetFlt "*LocalMap_INI" 1
 	iDist = GetUIFloatAlt "MapMenu\_LMO+Dist"
-	
+
+	; Reset icons
 	UnloadUIComponent "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons"
 	AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow|Map_Icons|Map_Icons"
-	
+
+	; Actor icons
 	iTemp = Goo1.AuxVarGetFlt "*LocalMap_INI" 2
 	if iTemp > 0
+
+		; Build array of actor refs
 		if iTemp == 2
-			aRef = Player.GetRefs 43 2 1 iDist		; Creature
+			aRefs = Player.GetRefs 43 2 1 iDist
 		else
-			aRef = Player.GetRefs 42 2 1 iDist		; NPC
+			aRefs = Player.GetRefs 42 2 1 iDist
 			if iTemp == 3
-				aTemp = Player.GetRefs 43 2 1 iDist	; Creature
-				ar_Cat aRef aTemp	
+				aTemp = Player.GetRefs 43 2 1 iDist
+				ar_Cat aRefs aTemp
 			endif
 		endif
-		
-		if aRef
-			foreach aForE <- aRef																							; Loop through all processed actors
-				rRef = *aForE
-				if eval (IsFormValid rRef && rRef.GetDisabled == 0 && rRef.IsActorsAIOff == 0 && rRef.IsActorInvisibleToPlayer == 0 && rRef.GetPlayerTeammate == 0 && rRef.HasLoaded3D)
-					
-					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iTile
-					sUITile = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iTile
-					SetUIFloatAlt (sUITile + "\_PosX") (rRef.GetPos X)
-					SetUIFloatAlt (sUITile + "\_PosY") (rRef.GetPos Y)
-					SetUIFloatAlt (sUITile + "\_PosZ") (rRef.GetPos Z)
-					SetUIFloatAlt (sUITile + "\_DepthMod") 3
-					SetUIFloatAlt (sUITile + "\_Dist") (Player.GetDistance3D rRef)
-					SetUIStringAlt (sUITile + "\_Name") (rRef.LNGetName)
-					SetUIStringAlt (sUITile + "\_RefID") (GetFormIDString rRef)
-					
-					iTemp = rRef.GetDead
-					
-					if eval rRef.GetIsCreature
+		if aRefs
+
+			; Get actor settings
+			iBitMask = Goo1.AuxVarGetFlt "*LocalMap_INI" 3
+
+			; Process actor refs
+			foreach aForE <- aRefs
+				rIcon = *aForE
+				if eval IsFormValid rIcon && rIcon.GetDisabled == 0 && rIcon.IsActorsAIOff == 0 && rIcon.IsActorInvisibleToPlayer == 0 && rIcon.GetPlayerTeammate == 0 && rIcon.HasLoaded3D
+
+					; Add icon tile
+					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iIndex
+					sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iIndex
+					SetUIFloatAlt (sUIPath + "\_PosX") (rIcon.GetPos X)
+					SetUIFloatAlt (sUIPath + "\_PosY") (rIcon.GetPos Y)
+					SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
+					SetUIFloatAlt (sUIPath + "\_DepthMod") 3
+					SetUIFloatAlt (sUIPath + "\_Dist") (Player.GetDistance3D rIcon)
+					SetUIStringAlt (sUIPath + "\_Name") (rIcon.LNGetName)
+					SetUIStringAlt (sUIPath + "\_RefID") (GetFormIDString rIcon)
+					iIndex += 1
+
+					; Set hostility status and corpse visibility
+					iTemp = rIcon.GetDead
+
+					; Creature
+					if eval rIcon.GetIsCreature
 						if iTemp == 1
-							if eval GetBit iBitActor 1 && rRef.GetContainerInventoryCount == 0
-								SetUIFloatAlt (sUITile + "\visible") 0
+							if eval GetBit iBitMask 1 && rIcon.GetContainerInventoryCount == 0
+								SetUIFloatAlt (sUIPath + "\visible") 0
 							else
-								SetUIStringAlt (sUITile + "\filename") "interface\icons\Misc_Skull.dds"
+								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_Skull.dds"
 							endif
 						else
-							SetUIFloatAlt (sUITile + "\_Deg") (rRef.GetAngle Z)
-							SetUIFloatAlt (sUITile + "\_Hostile") (rRef.IsCompassHostile)
+							SetUIFloatAlt (sUIPath + "\_Deg") (rIcon.GetAngle Z)
+							SetUIFloatAlt (sUIPath + "\_Hostile") (rIcon.IsCompassHostile)
 						endif
+
+					; NPC
 					else
 						if iTemp == 1
-							if eval GetBit iBitActor 1 && rRef.GetContainerInventoryCount == 0
-								SetUIFloatAlt (sUITile + "\visible") 0
+							if eval GetBit iBitMask 1 && rIcon.GetContainerInventoryCount == 0
+								SetUIFloatAlt (sUIPath + "\visible") 0
 							else
-								SetUIStringAlt (sUITile + "\filename") "interface\icons\Misc_Skull.dds"
+								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_Skull.dds"
 							endif
-						elseif eval GetBit iBitActor 0 && rRef.GetMerchantContainer
-							if eval GetServiceFlag (rRef.gbo) 131072
-								SetUIStringAlt (sUITile + "\filename") "interface\icons\Aid_WeaponRepairKit.dds"
-							elseif eval rRef.GetIsClass Doctor
-								SetUIStringAlt (sUITile + "\filename") "interface\icons\Aid_DoctorBag.dds"
+
+						; Vendor icon
+						elseif eval GetBit iBitMask 0 && rIcon.GetMerchantContainer
+							if eval GetServiceFlag (rIcon.GBO) 131072
+								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Aid_WeaponRepairKit.dds"
+							elseif eval rIcon.GetIsClass Doctor
+								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Aid_DoctorBag.dds"
 							else
-								SetUIStringAlt (sUITile + "\filename") "interface\icons\Misc_BottleCap.dds"
+								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_BottleCap.dds"
 							endif
+
 						else
-							SetUIFloatAlt (sUITile + "\_Deg") (rRef.GetAngle Z)
-							SetUIFloatAlt (sUITile + "\_Hostile") (rRef.IsCompassHostile)
+							SetUIFloatAlt (sUIPath + "\_Deg") (rIcon.GetAngle Z)
+							SetUIFloatAlt (sUIPath + "\_Hostile") (rIcon.IsCompassHostile)
 						endif
+
+						; Display NPC name
 						if iName == 0
-							SetUIFloatAlt (sUITile + "\_ShowName") 0
+							SetUIFloatAlt (sUIPath + "\_ShowName") 0
 						elseif iName == 1 || (iName == 2 && iTemp == 0)
-							SetUIFloatAlt (sUITile + "\_ShowName") (rRef.GetTalkedToPC)
-						endif				
+							SetUIFloatAlt (sUIPath + "\_ShowName") (rIcon.GetTalkedToPC)
+						endif
+
 					endif
-					
-					iTile += 1
-					
 				endif
 			loop
 		endif
 	endif
 
-
-	aRef = Player.GetRefs 24 2 1 iDist	; Armor
+	; Item icons
+	; Build array of item refs
+	aRefs = Player.GetRefs 24 2 1 iDist	; Armor
 	aTemp = Player.GetRefs 31 2 1 iDist	; Misc
-	ar_Cat aRef aTemp	
+	ar_Cat aRefs aTemp
 	aTemp = Player.GetRefs 40 2 1 iDist	; Weapon
-	ar_Cat aRef aTemp	
+	ar_Cat aRefs aTemp
 	aTemp = Player.GetRefs 41 2 1 iDist	; Ammo
-	ar_Cat aRef aTemp	
+	ar_Cat aRefs aTemp
 	aTemp = Player.GetRefs 46 2 1 iDist	; Key
-	ar_Cat aRef aTemp	
+	ar_Cat aRefs aTemp
 	aTemp = Player.GetRefs 47 2 1 iDist	; Ingestible
-	ar_Cat aRef aTemp
+	ar_Cat aRefs aTemp
 	aTemp = Player.GetRefs 49 2 1 iDist	; Note
-	ar_Cat aRef aTemp
+	ar_Cat aRefs aTemp
 	aTemp = Player.GetRefs 103 2 1 iDist; Weapon Mod
-	ar_Cat aRef aTemp
+	ar_Cat aRefs aTemp
 	if eval GetBit iBitIcon 0
 		aTemp = Player.GetRefs 25 2 1 iDist	; Book
-		ar_Cat aRef aTemp
+		ar_Cat aRefs aTemp
 	endif
 	if eval GetBit iBitIcon 7
 		aTemp = Player.GetRefs 115 2 1 iDist; Caravan Card
-		ar_Cat aRef aTemp
+		ar_Cat aRefs aTemp
 	endif
-	
-	if aRef
-		foreach aForE <- aRef
-			rRef = *aForE
-			if eval (IsFormValid rRef && IsReference rRef && rRef.GetDisabled == 0 && rRef.HasLoaded3D)
-				iTemp = rRef.GetType
-				if eval HasKeyword rRef "LocalMapIcon" || (GetBit iBitIcon 4 && rRef.IsQuestItem) || (GetBit iBitIcon 3 && IsItemUnique (rRef.gbo)) || (GetBit iBitIcon 2 && iTemp == 46) || (GetBit iBitIcon 1 && iTemp == 49) || (GetBit iBitIcon 7 && iTemp == 115)
-					
-					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iTile
-					sUITile = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iTile
-					SetUIFloatAlt (sUITile + "\_PosX") (rRef.GetPos X)
-					SetUIFloatAlt (sUITile + "\_PosY") (rRef.GetPos Y)
-					SetUIFloatAlt (sUITile + "\_PosZ") (rRef.GetPos Z)
-					SetUIFloatAlt (sUITile + "\_Dist") (Player.GetDistance3D rRef)
-					SetUIStringAlt (sUITile + "\_Name") (rRef.LNGetName)
-					SetUIStringAlt (sUITile + "\_RefID") (GetFormIDString rRef)
-					SetUIStringAlt (sUITile + "\filename") (rRef.ySIGetTrait "filename")
-					iTile += 1
-					
-				endif	
-			endif
-		loop
-	endif
-	
-	
-	aRef = Player.GetRefs 21 2 1 iDist		; Activator
 
-	if aRef
-		foreach aForE <- aRef
-			rRef = *aForE
-			if eval IsFormValid rRef && IsReference rRef && rRef.GetDisabled == 0 && HasKeyword rRef "LocalMapIcon"
-				
-				AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iTile
-				sUITile = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iTile
-				SetUIFloatAlt (sUITile + "\_PosX") (rRef.GetPos X)
-				SetUIFloatAlt (sUITile + "\_PosY") (rRef.GetPos Y)
-				SetUIFloatAlt (sUITile + "\_PosZ") (rRef.GetPos Z)
-				SetUIFloatAlt (sUITile + "\_Dist") (Player.GetDistance3D rRef)
-				SetUIStringAlt (sUITile + "\_Name") (rRef.LNGetName)
-				SetUIStringAlt (sUITile + "\_RefID") (GetFormIDString rRef)
-				SetUIStringAlt (sUITile + "\filename") (rRef.ySIGetTrait "filename")
-				
-				;if eval GetBit iBitActor 1 && HasKeyword rRef "LocalMapIconNPC"
-				;	rTemp = GetAshPileSource
-				;	if eval IsFormValid rTemp && rTemp.GetContainerInventoryCount == 0
-				;		SetUIFloatAlt (sUITile + "\visible") 0
-				;	endif
-				;endif
-				
-				iTile += 1
-				
+	; Process item refs
+	if aRefs
+		foreach aForE <- aRefs
+			rIcon = *aForE
+			if eval (IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D)
+				iTemp = rIcon.GetType
+				if eval HasKeyword rIcon "LocalMapIcon" || (GetBit iBitIcon 4 && rIcon.IsQuestItem) || (GetBit iBitIcon 3 && IsItemUnique (rIcon.gbo)) || (GetBit iBitIcon 2 && iTemp == 46) || (GetBit iBitIcon 1 && iTemp == 49) || (GetBit iBitIcon 7 && iTemp == 115)
+
+					; Add icon tile
+					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iIndex
+					sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iIndex
+					SetUIFloatAlt (sUIPath + "\_PosX") (rIcon.GetPos X)
+					SetUIFloatAlt (sUIPath + "\_PosY") (rIcon.GetPos Y)
+					SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
+					SetUIFloatAlt (sUIPath + "\_Dist") (Player.GetDistance3D rIcon)
+					SetUIStringAlt (sUIPath + "\_Name") (rIcon.LNGetName)
+					SetUIStringAlt (sUIPath + "\_RefID") (GetFormIDString rIcon)
+					SetUIStringAlt (sUIPath + "\filename") (rIcon.ySIGetTrait "filename")
+					iIndex += 1
+
+				endif
 			endif
 		loop
 	endif
 
-	
+	; Activator icons
+	; Build array of activator refs
+	aRefs = Player.GetRefs 21 2 1 iDist
+
+	; Process activator refs
+	if aRefs
+		foreach aForE <- aRefs
+			rIcon = *aForE
+			if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && HasKeyword rIcon "LocalMapIcon"
+
+				; Add icon tile
+				AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iIndex
+				sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iIndex
+				SetUIFloatAlt (sUIPath + "\_PosX") (rIcon.GetPos X)
+				SetUIFloatAlt (sUIPath + "\_PosY") (rIcon.GetPos Y)
+				SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
+				SetUIFloatAlt (sUIPath + "\_Dist") (Player.GetDistance3D rIcon)
+				SetUIStringAlt (sUIPath + "\_Name") (rIcon.LNGetName)
+				SetUIStringAlt (sUIPath + "\_RefID") (GetFormIDString rIcon)
+				SetUIStringAlt (sUIPath + "\filename") (rIcon.ySIGetTrait "filename")
+				iIndex += 1
+
+			endif
+		loop
+	endif
+
+	; Projectile icons
 	if eval GetBit iBitIcon 5
-		
-		aRef = Player.GetRefs 51 2 1 iDist	; Projectile
-		if aRef
-			foreach aForE <- aRef
-				rRef = *aForE
-				if eval IsFormValid rRef && IsReference rRef && rRef.GetDisabled == 0 && rRef.GetMineArmed
-					
-					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iTile
-					sUITile = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iTile
-					SetUIFloatAlt (sUITile + "\_PosX") (rRef.GetPos X)
-					SetUIFloatAlt (sUITile + "\_PosY") (rRef.GetPos Y)
-					SetUIFloatAlt (sUITile + "\_PosZ") (rRef.GetPos Z)
-					SetUIFloatAlt (sUITile + "\_Dist") (Player.GetDistance3D rRef)
-					SetUIStringAlt (sUITile + "\_Name") (rRef.LNGetName)
-					SetUIStringAlt (sUITile + "\_RefID") (GetFormIDString rRef)
-					SetUIStringAlt (sUITile + "\filename") (rRef.ySIGetTrait "filename")
-					iTile += 1
-						
+
+		; Build array of projectile refs
+		aRefs = Player.GetRefs 51 2 1 iDist
+
+		; Process projectile refs
+		if aRefs
+			foreach aForE <- aRefs
+				rIcon = *aForE
+				if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.GetMineArmed
+
+					; Add icon tile
+					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iIndex
+					sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iIndex
+					SetUIFloatAlt (sUIPath + "\_PosX") (rIcon.GetPos X)
+					SetUIFloatAlt (sUIPath + "\_PosY") (rIcon.GetPos Y)
+					SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
+					SetUIFloatAlt (sUIPath + "\_Dist") (Player.GetDistance3D rIcon)
+					SetUIStringAlt (sUIPath + "\_Name") (rIcon.LNGetName)
+					SetUIStringAlt (sUIPath + "\_RefID") (GetFormIDString rIcon)
+					SetUIStringAlt (sUIPath + "\filename") (rIcon.ySIGetTrait "filename")
+					iIndex += 1
+
 				endif
 			loop
 		endif
-		
 	endif
 
-	if eval GetBit iBitIcon 9
-		
-		aRef = Player.GetRefs 28 2 1 iDist ; Door
-		if aRef
-
-			foreach aForE <- aRef
-				rRef = *aForE
-				if eval IsFormValid rRef && IsReference rRef && rRef.GetDisabled == 0 && rRef.GetTeleportDoor == 0 && rRef.GetLocked > 0
-					
-					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Door_Template|Icon%g" iTile
-					sUITile = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iTile
-					SetUIFloatAlt (sUITile + "\_PosX") (rRef.GetPos X)
-					SetUIFloatAlt (sUITile + "\_PosY") (rRef.GetPos Y)
-					SetUIFloatAlt (sUITile + "\_PosZ") (rRef.GetPos Z)
-					SetUIFloatAlt (sUITile + "\_Dist") (Player.GetDistance3D rRef)
-					SetUIStringAlt (sUITile + "\_RefID") (GetFormIDString rRef)
-	
-					if eval rRef.PlayerHasKey
-						SetUIStringAlt (sUITile + "\filename") "interface\Stentorious\LocalMapOverhaul\door_keychain.dds"
-						rTemp = rRef.GetOpenKey
-						sTemp = sv_Construct "%n%r[%n]" rRef rTemp
-						SetUIStringAlt (sUITile + "\_Name") (sTemp)
-					else
-						SetUIStringAlt (sUITile + "\filename") "interface\Stentorious\LocalMapOverhaul\door_bobby.dds"
-						
-						iTemp = (rRef.GetLockLevel) / 25
-						iLocked = rRef.GetLocked
-						
-						if eval iTemp > 4 || iLocked == 2
-							if eval iLocked == 2
-								sTemp = sv_Construct "%n%r%z" rRef (GetStringGameSetting sBroken)
-							else
-								sTemp = sv_Construct "%n%r[%z - %z]" rRef (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameImpossible)
-							endif
-							SetUIStringAlt (sUITile + "\filename") "interface\Stentorious\LocalMapOverhaul\door_blocked.dds"				
-						else
-							if iTemp == 0
-								sTemp = sv_Construct "%n%r[%z - %z]" rRef (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameVeryEasy)
-							elseif iTemp == 1
-								sTemp = sv_Construct "%n%r[%z - %z]" rRef (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameEasy)
-							elseif iTemp == 2
-								sTemp = sv_Construct "%n%r[%z - %z]" rRef (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameAverage)
-							elseif iTemp == 3
-								sTemp = sv_Construct "%n%r[%z - %z]" rRef (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameHard)
-							else
-								sTemp = sv_Construct "%n%r[%z - %z]" rRef (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameVeryHard)
-							endif						
-						endif
-						SetUIStringAlt (sUITile + "\_Name") (sTemp)
-					endif
-					
-					iTile += 1
-						
-				endif
-			loop
-
-			;iTemp = 0
-			;While GetUIFloatAlt ("MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:" + $iTemp + "\visible") != -999
-			;	SetUIFloatAlt ("MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:" + $iTemp + "\visible") 0
-			;	iTemp += 1
-			;loop
-			;
-			;foreach aForE <- aRef
-			;	rRef = *aForE
-			;	if eval (IsFormValid rRef && IsReference rRef && rRef.GetDisabled == 0)
-			;		
-			;		if eval rRef.GetLocked > 0
-			;		
-			;			AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iTile
-			;			sUITile = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iTile
-			;			SetUIFloatAlt (sUITile + "\_PosX") (rRef.GetPos X)
-			;			SetUIFloatAlt (sUITile + "\_PosY") (rRef.GetPos Y)
-			;			SetUIFloatAlt (sUITile + "\_PosZ") (rRef.GetPos Z)
-			;			SetUIFloatAlt (sUITile + "\_Dist") (Player.GetDistance3D rRef)
-			;			SetUIStringAlt (sUITile + "\_RefID") (GetFormIDString rRef)
-			;
-			;			if eval rRef.PlayerHasKey
-			;				SetUIStringAlt (sUITile + "\filename") "interface\Stentorious\LocalMapOverhaul\door_keychain.dds"
-			;				rTemp = rRef.GetOpenKey
-			;				rRef = rRef.GetTeleportCell
-			;				sTemp = sv_Construct "%n%r[%n]" rRef rTemp
-			;				SetUIStringAlt (sUITile + "\_Name") (sTemp)
-			;			else
-			;				SetUIStringAlt (sUITile + "\filename") "interface\Stentorious\LocalMapOverhaul\door_bobby.dds"
-			;				
-			;				iTemp = (rRef.GetLockLevel) / 25
-			;				iLocked = rRef.GetLocked
-			;				rTemp = rRef.GetTeleportCell
-			;				
-			;				if eval iTemp > 4 || iLocked == 2
-			;					if eval iLocked == 2
-			;						sTemp = sv_Construct "%n%r%z" rTemp (GetStringGameSetting sBroken)
-			;					else
-			;						sTemp = sv_Construct "%n%r[%z - %z]" rTemp (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameImpossible)
-			;					endif
-			;					SetUIStringAlt (sUITile + "\filename") "interface\Stentorious\LocalMapOverhaul\door_blocked.dds"				
-			;				else
-			;					if iTemp == 0
-			;						sTemp = sv_Construct "%n%r[%z - %z]" rTemp (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameVeryEasy)
-			;					elseif iTemp == 1
-			;						sTemp = sv_Construct "%n%r[%z - %z]" rTemp (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameEasy)
-			;					elseif iTemp == 2
-			;						sTemp = sv_Construct "%n%r[%z - %z]" rTemp (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameAverage)
-			;					elseif iTemp == 3
-			;						sTemp = sv_Construct "%n%r[%z - %z]" rTemp (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameHard)
-			;					else
-			;						sTemp = sv_Construct "%n%r[%z - %z]" rTemp (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameVeryHard)
-			;					endif						
-			;				endif
-			;				SetUIStringAlt (sUITile + "\_Name") (sTemp)
-			;			endif
-			;			
-			;			iTile += 1
-			;
-			;		elseif eval rRef.GetTeleportDoor
-			;		
-			;			AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iTile
-			;			sUITile = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iTile
-			;			SetUIFloatAlt (sUITile + "\_PosX") (rRef.GetPos X)
-			;			SetUIFloatAlt (sUITile + "\_PosY") (rRef.GetPos Y)
-			;			SetUIFloatAlt (sUITile + "\_PosZ") (rRef.GetPos Z)
-			;			SetUIFloatAlt (sUITile + "\_Dist") (Player.GetDistance3D rRef)
-			;			SetUIStringAlt (sUITile + "\_Name") (LNGetName (rRef.GetTeleportCell))
-			;			SetUIStringAlt (sUITile + "\_RefID") (GetFormIDString rRef)
-			;			
-			;			if eval Player.IsInInterior
-			;				rTemp = rRef.GetTeleportDoor
-			;				if eval IsFormValid rTemp == 0 || rTemp.IsInInterior
-			;					SetUIStringAlt (sUITile + "\filename") "interface\Stentorious\LocalMapOverhaul\door_enter.dds"
-			;				else
-			;					SetUIStringAlt (sUITile + "\filename") "interface\Stentorious\LocalMapOverhaul\door_exit.dds"
-			;				endif
-			;			else
-			;				SetUIStringAlt (sUITile + "\filename") "interface\Stentorious\LocalMapOverhaul\door_enter.dds"
-			;			endif
-			;
-			;			iTile += 1
-			;			
-			;		endif
-			;	endif
-			;loop
-			
-		endif
-		
-	endif
-
-	aRef = Player.GetRefs 27 2 1 iDist		; Container
+	; Lockable ref icons
+	; Build array of lockable refs
+	aRefs = Player.GetRefs 27 2 1 iDist	; Container
 	if eval GetBit iBitIcon 8
 		aTemp = Player.GetRefs 23 2 1 iDist ; Terminal
-		ar_Cat aRef aTemp
+		ar_Cat aRefs aTemp
 	endif
-	
-	if aRef
-		foreach aForE <- aRef
-			rRef = *aForE
-			if eval (IsFormValid rRef && IsReference rRef && rRef.GetDisabled == 0)
-				if eval (GetBit iBitIcon 6 || GetBit iBitIcon 8) && rRef.GetLocked > 0
-				
-					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iTile
-					sUITile = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iTile
-					SetUIFloatAlt (sUITile + "\_PosX") (rRef.GetPos X)
-					SetUIFloatAlt (sUITile + "\_PosY") (rRef.GetPos Y)
-					SetUIFloatAlt (sUITile + "\_PosZ") (rRef.GetPos Z)
-					SetUIFloatAlt (sUITile + "\_Dist") (Player.GetDistance3D rRef)
-					SetUIStringAlt (sUITile + "\_RefID") (GetFormIDString rRef)
+	if eval GetBit iBitIcon 9
+		aTemp = Player.GetRefs 28 2 1 iDist ; Door
+		ar_Cat aRefs aTemp
+	endif
 
-					if eval rRef.PlayerHasKey
-						SetUIStringAlt (sUITile + "\filename") "interface\icons\Misc_Keychain.dds"
-						rTemp = rRef.GetOpenKey
-						sTemp = sv_Construct "%n%r[%n]" rRef rTemp
-						SetUIStringAlt (sUITile + "\_Name") (sTemp)
+	; Process lockable refs
+	if aRefs
+		foreach aForE <- aRefs
+			rIcon = *aForE
+			if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0
+				if eval (GetBit iBitIcon 6 || GetBit iBitIcon 8 || GetBit iBitIcon 9) && rIcon.GetLocked > 0 && rIcon.GetTeleportDoor == 0
+
+					; Add icon tile
+					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iIndex
+					sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iIndex
+					SetUIFloatAlt (sUIPath + "\_PosX") (rIcon.GetPos X)
+					SetUIFloatAlt (sUIPath + "\_PosY") (rIcon.GetPos Y)
+					SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
+					SetUIFloatAlt (sUIPath + "\_Dist") (Player.GetDistance3D rIcon)
+					SetUIStringAlt (sUIPath + "\_RefID") (GetFormIDString rIcon)
+					iIndex += 1
+
+					; Has key
+					if eval rIcon.PlayerHasKey
+						SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_Keychain.dds"
+						rTemp = rIcon.GetOpenKey
+						sTemp = sv_Construct "%n%r[%n]" rIcon rTemp
+						SetUIStringAlt (sUIPath + "\_Name") (sTemp)
+
+					; Locked
 					else
-						SetUIStringAlt (sUITile + "\filename") "interface\icons\Misc_BobbyPin.dds"
-						
-						iTemp = rRef.GetLockLevel
-						if rRef.GetType == 27
+						iTemp = rIcon.GetLockLevel
+						if rIcon.GetType == 27
 							iTemp /= 25
 						endif
-						iLocked = rRef.GetLocked
-						
+
+						; Requires key
+						iLocked = rIcon.GetLocked
 						if eval iTemp > 4 || iLocked == 2
 							if eval iLocked == 2
-								sTemp = sv_Construct "%n%r%z" rRef (GetStringGameSetting sBroken)
+								sTemp = sv_Construct "%n%r%z" rIcon (GetStringGameSetting sBroken)
 							else
-								sTemp = sv_Construct "%n%r[%z - %z]" rRef (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameImpossible)
+								sTemp = sv_Construct "%n%r[%z - %z]" rIcon (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameImpossible)
 							endif
-							SetUIStringAlt (sUITile + "\filename") "interface\icons\Misc_Key.dds"					
+							SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_Key.dds"
+
+						; Pickable
 						else
 							if iTemp == 0
-								sTemp = sv_Construct "%n%r[%z - %z]" rRef (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameVeryEasy)
+								sTemp = sv_Construct "%n%r[%z - %z]" rIcon (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameVeryEasy)
 							elseif iTemp == 1
-								sTemp = sv_Construct "%n%r[%z - %z]" rRef (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameEasy)
+								sTemp = sv_Construct "%n%r[%z - %z]" rIcon (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameEasy)
 							elseif iTemp == 2
-								sTemp = sv_Construct "%n%r[%z - %z]" rRef (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameAverage)
+								sTemp = sv_Construct "%n%r[%z - %z]" rIcon (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameAverage)
 							elseif iTemp == 3
-								sTemp = sv_Construct "%n%r[%z - %z]" rRef (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameHard)
+								sTemp = sv_Construct "%n%r[%z - %z]" rIcon (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameHard)
 							else
-								sTemp = sv_Construct "%n%r[%z - %z]" rRef (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameVeryHard)
-							endif						
+								sTemp = sv_Construct "%n%r[%z - %z]" rIcon (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameVeryHard)
+							endif
+							SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_BobbyPin.dds"
+
 						endif
-						SetUIStringAlt (sUITile + "\_Name") (sTemp)
+
+						SetUIStringAlt (sUIPath + "\_Name") (sTemp)
+
 					endif
-					
-					if rRef.GetType == 23
-						SetUIStringAlt (sUITile + "\filename") (rRef.ySIGetTrait "filename")
+
+					; Terminal
+					if rIcon.GetType == 23
+						SetUIStringAlt (sUIPath + "\filename") (rIcon.ySIGetTrait "filename")
 					endif
-					
-					iTile += 1
-	
-				elseif eval HasKeyword rRef "LocalMapIcon" || rRef.GetType == 23
-				
-					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iTile
-					sUITile = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iTile
-					SetUIFloatAlt (sUITile + "\_PosX") (rRef.GetPos X)
-					SetUIFloatAlt (sUITile + "\_PosY") (rRef.GetPos Y)
-					SetUIFloatAlt (sUITile + "\_PosZ") (rRef.GetPos Z)
-					SetUIFloatAlt (sUITile + "\_Dist") (Player.GetDistance3D rRef)
-					SetUIStringAlt (sUITile + "\_Name") (rRef.LNGetName)
-					SetUIStringAlt (sUITile + "\_RefID") (GetFormIDString rRef)
-					SetUIStringAlt (sUITile + "\filename") (rRef.ySIGetTrait "filename")				
-					iTile += 1
+
+				elseif eval HasKeyword rIcon "LocalMapIcon" || rIcon.GetType == 23
+
+					; Add icon tile
+					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iIndex
+					sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iIndex
+					SetUIFloatAlt (sUIPath + "\_PosX") (rIcon.GetPos X)
+					SetUIFloatAlt (sUIPath + "\_PosY") (rIcon.GetPos Y)
+					SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
+					SetUIFloatAlt (sUIPath + "\_Dist") (Player.GetDistance3D rIcon)
+					SetUIStringAlt (sUIPath + "\_Name") (rIcon.LNGetName)
+					SetUIStringAlt (sUIPath + "\_RefID") (GetFormIDString rIcon)
+					SetUIStringAlt (sUIPath + "\filename") (rIcon.ySIGetTrait "filename")
+					iIndex += 1
+
 				endif
 			endif
 		loop
 	endif
 
-	sv_Destruct sUITile sTemp
-	aRef = aTemp = aForE = ar_Null
-	
+	sv_Destruct sUIPath sTemp
+	aRefs = aTemp = aForE = ar_Null
+
 end

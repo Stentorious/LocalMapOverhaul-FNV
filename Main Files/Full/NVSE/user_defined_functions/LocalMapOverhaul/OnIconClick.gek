@@ -1,33 +1,36 @@
 int	iMenuID
 int	iTileID
 int	iType
-int iBitExtra
-ref rRef
-ref rTemp
-string_var sUITile
+int iBitMask
+ref rIcon
+string_var sUIPath
 
-begin Function {iMenuID, iTileID, sUITile}
+begin Function {iMenuID, iTileID, sUIPath}
 
-	sUITile = GetActiveUIComponentFullName						; Get active tile path
-	if GetUIFloatAlt (sUITile + "\_ShowName") == 1				; If name should be visible
-		rRef = StringToRef (GetUIString (sUITile + "\_RefID"))	; Get icon ref
-		Goo1.AuxVarSetRef "*LocalMap_Ref" rRef
-		iType = rRef.GetType
-		iBitExtra = Goo1.AuxVarGetFlt "*LocalMap_INI" 4
-		if eval iType == 23 && rRef.GetLocked < 2 && (GetBit iBitExtra 0 || (GetBit iBitExtra 1 && Player.HasPerk ComputerWhiz))
-			
-			MessageBoxExAlt (begin function {int iButton} 
+	; Clickable icon functionality
+	sUIPath = GetActiveUIComponentFullName
+	if GetUIFloatAlt (sUIPath + "\_ShowName") == 1
+
+		rIcon = StringToRef (GetUIString (sUIPath + "\_RefID"))
+		Goo1.AuxVarSetRef "*LocalMap_Ref" rIcon
+		iType = rIcon.GetType
+		iBitMask = Goo1.AuxVarGetFlt "*LocalMap_INI" 4
+
+		; Display remote terminal access message box
+		if eval iType == 23 && rIcon.GetLocked < 2 && (GetBit iBitMask 0 || (GetBit iBitMask 1 && Player.HasPerk ComputerWhiz))
+			MessageBoxExAlt (begin function {int iButton}
 				if iButton == 0
-					rTemp = Goo1.AuxVarGetRef "*LocalMap_Ref"
-					rTemp.Activate Player
-					if eval rTemp.GetLocked == 0 || (rTemp.GetLocked && ((rTemp.GetLockLevel) * 25) <= Player.GetAV Science)
+					rIcon = Goo1.AuxVarGetRef "*LocalMap_Ref"
+					rIcon.Activate Player
+					if eval rIcon.GetLocked == 0 || (rIcon.GetLocked && ((rIcon.GetLockLevel) * 25) <= Player.GetAV Science)
 						TogglePipBoy
 					endif
 				endif
-			end) "^Remote Access^Access %n?|%z|%z" rRef (GetStringGameSetting sOk) (GetStringGameSetting sCancel)
-			
+			end) "^Remote Access^Access %n?|%z|%z" rIcon (GetStringGameSetting sOk) (GetStringGameSetting sCancel)
 		endif
+
 	endif
-	sv_Destruct sUITile
+
+	sv_Destruct sUIPath
 
 end

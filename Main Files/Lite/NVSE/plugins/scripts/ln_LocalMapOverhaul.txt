@@ -1,12 +1,15 @@
 ; Local Map Overhaul Lite 1.4 - Stentorious
+
+; On game restart
 if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
-	Goo1.AuxVarSetFlt "*LocalMap_Init" 1
+	Goo1.AuxVarSetFlt "*LocalMap_Init" 1 0
+
 	; Check for requirements
 	if GetNVSEVersion > 5 && GetNVSERevision > 2 && GetNVSEBeta > 2
 	else
 		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall xNVSE 6.3.3+."
 		return
-	endif 
+	endif
 	if GetPluginVersion "JohnnyGuitarNVSE" < 390
 		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest JohnnyGuitar NVSE plugin."
 		return
@@ -15,10 +18,15 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest ShowOff NVSE plugin."
 		return
 	endif
+	if GetPluginVersion "UI Organizer Plugin" < 230
+		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest User Interface Organizer plugin."
+		return
+	endif
+	Goo1.AuxVarSetFlt "*LocalMap_Init" 1 1
 
+	; Global icon settings
 	SetUIFloatAlt "MapMenu\_LMO+Dist" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat "General:fIconRadius" "Stentorious\LocalMapOverhaul.ini"))) * 69.99104)
 	SetNumericGameSetting "fSeenDataUpdateRadius" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat "General:fFogOfWarRadius" "Stentorious\LocalMapOverhaul.ini"))) * 69.99104)
-	
 	if GetINIFloat "General:bPerceptionCalc" "Stentorious\LocalMapOverhaul.ini" == 1
 		SetUIFloatAlt "MapMenu\_LMO+DistMode" 1
 		SetOnActorValueChangeEventHandler 1 ({int iAVCode, float fOldValue, float fNewValue} => SetUIFloatAlt "MapMenu\_LMO+PlrAV6" (GetMaxOf 1 (GetMinOf 10 (Player.GetActorValue Perception)))) 0 6
@@ -30,26 +38,20 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 		SetUIFloatAlt "MapMenu\_LMO+Fade" 1
 	endif
 
+	; Actor settings
+	if GetINIFloat "Actors:bHostileColor" "Stentorious\LocalMapOverhaul.ini" == 1
+		SetUIFloatAlt "MapMenu\_LMO+Color2" 2
+	endif
 	Goo1.AuxVarSetFlt "*LocalMap_INI" 0 0
 	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat "Actors:iNameVisibility" "Stentorious\LocalMapOverhaul.ini"))) 1
 	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat "Actors:iMode" "Stentorious\LocalMapOverhaul.ini"))) 2
 	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetINIFloat "Actors:bHideEmptyCorpses" "Stentorious\LocalMapOverhaul.ini") 3
-	
-	if GetINIFloat "Actors:bHostileColor" "Stentorious\LocalMapOverhaul.ini" == 1
-		SetUIFloatAlt "MapMenu\_LMO+Color2" 2
-	endif
 
 endif
 
-; Check for requirements
-if GetNVSEVersion > 5 && GetNVSERevision > 2 && GetNVSEBeta > 2
-else
-	return
-endif 
-if eval GetPluginVersion "JohnnyGuitarNVSE" < 390 || GetPluginVersion "ShowOffNVSE Plugin" < 180
-	return
+; On game load
+if Goo1.AuxVarGetFlt "*LocalMap_Init" 1 == 1
+	SetOnMenuOpenEventHandler (CompileScript "LocalMapOverhaul\OnMenuOpen1023.gek") 1 1023
+	SetOnMouseoverChangeEventHandler (CompileScript "LocalMapOverhaul\OnMouseover1023.gek") 1 1023
+	SetOnMenuClickEventHandler (CompileScript "LocalMapOverhaul\OnIconClick.gek") 1 "MapMenu#50"
 endif
-
-SetOnMenuOpenEventHandler (CompileScript "LocalMapOverhaul\OnMenuOpen1023.gek") 1 1023	
-SetOnMouseoverChangeEventHandler (CompileScript "LocalMapOverhaul\OnMouseover1023.gek") 1 1023
-SetOnMenuClickEventHandler (CompileScript "LocalMapOverhaul\OnIconClick.gek") 1 "MapMenu#50"

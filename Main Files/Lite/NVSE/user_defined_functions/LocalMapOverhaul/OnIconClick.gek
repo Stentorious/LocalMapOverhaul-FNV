@@ -1,14 +1,16 @@
 int	iMenuID
 int	iTileID
 ref rIcon
-string_var sUITile
+string_var sUIPath
 
-begin Function {iMenuID, iTileID, sUITile}
+begin Function {iMenuID, iTileID, sUIPath}
 
-	sUITile = GetActiveUIComponentFullName						; Get active tile path
-	if GetUIFloatAlt (sUITile + "\_ShowName") == 1				; If name should be visible
-		rIcon = StringToRef (GetUIString (sUITile + "\_RefID"))	; Get icon ref
+	; Clickable icon functionality
+	sUIPath = GetActiveUIComponentFullName
+	if GetUIFloatAlt (sUIPath + "\_ShowName") == 1
+		rIcon = StringToRef (GetUIString (sUIPath + "\_RefID"))
 	endif
-	sv_Destruct sUITile
+
+	sv_Destruct sUIPath
 
 end
