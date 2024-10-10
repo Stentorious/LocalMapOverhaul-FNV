@@ -141,8 +141,13 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 		endif
 		if eval IsModLoaded "LonesomeRoad.esm"
 			AssignKeyword (EditorIDToFormID "NVDLC04Snowglobe") "LocalMapIcon"
-			AssignKeyword (EditorIDToFormID "NVDLC04Warhead") "LocalMapIcon"
 			AssignKeyword (EditorIDToFormID "NVDLC04RALPHIEPosterActivator") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC04Warhead") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC04DivideBldgWarhead") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC04DivideDeathclawWarhead") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC04DivideSniperWarhead01") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC04DivideSniperWarhead02") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC04DivideSniperWarhead03") "LocalMapIcon"
 		endif
 		if eval IsModLoaded "TaleOfTwoWastelands.esm"
 			AssignKeyword (EditorIDToFormID "BobbleheadAGL") "LocalMapIcon"
