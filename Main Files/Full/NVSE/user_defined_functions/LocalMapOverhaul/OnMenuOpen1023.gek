@@ -1,4 +1,5 @@
 int	iMenuID
+
 int	iIndex
 int	iDist
 int	iName
@@ -6,6 +7,9 @@ int iLocked
 int	iTemp
 int	iBitIcon
 int	iBitMask
+float fPosX
+float fPosY
+float fPosZ
 ref rIcon
 ref rTemp
 array_var aRefs
@@ -59,9 +63,13 @@ begin Function {iMenuID}
 					; Add icon tile
 					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iIndex
 					sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iIndex
-					SetUIFloatAlt (sUIPath + "\_PosX") (rIcon.GetPos X)
-					SetUIFloatAlt (sUIPath + "\_PosY") (rIcon.GetPos Y)
-					SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
+					fPosX = rIcon.GetPos X
+					fPosY = rIcon.GetPos Y
+					fPosZ = rIcon.GetPos Z
+					SetUIFloatAlt (sUIPath + "\_PosX") fPosX
+					SetUIFloatAlt (sUIPath + "\_PosY") fPosY
+					SetUIFloatAlt (sUIPath + "\_PosZ") fPosZ
+					SetUIFloatAlt (sUIPath + "\_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
 					SetUIFloatAlt (sUIPath + "\_DepthMod") 3
 					SetUIFloatAlt (sUIPath + "\_Dist") (Player.GetDistance3D rIcon)
 					SetUIStringAlt (sUIPath + "\_Name") (rIcon.LNGetName)
@@ -158,9 +166,13 @@ begin Function {iMenuID}
 					; Add icon tile
 					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iIndex
 					sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iIndex
-					SetUIFloatAlt (sUIPath + "\_PosX") (rIcon.GetPos X)
-					SetUIFloatAlt (sUIPath + "\_PosY") (rIcon.GetPos Y)
-					SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
+					fPosX = rIcon.GetPos X
+					fPosY = rIcon.GetPos Y
+					fPosZ = rIcon.GetPos Z
+					SetUIFloatAlt (sUIPath + "\_PosX") fPosX
+					SetUIFloatAlt (sUIPath + "\_PosY") fPosY
+					SetUIFloatAlt (sUIPath + "\_PosZ") fPosZ
+					SetUIFloatAlt (sUIPath + "\_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
 					SetUIFloatAlt (sUIPath + "\_Dist") (Player.GetDistance3D rIcon)
 					SetUIStringAlt (sUIPath + "\_Name") (rIcon.LNGetName)
 					SetUIStringAlt (sUIPath + "\_RefID") (GetFormIDString rIcon)
@@ -185,9 +197,13 @@ begin Function {iMenuID}
 				; Add icon tile
 				AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iIndex
 				sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iIndex
-				SetUIFloatAlt (sUIPath + "\_PosX") (rIcon.GetPos X)
-				SetUIFloatAlt (sUIPath + "\_PosY") (rIcon.GetPos Y)
-				SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
+				fPosX = rIcon.GetPos X
+				fPosY = rIcon.GetPos Y
+				fPosZ = rIcon.GetPos Z
+				SetUIFloatAlt (sUIPath + "\_PosX") fPosX
+				SetUIFloatAlt (sUIPath + "\_PosY") fPosY
+				SetUIFloatAlt (sUIPath + "\_PosZ") fPosZ
+				SetUIFloatAlt (sUIPath + "\_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
 				SetUIFloatAlt (sUIPath + "\_Dist") (Player.GetDistance3D rIcon)
 				SetUIStringAlt (sUIPath + "\_Name") (rIcon.LNGetName)
 				SetUIStringAlt (sUIPath + "\_RefID") (GetFormIDString rIcon)
@@ -213,9 +229,13 @@ begin Function {iMenuID}
 					; Add icon tile
 					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iIndex
 					sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iIndex
-					SetUIFloatAlt (sUIPath + "\_PosX") (rIcon.GetPos X)
-					SetUIFloatAlt (sUIPath + "\_PosY") (rIcon.GetPos Y)
-					SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
+					fPosX = rIcon.GetPos X
+					fPosY = rIcon.GetPos Y
+					fPosZ = rIcon.GetPos Z
+					SetUIFloatAlt (sUIPath + "\_PosX") fPosX
+					SetUIFloatAlt (sUIPath + "\_PosY") fPosY
+					SetUIFloatAlt (sUIPath + "\_PosZ") fPosZ
+					SetUIFloatAlt (sUIPath + "\_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
 					SetUIFloatAlt (sUIPath + "\_Dist") (Player.GetDistance3D rIcon)
 					SetUIStringAlt (sUIPath + "\_Name") (rIcon.LNGetName)
 					SetUIStringAlt (sUIPath + "\_RefID") (GetFormIDString rIcon)
@@ -249,9 +269,13 @@ begin Function {iMenuID}
 					; Add icon tile
 					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iIndex
 					sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iIndex
-					SetUIFloatAlt (sUIPath + "\_PosX") (rIcon.GetPos X)
-					SetUIFloatAlt (sUIPath + "\_PosY") (rIcon.GetPos Y)
-					SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
+					fPosX = rIcon.GetPos X
+					fPosY = rIcon.GetPos Y
+					fPosZ = rIcon.GetPos Z
+					SetUIFloatAlt (sUIPath + "\_PosX") fPosX
+					SetUIFloatAlt (sUIPath + "\_PosY") fPosY
+					SetUIFloatAlt (sUIPath + "\_PosZ") fPosZ
+					SetUIFloatAlt (sUIPath + "\_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
 					SetUIFloatAlt (sUIPath + "\_Dist") (Player.GetDistance3D rIcon)
 					SetUIStringAlt (sUIPath + "\_RefID") (GetFormIDString rIcon)
 					iIndex += 1
@@ -311,9 +335,13 @@ begin Function {iMenuID}
 					; Add icon tile
 					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iIndex
 					sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iIndex
-					SetUIFloatAlt (sUIPath + "\_PosX") (rIcon.GetPos X)
-					SetUIFloatAlt (sUIPath + "\_PosY") (rIcon.GetPos Y)
-					SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
+					fPosX = rIcon.GetPos X
+					fPosY = rIcon.GetPos Y
+					fPosZ = rIcon.GetPos Z
+					SetUIFloatAlt (sUIPath + "\_PosX") fPosX
+					SetUIFloatAlt (sUIPath + "\_PosY") fPosY
+					SetUIFloatAlt (sUIPath + "\_PosZ") fPosZ
+					SetUIFloatAlt (sUIPath + "\_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
 					SetUIFloatAlt (sUIPath + "\_Dist") (Player.GetDistance3D rIcon)
 					SetUIStringAlt (sUIPath + "\_Name") (rIcon.LNGetName)
 					SetUIStringAlt (sUIPath + "\_RefID") (GetFormIDString rIcon)

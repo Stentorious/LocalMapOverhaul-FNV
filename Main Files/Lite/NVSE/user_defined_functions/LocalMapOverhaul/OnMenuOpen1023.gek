@@ -1,10 +1,14 @@
 int	iMenuID
+
 int	iIndex
 int	iDist
 int	iName
 int	iCorpse
 int	iTemp
-ref rActor
+float fPosX
+float fPosY
+float fPosZ
+ref rIcon
 ref rTemp
 array_var aActors
 array_var aForE
@@ -49,51 +53,55 @@ begin Function {iMenuID}
 
 			; Process actor refs
 			foreach aForE <- aActors
-				rActor = *aForE
-				if eval IsFormValid rActor && rActor.GetDisabled == 0 && rActor.IsActorsAIOff == 0 && rActor.IsActorInvisibleToPlayer == 0 && rActor.GetPlayerTeammate == 0 && rActor.HasLoaded3D
+				rIcon = *aForE
+				if eval IsFormValid rIcon && rIcon.GetDisabled == 0 && rIcon.IsActorsAIOff == 0 && rIcon.IsActorInvisibleToPlayer == 0 && rIcon.GetPlayerTeammate == 0 && rIcon.HasLoaded3D
 
 					; Add icon tile
 					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iIndex
 					sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iIndex
-					SetUIFloatAlt (sUIPath + "\_PosX") (rActor.GetPos X)
-					SetUIFloatAlt (sUIPath + "\_PosY") (rActor.GetPos Y)
-					SetUIFloatAlt (sUIPath + "\_PosZ") (rActor.GetPos Z)
+					fPosX = rIcon.GetPos X
+					fPosY = rIcon.GetPos Y
+					fPosZ = rIcon.GetPos Z
+					SetUIFloatAlt (sUIPath + "\_PosX") fPosX
+					SetUIFloatAlt (sUIPath + "\_PosY") fPosY
+					SetUIFloatAlt (sUIPath + "\_PosZ") fPosZ
+					SetUIFloatAlt (sUIPath + "\_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
 					SetUIFloatAlt (sUIPath + "\_DepthMod") 3
-					SetUIFloatAlt (sUIPath + "\_Dist") (Player.GetDistance3D rActor)
-					SetUIStringAlt (sUIPath + "\_Name") (rActor.LNGetName)
-					SetUIStringAlt (sUIPath + "\_RefID") (GetFormIDString rActor)
+					SetUIFloatAlt (sUIPath + "\_Dist") (Player.GetDistance3D rIcon)
+					SetUIStringAlt (sUIPath + "\_Name") (rIcon.LNGetName)
+					SetUIStringAlt (sUIPath + "\_RefID") (GetFormIDString rIcon)
 					iIndex += 1
 
 					; Set hostility status and corpse visibility
-					iTemp = rActor.GetDead
-					if eval rActor.GetIsCreature
+					iTemp = rIcon.GetDead
+					if eval rIcon.GetIsCreature
 						if iTemp == 1
-							if eval iCorpse == 1 && rActor.GetContainerInventoryCount == 0
+							if eval iCorpse == 1 && rIcon.GetContainerInventoryCount == 0
 								SetUIFloatAlt (sUIPath + "\visible") 0
 							else
 								SetUIStringAlt (sUIPath + "\filename") "Interface\Stentorious\LocalMapOverhaul\ActorDead.dds"
 							endif
 						else
-							SetUIFloatAlt (sUIPath + "\_Deg") (rActor.GetAngle Z)
-							SetUIFloatAlt (sUIPath + "\_Hostile") (rActor.IsCompassHostile)
+							SetUIFloatAlt (sUIPath + "\_Deg") (rIcon.GetAngle Z)
+							SetUIFloatAlt (sUIPath + "\_Hostile") (rIcon.IsCompassHostile)
 						endif
 					else
 						if iTemp == 1
-							if eval iCorpse == 1 && rActor.GetContainerInventoryCount == 0
+							if eval iCorpse == 1 && rIcon.GetContainerInventoryCount == 0
 								SetUIFloatAlt (sUIPath + "\visible") 0
 							else
 								SetUIStringAlt (sUIPath + "\filename") "Interface\Stentorious\LocalMapOverhaul\ActorDead.dds"
 							endif
 						else
-							SetUIFloatAlt (sUIPath + "\_Deg") (rActor.GetAngle Z)
-							SetUIFloatAlt (sUIPath + "\_Hostile") (rActor.IsCompassHostile)
+							SetUIFloatAlt (sUIPath + "\_Deg") (rIcon.GetAngle Z)
+							SetUIFloatAlt (sUIPath + "\_Hostile") (rIcon.IsCompassHostile)
 						endif
 
 						; Display NPC name
 						if iName == 0
 							SetUIFloatAlt (sUIPath + "\_ShowName") 0
 						elseif iName == 1 || (iName == 2 && iTemp == 0)
-							SetUIFloatAlt (sUIPath + "\_ShowName") (rActor.GetTalkedToPC)
+							SetUIFloatAlt (sUIPath + "\_ShowName") (rIcon.GetTalkedToPC)
 						endif
 
 					endif

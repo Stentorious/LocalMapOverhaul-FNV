@@ -1,4 +1,4 @@
-; Local Map Overhaul Full 1.4 - Stentorious
+; Local Map Overhaul Full 1.5 - Stentorious
 
 ; On game restart
 if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
@@ -33,6 +33,7 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 	Goo1.AuxVarSetFlt "*LocalMap_Init" 1 1
 
 	; Global icon settings
+	SetUIFloatAlt "MapMenu\_LMO+SeenData" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "General:bRespectFogOfWar" "Stentorious\LocalMapOverhaul.ini")))
 	SetUIFloatAlt "MapMenu\_LMO+Dist" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat "General:fIconRadius" "Stentorious\LocalMapOverhaul.ini"))) * 69.99104)
 	SetNumericGameSetting "fSeenDataUpdateRadius" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat "General:fFogOfWarRadius" "Stentorious\LocalMapOverhaul.ini"))) * 69.99104)
 	if GetINIFloat "General:bPerceptionCalc" "Stentorious\LocalMapOverhaul.ini" == 1

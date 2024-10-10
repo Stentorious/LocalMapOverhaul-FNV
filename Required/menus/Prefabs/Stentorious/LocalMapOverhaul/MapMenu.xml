@@ -1,5 +1,6 @@
 <_LMO+Dist> 0 </_LMO+Dist>
 <_LMO+DistMode> 0 </_LMO+DistMode>
+<_LMO+SeenData> 0 </_LMO+SeenData>
 <_LMO+Deg> 0 </_LMO+Deg>
 <_LMO+Fade> 0 </_LMO+Fade>
 <_LMO+Focus> 0 </_LMO+Focus>
@@ -107,6 +108,7 @@
 		<_ShowName> 1 </_ShowName>
 		<_RefID> 0 </_RefID>
 		<_DepthMod> 0 </_DepthMod>
+		<_SeenData> 0 </_SeenData>
 		<_PosXOffset>
 			<copy src="me()" trait="_PosX" />
 			<sub src="io()" trait="_LMO+PlrX" />
@@ -172,7 +174,13 @@
 			<visible> <copy src="parent()" trait="visible" /> </visible>
 			<alpha>
 				<copy> 0 </copy>
-				<add>255</add>
+				<add>
+					<copy> 255 </copy>
+					<mul>
+						<copy src="parent()" trait="_SeenData" />
+						<onlyif src="io()" trait="_LMO+SeenData" />
+					</mul>
+				</add>
 				<sub>
 					<copy src="parent()" trait="_Dist" />
 					<pow> 6 </pow>
