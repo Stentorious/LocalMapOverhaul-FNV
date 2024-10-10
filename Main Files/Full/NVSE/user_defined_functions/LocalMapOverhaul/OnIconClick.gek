@@ -1,9 +1,10 @@
 int	iMenuID
 int	iTileID
+string_var sUIPath
+
 int	iType
 int iBitMask
 ref rIcon
-string_var sUIPath
 
 begin Function {iMenuID, iTileID, sUIPath}
 

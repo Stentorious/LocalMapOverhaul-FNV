@@ -1,4 +1,5 @@
 int	iMenuID
+
 string_var sUIPath
 
 begin Function {iMenuID}
