@@ -68,6 +68,8 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 			AssignKeyword (EditorIDToFormID "NVDLC03HotPlate") "LocalMapIcon"
 		endif
 		if eval IsModLoaded "TaleOfTwoWastelands.esm"
+			AssignKeyword (EditorIDToFormID "TTWDLC05ControlWB") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "TTWDLC05ControlRB") "LocalMapIcon"
 			AssignKeyword (EditorIDToFormID "TTWCampGrillCrafting01") "LocalMapIcon"
 			AssignKeyword (EditorIDToFormID "TTWGrillBBQDirtyCrafting") "LocalMapIcon"
 			AssignKeyword (EditorIDToFormID "TTWGrillBBQCleanCrafting") "LocalMapIcon"
@@ -177,11 +179,20 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 		iBitMask += 128
 	endif
 
+	; Assign keywords (Quest)
+	if GetINIFloat "Icons:bQuest" "Stentorious\LocalMapOverhaul.ini" == 1
+		;if eval IsModLoaded "TaleOfTwoWastelands.esm"
+		;	AssignKeyword (EditorIDToFormID "MegatonPipeJointY01ACT") "LocalMapIcon"
+		;	AssignKeyword (EditorIDToFormID "MegatonPipeStraightRegSmlACT") "LocalMapIcon"
+		;	AssignKeyword (EditorIDToFormID "MegatonPipeJointLrgToLrgACT") "LocalMapIcon"
+		;endif
+		iBitMask += 16
+	endif
+
 	; Icon visibility bitmask
 	iBitMask += 2 * (eval (GetINIFloat "Icons:bNote" "Stentorious\LocalMapOverhaul.ini" == 1))
 	iBitMask += 4 * (eval (GetINIFloat "Icons:bKey" "Stentorious\LocalMapOverhaul.ini" == 1))
 	iBitMask += 8 * (eval (GetINIFloat "Icons:bUnique" "Stentorious\LocalMapOverhaul.ini" == 1))
-	iBitMask += 16 * (eval (GetINIFloat "Icons:bQuest" "Stentorious\LocalMapOverhaul.ini" == 1))
 	iBitMask += 32 * (eval (GetINIFloat "Icons:bMine" "Stentorious\LocalMapOverhaul.ini" == 1))
 	iBitMask += 64 * (eval (GetINIFloat "Icons:bLockedContainer" "Stentorious\LocalMapOverhaul.ini" == 1))
 	iBitMask += 256 * (eval (GetINIFloat "Icons:bTerminal" "Stentorious\LocalMapOverhaul.ini" == 1))
