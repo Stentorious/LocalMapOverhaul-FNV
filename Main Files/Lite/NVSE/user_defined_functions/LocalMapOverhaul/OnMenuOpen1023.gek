@@ -65,7 +65,7 @@ begin Function {iMenuID}
 					SetUIFloatAlt (sUIPath + "\_PosX") fPosX
 					SetUIFloatAlt (sUIPath + "\_PosY") fPosY
 					SetUIFloatAlt (sUIPath + "\_PosZ") fPosZ
-					SetUIFloatAlt (sUIPath + "\_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
+					;SetUIFloatAlt (sUIPath + "\_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
 					SetUIFloatAlt (sUIPath + "\_DepthMod") 3
 					SetUIFloatAlt (sUIPath + "\_Dist") (Player.GetDistance3D rIcon)
 					SetUIStringAlt (sUIPath + "\_Name") (rIcon.LNGetName)
