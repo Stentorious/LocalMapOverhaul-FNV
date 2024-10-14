@@ -82,21 +82,22 @@
 	{ "priority": 200, "tag": "(fjc1)", "mod": "TaleOfTwoWastelands.esm", "form": "008B8B" },
 
 	// Quest
-	{ "priority": 200, "tag": "(jdb1)", "mod": "FalloutNV.esm", "form": [ "1378E2", "100631", "125C2A", "130C72", "162C07", "162C03" ] },
+	{ "priority": 200, "tag": "(jdb1)", "mod": "FalloutNV.esm", "form": [ "100631", "125C2A", "130C72", "162C07", "162C03", "0F828E", "1378E1", "1378E2", "1378E3", "1378E4", "1378E5", "13494C" ] },
 	{ "priority": 200, "tag": "(jdb1)", "mod": "DeadMoney.esm", "form": [ "010E88", "011F66", "01226D" ] },
 	{ "priority": 200, "tag": "(jdb1)", "mod": "HonestHearts.esm", "form": [ "010EB6", "00F370", "0108C4", "00C7C3", "00F6FE" ] },
-	{ "priority": 200, "tag": "(jdb1)", "mod": "OldWorldBlues.esm", "form": [ "012D3B", "012D3A", "012D38", "015DD5", "015DD6", "015DD7" ] },
+	{ "priority": 200, "tag": "(jdb1)", "mod": "OldWorldBlues.esm", "form": [ "012D3B", "012D3A", "012D38", "015DD5", "015DD6", "015DD7", "013574" ] },
 	{ "priority": 200, "tag": "(jdb1)", "mod": "LonesomeRoad.esm", "form": [ "00D12A", "00D2DA", "009C94", "00894E", "00868D", "0046E8" ] },
-	{ "priority": 200, "tag": "(jdb1)", "mod": "Fallout3.esm", "form": [ "05CBE7" ] },
+	{ "priority": 200, "tag": "(jdb1)", "mod": "Fallout3.esm", "form": [ "05CBE7", "003BC8", "038991", "038990", "038992", "0328FC" ] },
 	{ "priority": 200, "tag": "(jdb1)", "mod": "Anchorage.esm", "form": [ "0018A6", "002F38", "002F39", "007514", "007BBF", "007BC1", "007BC3" ] },
 	{ "priority": 200, "tag": "(jdb1)", "mod": "ThePitt.esm", "form": [ "000F3D", "000F35" ] },
 	{ "priority": 200, "tag": "(jdb1)", "mod": "BrokenSteel.esm", "form": "005705" },
 	{ "priority": 200, "tag": "(jdb1)", "mod": "PointLookout.esm", "form": [ "006AB1", "0109D8", "003149", "003FE4", "00A276", "00D70A", "00DD3C", "00E1FC", "00ED92", "01030F" ] },
 
 	// Radio
-	{ "priority": 200, "tag": "(hlb2)", "mod": "FalloutNV.esm", "form": [ "02942E", "0842B9", "0ACD55", "10418C", "1343EB", "14ADB7", "152BEA", "152BED", "152BEE", "152BEF", "152BF0", "152BF1", "0770C5", "0CD21B", "0EB3F2", "101F43", "109085", "14B3ED", "153738", "16B668" ] },
+	{ "priority": 200, "tag": "(hlb2)", "mod": "FalloutNV.esm", "form": [ "02942E", "0842B9", "0ACD55", "10418C", "1343EB", "14ADB7", "152BEA", "152BED", "152BEE", "152BEF", "152BF0", "152BF1", "0770C5", "0CD21B", "0EB3F2", "101F43", "109085", "14B3ED", "153738", "16B668", "16CC0B", "10973F", "0A6FFA", "02D671" ] },
 	{ "priority": 200, "tag": "(hlb2)", "mod": "DeadMoney.esm", "form": [ "00E424", "00E426", "006E8C", "01394B", "005259", "006E94", "00F229", "010E88" ] },
-	{ "priority": 200, "tag": "(hlb2)", "mod": "Fallout3.esm", "form": [ "0842BC", "0842CA", "0842FC", "0842FD", "0842FE", "0842FF", "084303", "084304", "09DEE3", "01A32F", "02B803", "02CC3F", "031425", "031426", "0328FC", "054E8B", "059BB2", "0770C4"  ] },
+	{ "priority": 200, "tag": "(hlb2)", "mod": "OldWorldBlues.esm", "form": "01474A" },
+	{ "priority": 200, "tag": "(hlb2)", "mod": "Fallout3.esm", "form": [ "0842BC", "0842CA", "0842FC", "0842FD", "0842FE", "0842FF", "084303", "084304", "09DEE3", "01A32F", "02B803", "02CC3F", "031425", "031426", "0328FC", "054E8B", "059BB2", "0770C4", "02D671" ] },
 	{ "priority": 200, "tag": "(hlb2)", "mod": "Anchorage.esm", "form": "0013FB" },
 	{ "priority": 200, "tag": "(hlb2)", "mod": "PointLookout.esm", "form": "0041FB" },
 	{ "priority": 200, "tag": "(hlb2)", "mod": "TaleOfTwoWastelands.esm", "form": "004C5B" },
