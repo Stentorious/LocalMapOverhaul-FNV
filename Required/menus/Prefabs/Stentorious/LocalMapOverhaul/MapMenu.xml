@@ -173,14 +173,7 @@
 		<image name="Icon">
 			<visible> <copy src="parent()" trait="visible" /> </visible>
 			<alpha>
-				<copy> 0 </copy>
-				<add>
-					<copy> 255 </copy>
-					<mul>
-						<copy src="parent()" trait="_SeenData" />
-						<onlyif src="io()" trait="_LMO+SeenData" />
-					</mul>
-				</add>
+				<copy> 255 </copy>
 				<sub>
 					<copy src="parent()" trait="_Dist" />
 					<pow> 6 </pow>
@@ -189,11 +182,18 @@
 						<pow> 6 </pow>
 					</div>
 					<mul> 255 </mul>
-					<onlyif>
-						<copy src="io()" trait="_LMO+Fade" />
-						<eq> 1 </eq>
-					</onlyif>
+					<onlyif src="io()" trait="_LMO+Fade" />
 				</sub>
+				<mul>
+					<add>
+						<copy src="parent()" trait="_SeenData" />
+						<onlyif src="io()" trait="_LMO+SeenData" />
+					</add>
+					<add>
+						<copy> 1 </copy>
+						<onlyifnot src="io()" trait="_LMO+SeenData" />
+					</add>
+				</mul>
 				<max> 0 </max>
 				<min> 255 </min>
 			</alpha>
