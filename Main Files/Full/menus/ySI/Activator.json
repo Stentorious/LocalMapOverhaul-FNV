@@ -5,6 +5,7 @@
 	{ "priority": 100, "tag": "(hhb1)", "formType": 27 }, 												// Container
 	{ "priority": 200, "tag": "(jba1)", "mod": "FalloutNV.esm", "form": "1017C6" }, 					// Sunset Sarsaparilla Cap
 	{ "priority": 200, "tag": "(dja1)", "mod": "FalloutNV.esm", "form": "161245" },						// Magazine Vending Machine
+	{ "priority": 200, "tag": "(aje1)", "mod": "FalloutNV.esm", "form": "033D85" },						// Baseball (Projectile)
 	{ "priority": 200, "tag": "(jba1)", "mod": "LonesomeRoad.esm", "form": [ "00A870", "00B8F6" ] },	// Commissary Terminal
 
 	// Armor
@@ -60,6 +61,7 @@
 	{ "priority": 200, "tag": "(CP01)", "mod": "LonesomeRoad.esm", "form": "00C46B" },
 	{ "priority": 200, "tag": "(CP01)", "mod": "ThePitt.esm", "form": [ "007D7D", "00A60A" ] },
 	{ "priority": 200, "tag": "(CP01)", "mod": "BrokenSteel.esm", "form": [ "0049A3", "000D69", "0049AA", "005561", "005566" ] },
+	{ "priority": 200, "tag": "(CP01)", "mod": "PointLookout.esm", "form": [ "00845B", "00B5ED" ] },
 	{ "priority": 200, "tag": "(CP01)", "mod": "Zeta.esm", "form": "008507" },
 
 	// Harvestable
@@ -81,13 +83,22 @@
 	{ "priority": 200, "tag": "(fjc1)", "mod": "Zeta.esm", "form": [ "001F74", "006FC1", "0076C9" ] },
 	{ "priority": 200, "tag": "(fjc1)", "mod": "TaleOfTwoWastelands.esm", "form": "008B8B" },
 
+	// Note
+	{ "priority": 200, "tag": "(jdc0)", "mod": "FalloutNV.esm", "form": [ "161436", "0E288B", "0E32FE", "0E32FD", "0E85EC", "0E85EA", "0E85EB", "0EACAE", "0EACAF", "0EACB0", "0EACB1", "0EACB2", "0EACB3", "0EACB4", "0EACB5", "0EACB6", "0EACB7", "0EACB8", "1572E1" ] },
+	{ "priority": 200, "tag": "(jdc0)", "mod": "Fallout3.esm", "form": [ "0C77C1", "0C77C5", "0C77C9", "0C77CC", "0C85A5", "0C8596", "0C77CF", "0C85A8", "0C85AB", "0C859D", "0C8599", "0C3CDB", "0C85B0", "0C85A0", "0C7758" ] },
+	{ "priority": 200, "tag": "(jdc0)", "mod": "PointLookout.esm", "form": "010ACB" },
+
+	// Nuke
+	{ "priority": 200, "tag": "(aha1)", "mod": "FalloutNV.esm", "form": "16192B" },
+	{ "priority": 200, "tag": "(aha1)", "mod": "Fallout3.esm", "form": "003BC8" },
+
 	// Quest
-	{ "priority": 200, "tag": "(jdb1)", "mod": "FalloutNV.esm", "form": [ "100631", "125C2A", "130C72", "162C07", "162C03", "0F828E", "1378E1", "1378E2", "1378E3", "1378E4", "1378E5", "13494C" ] },
+	{ "priority": 200, "tag": "(jdb1)", "mod": "FalloutNV.esm", "form": [ "100631", "125C2A", "130C72", "162C07", "162C03", "0F828E", "1378E1", "1378E2", "1378E3", "1378E4", "1378E5", "13494C", "104C0A", "14EF60", "137285" ] },
 	{ "priority": 200, "tag": "(jdb1)", "mod": "DeadMoney.esm", "form": [ "010E88", "011F66", "01226D" ] },
 	{ "priority": 200, "tag": "(jdb1)", "mod": "HonestHearts.esm", "form": [ "010EB6", "00F370", "0108C4", "00C7C3", "00F6FE" ] },
 	{ "priority": 200, "tag": "(jdb1)", "mod": "OldWorldBlues.esm", "form": [ "012D3B", "012D3A", "012D38", "015DD5", "015DD6", "015DD7", "013574" ] },
 	{ "priority": 200, "tag": "(jdb1)", "mod": "LonesomeRoad.esm", "form": [ "00D12A", "00D2DA", "009C94", "00894E", "00868D", "0046E8" ] },
-	{ "priority": 200, "tag": "(jdb1)", "mod": "Fallout3.esm", "form": [ "05CBE7", "003BC8", "038991", "038990", "038992", "0328FC" ] },
+	{ "priority": 200, "tag": "(jdb1)", "mod": "Fallout3.esm", "form": [ "05CBE7", "038991", "038990", "038992", "0328FC", "04F23B" ] },
 	{ "priority": 200, "tag": "(jdb1)", "mod": "Anchorage.esm", "form": [ "0018A6", "002F38", "002F39", "007514", "007BBF", "007BC1", "007BC3" ] },
 	{ "priority": 200, "tag": "(jdb1)", "mod": "ThePitt.esm", "form": [ "000F3D", "000F35" ] },
 	{ "priority": 200, "tag": "(jdb1)", "mod": "BrokenSteel.esm", "form": "005705" },
@@ -109,6 +120,18 @@
 	// Terminal
 	{ "priority": 100, "tag": "(dlb1)", "formType": 23 },
 	{ "priority": 200, "tag": "(dlb1)", "mod": "BrokenSteel.esm", "form": [ "0027EA", "009AD5" ] },
+
+	// Trap
+	{ "priority": 200, "tag": "(fja1)", "mod": "FalloutNV.esm", "form": "026FB3" },
+	{ "priority": 200, "tag": "(fbc2)", "mod": "FalloutNV.esm", "form": "029438" },
+	{ "priority": 200, "tag": "(fbc2)", "mod": "DeadMoney.esm", "form": "014015" },
+	{ "priority": 200, "tag": "(fbc2)", "mod": "Fallout3.esm", "form": "029438" },
+	{ "priority": 200, "tag": "(fjc1)", "mod": "FalloutNV.esm", "form": [ "02A9F9", "02C2B5", "02E91C", "057F6B" ] },
+	{ "priority": 200, "tag": "(fjc1)", "mod": "Fallout3.esm", "form": "0C72D5" },
+	{ "priority": 200, "tag": "(fjc1)", "mod": "PointLookout.esm", "form": "00AD52" },
+	{ "priority": 200, "tag": "(aje1)", "mod": "FalloutNV.esm", "form": "053EF3" },
+	{ "priority": 200, "tag": "(aje1)", "mod": "PointLookout.esm", "form": "00D3B2" },
+	{ "priority": 200, "tag": "(ada1)", "mod": "Fallout3.esm", "form": "0C72D5" },
 
 	// Water
 	{ "priority": 100, "tag": "(jda2)", "formType": 35 },
@@ -139,6 +162,7 @@
 	{ "priority": 200, "tag": "(fjc1)", "mod": "TaleOfTwoWastelands.esm", "form": "008E2E" },
 
 	// Anchorage
+	{ "priority": 200, "tag": "(dda1)", "mod": "Anchorage.esm", "form": "00C8C9" },						// Psycho
 	{ "priority": 200, "tag": "(aba1)", "mod": "Anchorage.esm", "form": "00CB32" },						// Ammo Dispenser
 	{ "priority": 200, "tag": "(ada1)", "mod": "Anchorage.esm", "form": "00C8C1" },						// Microfusion Cells
 	{ "priority": 200, "tag": "(aha1)", "mod": "Anchorage.esm", "form": "00C8C7" },						// Missile
