@@ -13,12 +13,16 @@
 	<copy src="me()" trait="width" />
 	<div>
 		<copy src="child(dummy)" trait="filewidth" />
-		<mul> 0.546875 </mul>
+		<mul>
+			<copy> 1 </copy>
+			<sub src="me()" trait="_LeftCropRatio" />
+			<sub src="me()" trait="_RightCropRatio" />
+		</mul>
 	</div>
 	<mul> 100 </mul>
 </zoom>
 <cropx>
-	<copy> 0.21875 </copy>
+	<copy src="me()" trait="_LeftCropRatio" />
 	<mul src="child(dummy)" trait="filewidth" />
 	<mul src="me()" trait="zoom" />
 	<div> 100 </div>
