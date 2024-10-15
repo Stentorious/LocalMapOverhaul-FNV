@@ -15,7 +15,7 @@ begin Function {iMenuID, iTileID, sUIPath}
 		rIcon = StringToRef (GetUIString (sUIPath + "\_RefID"))
 		Goo1.AuxVarSetRef "*LocalMap_Ref" rIcon
 		iType = rIcon.GetType
-		iBitMask = Goo1.AuxVarGetFlt "*LocalMap_INI" 4
+		iBitMask = Goo1.AuxVarGetFlt "*LocalMap_INI" 5
 
 		; Display remote terminal access message box
 		if eval iType == 23 && rIcon.GetLocked < 2 && (GetBit iBitMask 0 || (GetBit iBitMask 1 && Player.HasPerk ComputerWhiz))
@@ -27,7 +27,7 @@ begin Function {iMenuID, iTileID, sUIPath}
 						TogglePipBoy
 					endif
 				endif
-			end) "^Remote Access^Access %n?|%z|%z" rIcon (GetStringGameSetting sOk) (GetStringGameSetting sCancel)
+			end) "^Remote Access^Access %n?|%z|%z" rIcon (GetStringSetting "sOk") (GetStringSetting "sCancel")
 		endif
 
 	endif

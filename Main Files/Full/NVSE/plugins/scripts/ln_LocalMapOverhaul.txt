@@ -189,6 +189,43 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 		iBitMask += 16
 	endif
 
+	; Assign keywords (Trap)
+	if GetINIFloat "Icons:bTrap" "Stentorious\LocalMapOverhaul.ini" == 1
+		AssignKeyword TrapGrenadeBunch "LocalMapIcon"
+		AssignKeyword TrapBearTrap "LocalMapIcon"
+		AssignKeyword TrapTripwire01 "LocalMapIcon"
+		AssignKeyword trapShotgun "LocalMapIcon"
+		AssignKeyword TrapComputer "LocalMapIcon"
+		AssignKeyword trapMineBuried01 "LocalMapIcon"
+		AssignKeyword TrapBabyCarriage "LocalMapIcon"
+		AssignKeyword TrapPressurePlate "LocalMapIcon"
+		AssignKeyword TrapPitchingMachine01 "LocalMapIcon"
+		AssignKeyword TrapMailboxBomb01 "LocalMapIcon"
+		AssignKeyword SprungTrapBearTrap "LocalMapIcon"
+		AssignKeyword VHDLegionOliverRangerTrapBearTrap "LocalMapIcon"
+		AssignKeyword VHDLegionOliverTrapTripwire "LocalMapIcon"
+		if eval IsModLoaded "DeadMoney.esm"
+			AssignKeyword (EditorIDToFormID "NVDLC01TrapTripwire") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC01TrapBearTrap") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC01TrapPressurePlate") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC01trapShotgun") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC01SprungTrapBearTrap") "LocalMapIcon"
+		endif
+		if eval IsModLoaded "HonestHearts.esm"
+			AssignKeyword (EditorIDToFormID "NVDLC02MQ03BearTrap") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC02BearTrap") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC02TrapTripwire01") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "NVDLC02TrapPressurePlate") "LocalMapIcon"
+		endif
+		if eval IsModLoaded "TaleOfTwoWastelands.esm"
+			AssignKeyword (EditorIDToFormID "trapShotgunCombat") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "TrapElectrifiedToiletTop01") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "TakomaTrapBabyCarriage") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "DLC04LabTrapComputer") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "DLC04TrapPitchingMachine") "LocalMapIcon"
+		endif
+	endif
+
 	; Icon visibility bitmask
 	iBitMask += 2 * (eval (GetINIFloat "Icons:bNote" "Stentorious\LocalMapOverhaul.ini" == 1))
 	iBitMask += 4 * (eval (GetINIFloat "Icons:bKey" "Stentorious\LocalMapOverhaul.ini" == 1))
@@ -205,18 +242,19 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 	endif
 	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat "Actors:iNameVisibility" "Stentorious\LocalMapOverhaul.ini"))) 1
 	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat "Actors:iMode" "Stentorious\LocalMapOverhaul.ini"))) 2
+	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 2 (GetINIFloat "Vendors:iMode" "Stentorious\LocalMapOverhaul.ini"))) 3
 
 	; Actor settings bitmask
 	iBitMask = 0
-	iBitMask += 1 * (eval (GetINIFloat "Actors:bVendor" "Stentorious\LocalMapOverhaul.ini" == 1))
-	iBitMask += 2 * (eval (GetINIFloat "Actors:bHideEmptyCorpses" "Stentorious\LocalMapOverhaul.ini" == 1))
-	Goo1.AuxVarSetFlt "*LocalMap_INI" iBitMask 3
+	iBitMask += 1 * (eval (GetINIFloat "Actors:bHideEmptyCorpses" "Stentorious\LocalMapOverhaul.ini" == 1))
+	;iBitMask += 2 * (eval (GetINIFloat "Vendors:bCaps" "Stentorious\LocalMapOverhaul.ini" == 1))
+	Goo1.AuxVarSetFlt "*LocalMap_INI" iBitMask 4
 
 	; Extra settings bitmask
 	iBitMask = 0
 	iBitMask += 1 * (eval (GetINIFloat "Extra:bRemoteTerminals" "Stentorious\LocalMapOverhaul.ini" == 1))
 	iBitMask += 2 * (eval (GetINIFloat "Extra:bRemoteTerminals" "Stentorious\LocalMapOverhaul.ini" == 2))
-	Goo1.AuxVarSetFlt "*LocalMap_INI" iBitMask 4
+	Goo1.AuxVarSetFlt "*LocalMap_INI" iBitMask 5
 
 endif
 

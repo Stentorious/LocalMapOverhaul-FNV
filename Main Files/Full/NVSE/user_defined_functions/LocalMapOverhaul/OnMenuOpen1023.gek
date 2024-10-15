@@ -7,6 +7,7 @@ int iLocked
 int	iTemp
 int	iBitIcon
 int	iBitMask
+int	iVendor
 float fPosX
 float fPosY
 float fPosZ
@@ -53,7 +54,8 @@ begin Function {iMenuID}
 		if aRefs
 
 			; Get actor settings
-			iBitMask = Goo1.AuxVarGetFlt "*LocalMap_INI" 3
+			iBitMask = Goo1.AuxVarGetFlt "*LocalMap_INI" 4
+			iVendor = Goo1.AuxVarGetFlt "*LocalMap_INI" 3
 
 			; Process actor refs
 			foreach aForE <- aRefs
@@ -81,12 +83,19 @@ begin Function {iMenuID}
 
 					; Creature
 					if eval rIcon.GetIsCreature
+
+						; Dead
 						if iTemp == 1
-							if eval GetBit iBitMask 1 && rIcon.GetContainerInventoryCount == 0
+							if eval GetBit iBitMask 0 && rIcon.GetContainerInventoryCount == 0
 								SetUIFloatAlt (sUIPath + "\visible") 0
 							else
 								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_Skull.dds"
 							endif
+
+						; ySI framework icon
+						elseif eval rIcon.ySIGetTrait "tag" != ""
+							SetUIStringAlt (sUIPath + "\filename") (rIcon.ySIGetTrait "filename")
+
 						else
 							SetUIFloatAlt (sUIPath + "\_Deg") (rIcon.GetAngle Z)
 							SetUIFloatAlt (sUIPath + "\_Hostile") (rIcon.IsCompassHostile)
@@ -94,22 +103,48 @@ begin Function {iMenuID}
 
 					; NPC
 					else
+
+						; Dead
 						if iTemp == 1
-							if eval GetBit iBitMask 1 && rIcon.GetContainerInventoryCount == 0
+							if eval GetBit iBitMask 0 && rIcon.GetContainerInventoryCount == 0
 								SetUIFloatAlt (sUIPath + "\visible") 0
 							else
 								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_Skull.dds"
 							endif
 
+						; ySI framework icon
+						elseif eval rIcon.ySIGetTrait "tag" != ""
+							SetUIStringAlt (sUIPath + "\filename") (rIcon.ySIGetTrait "filename")
+
 						; Vendor icon
-						elseif eval GetBit iBitMask 0 && rIcon.GetMerchantContainer
-							if eval GetServiceFlag (rIcon.GBO) 131072
+						elseif eval iVendor > 0 && rIcon.GetMerchantContainer
+
+							; Assign icon
+							rTemp = rIcon.GetClass
+							if iVendor == 1
+								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_BottleCap.dds"
+							elseif eval GetServiceFlag (rIcon.GBO) 131072
 								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Aid_WeaponRepairKit.dds"
-							elseif eval rIcon.GetIsClass Doctor
+							elseif eval rTemp == VendorDrinks
+								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Aid_Alcohol.dds"
+							elseif eval rTemp == Doctor
 								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Aid_DoctorBag.dds"
+							elseif eval rTemp == VendorWeapons
+								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Ammo_Bullet.dds"
+							elseif eval rTemp == VendorFood
+								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Aid_CookedMeal.dds"
+							elseif eval rTemp == VendorClothes
+								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Apparel_Other_Bag.dds"
+							elseif eval rTemp == VendorChems || rTemp == VendorChemsFood
+								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Aid_Drug.dds"
 							else
 								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_BottleCap.dds"
 							endif
+
+							; Append caps count
+							;if eval GetBit iBitMask 1
+							;	SetUIStringAlt (sUIPath + "\_Name") "%n%r[%z: %g]" rIcon (GetStringSetting "sInventoryCaps") ((rIcon.GetMerchantContainer).GetItemCount Caps001)
+							;endif
 
 						else
 							SetUIFloatAlt (sUIPath + "\_Deg") (rIcon.GetAngle Z)
@@ -284,8 +319,7 @@ begin Function {iMenuID}
 					if eval rIcon.PlayerHasKey
 						SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_Keychain.dds"
 						rTemp = rIcon.GetOpenKey
-						sTemp = sv_Construct "%n%r[%n]" rIcon rTemp
-						SetUIStringAlt (sUIPath + "\_Name") (sTemp)
+						SetUIStringAlt (sUIPath + "\_Name") "%n%r[%n]" rIcon rTemp
 
 					; Locked
 					else
@@ -298,24 +332,24 @@ begin Function {iMenuID}
 						iLocked = rIcon.GetLocked
 						if eval iTemp > 4 || iLocked == 2
 							if eval iLocked == 2
-								sTemp = sv_Construct "%n%r%z" rIcon (GetStringGameSetting sBroken)
+								sTemp = sv_Construct "%n%r%z" rIcon (GetStringSetting "sBroken")
 							else
-								sTemp = sv_Construct "%n%r[%z - %z]" rIcon (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameImpossible)
+								sTemp = sv_Construct "%n%r[%z - %z]" rIcon (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameImpossible")
 							endif
 							SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_Key.dds"
 
 						; Pickable
 						else
 							if iTemp == 0
-								sTemp = sv_Construct "%n%r[%z - %z]" rIcon (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameVeryEasy)
+								sTemp = sv_Construct "%n%r[%z - %z]" rIcon (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameVeryEasy")
 							elseif iTemp == 1
-								sTemp = sv_Construct "%n%r[%z - %z]" rIcon (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameEasy)
+								sTemp = sv_Construct "%n%r[%z - %z]" rIcon (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameEasy")
 							elseif iTemp == 2
-								sTemp = sv_Construct "%n%r[%z - %z]" rIcon (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameAverage)
+								sTemp = sv_Construct "%n%r[%z - %z]" rIcon (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameAverage")
 							elseif iTemp == 3
-								sTemp = sv_Construct "%n%r[%z - %z]" rIcon (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameHard)
+								sTemp = sv_Construct "%n%r[%z - %z]" rIcon (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameHard")
 							else
-								sTemp = sv_Construct "%n%r[%z - %z]" rIcon (GetStringGameSetting sLocked) (GetStringGameSetting sLockLevelNameVeryHard)
+								sTemp = sv_Construct "%n%r[%z - %z]" rIcon (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameVeryHard")
 							endif
 							SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_BobbyPin.dds"
 
