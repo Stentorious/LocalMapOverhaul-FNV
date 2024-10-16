@@ -263,4 +263,8 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" 1 == 1
 	SetOnMenuOpenEventHandler (CompileScript "LocalMapOverhaul\OnMenuOpen1023.gek") 1 1023
 	SetOnMouseoverChangeEventHandler (CompileScript "LocalMapOverhaul\OnMouseover1023.gek") 1 1023
 	SetOnMenuClickEventHandler (CompileScript "LocalMapOverhaul\OnIconClick.gek") 1 "MapMenu#50"
+	if eval GetBit (Goo1.AuxVarGetFlt "*LocalMap_INI" 0) 9
+		SetOnMenuCloseEventHandler ({int iMenuID} => SetJohnnyOnRenderUpdateEventHandler 0 (CompileScript "LocalMapOverhaul\MenuLoop.gek")) 1 1023
+		SetJohnnyOnRenderUpdateEventHandler 0 (CompileScript "LocalMapOverhaul\MenuLoop.gek")
+	endif
 endif

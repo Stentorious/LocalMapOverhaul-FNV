@@ -33,6 +33,11 @@ begin Function {iMenuID}
 	iName = Goo1.AuxVarGetFlt "*LocalMap_INI" 1
 	iDist = GetUIFloatAlt "MapMenu\_LMO+Dist"
 
+	; Door icon loop
+	if eval GetBit iBitIcon 9
+		SetJohnnyOnRenderUpdateEventHandler 1 (CompileScript "LocalMapOverhaul\MenuLoop.gek") 0
+	endif
+
 	; Reset icons
 	UnloadUIComponent "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons"
 	AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow|Map_Icons|Map_Icons"

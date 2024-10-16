@@ -273,37 +273,47 @@
 			<visible>
 				<copy src="parent()" trait="_Level" />
 				<gt> 0 </gt>
+				<and src="io()" trait="_LMO+Height"/>
 			</visible>
 			<alpha> <copy src="sibling(Icon)" trait="alpha" /> </alpha>
 			<x>
-				<copy src="sibling(Icon)" trait="width" />
+				<copy src="parent()" trait="width" />
+				<sub src="me()" trait="width" />
 				<div> 2 </div>
-				<sub>
-					<copy src="me()" trait="width" />
-					<div> 2 </div>
-				</sub>
 			</x>
 			<y>
-				<copy> 0 </copy>
-				<sub src="me()" trait="height" />
+				<copy src="me()" trait="x" />
+				<add>
+					<copy src="parent()" trait="height" />
+					<div> 1.5 </div>
+					<onlyif>
+						<copy src="parent()" trait="_Level" />
+						<eq> 2 </eq>
+					</onlyif>
+				</add>
+				<sub>
+					<copy src="parent()" trait="height" />
+					<div> 1.5 </div>
+					<onlyif>
+						<copy src="parent()" trait="_Level" />
+						<eq> 1 </eq>
+					</onlyif>
+				</sub>
 			</y>
 			<rotateaxisx>
 				<copy src="me()" trait="width" />
 				<div> 2 </div>
 			</rotateaxisx>
 			<rotateaxisy>
-				<copy src="me()" trait="x" />
-				<mul> 2 </mul>
+				<copy src="me()" trait="height" />
+				<div> 2 </div>
 			</rotateaxisy>
 			<rotateangle>
-				<copy> 0 </copy>
-				<add>
-					<copy> 3.1416 </copy>
-					<onlyif>
-						<copy src="parent()" trait="_Level" />
-						<eq> 2 </eq>
-					</onlyif>
-				</add>
+				<copy> 3.1416 </copy>
+				<onlyif>
+					<copy src="parent()" trait="_Level" />
+					<eq> 2 </eq>
+				</onlyif>
 			</rotateangle>
 			<height>
 				<copy src="sibling(Icon)" trait="height" />
