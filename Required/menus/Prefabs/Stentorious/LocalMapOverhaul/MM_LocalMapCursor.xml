@@ -1,5 +1,5 @@
 <height>
-    <copy src="me()" trait="width" />
-    <mul> 2 </mul>
+	<copy src="me()" trait="width" />
+	<mul> 2 </mul>
 </height>
 <zoom> &scale; </zoom>
