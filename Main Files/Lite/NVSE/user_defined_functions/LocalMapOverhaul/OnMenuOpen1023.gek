@@ -24,13 +24,16 @@ begin Function {iMenuID}
 	SetUIFloatAlt "MapMenu\_LMO+PlrAV6" (GetMaxOf 1 (GetMinOf 10 (Player.GetActorValue Perception)))
 	SetUIFloatAlt "MapMenu\_LMO+Deg" (ABS (GetCellNorthRotation (Player.GPC)))
 
-	; Reset icons
-	UnloadUIComponent "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons"
-	AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow|Map_Icons|Map_Icons"
-
 	; Get global settings
 	iDist = GetUIFloatAlt "MapMenu\_LMO+Dist"
 	iName = Goo1.AuxVarGetFlt "*LocalMap_INI" 1
+
+	; Door icon loop
+	SetJohnnyOnRenderUpdateEventHandler 1 (CompileScript "LocalMapOverhaul\MenuLoop.gek") 0
+
+	; Reset icons
+	UnloadUIComponent "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons"
+	AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow|Map_Icons|Map_Icons"
 
 	; Actor icons
 	iTemp = Goo1.AuxVarGetFlt "*LocalMap_INI" 2

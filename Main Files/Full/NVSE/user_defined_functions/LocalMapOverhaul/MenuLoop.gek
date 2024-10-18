@@ -1,4 +1,5 @@
 int iTemp
+int iDoor
 int iLocked
 int iUITile
 ref rIcon
@@ -10,65 +11,78 @@ string_var sTemp
 begin Function {}
 
 	; Door icons have been reset
-	if GetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_Tabline\_CurrentTab" == 0 && GetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:0\_LMO+Icon" == 0
-		while GetUIFloatAlt ("MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:" + $iUITile + "\visible") != -999
+	if GetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_Tabline\_CurrentTab" == 0 && GetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:0\_Icon" == 0
+		if eval GetBit (Goo1.AuxVarGetFlt "*LocalMap_INI" 0) 9
 
-			sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:%g" iUITile
-			rIcon = StringToRef (GetUIString (sUIPath + "\_RefIDStr"))
-			SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
+			; Dynamic door icons
+			while GetUIFloatAlt ("MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:" + $iUITile + "\visible") != -999
 
-			if rIcon.GetLocked > 0
-				sName = GetUIString (sUIPath + "\_LocationName")
+				sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:%g" iUITile
+				rIcon = StringToRef (GetUIString (sUIPath + "\_RefIDStr"))
+				SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
 
-				; Has key
-				if eval rIcon.PlayerHasKey
-					SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_Keychain.dds"
-					rTemp = rIcon.GetOpenKey
-					SetUIStringAlt (sUIPath + "\_LocationName") "%z%r[%n]" sName rTemp
+				if rIcon.GetLocked > 0
+					sName = GetUIString (sUIPath + "\_LocationName")
 
-				; Locked
-				else
-					iTemp = rIcon.GetLockLevel
-					if rIcon.GetType == 27
-						iTemp /= 25
-					endif
+					; Has key
+					if eval rIcon.PlayerHasKey
+						SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_Keychain.dds"
+						rTemp = rIcon.GetOpenKey
+						SetUIStringAlt (sUIPath + "\_LocationName") "%z%r[%n]" sName rTemp
 
-					; Requires key
-					iLocked = rIcon.GetLocked
-					if eval iTemp > 4 || iLocked == 2
-						if eval iLocked == 2
-							sTemp = sv_Construct "%z%r%z" sName (GetStringSetting "sBroken")
-						else
-							sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameImpossible")
-						endif
-						SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_Key.dds"
-
-					; Pickable
+					; Locked
 					else
-						if iTemp == 0
-							sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameVeryEasy")
-						elseif iTemp == 1
-							sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameEasy")
-						elseif iTemp == 2
-							sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameAverage")
-						elseif iTemp == 3
-							sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameHard")
-						else
-							sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameVeryHard")
+						iTemp = rIcon.GetLockLevel
+						if rIcon.GetType == 27
+							iTemp /= 25
 						endif
-						SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_BobbyPin.dds"
+
+						; Requires key
+						iLocked = rIcon.GetLocked
+						if eval iTemp > 4 || iLocked == 2
+							if eval iLocked == 2
+								sTemp = sv_Construct "%z%r%z" sName (GetStringSetting "sBroken")
+							else
+								sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameImpossible")
+							endif
+							SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_Key.dds"
+
+						; Pickable
+						else
+							if iTemp == 0
+								sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameVeryEasy")
+							elseif iTemp == 1
+								sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameEasy")
+							elseif iTemp == 2
+								sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameAverage")
+							elseif iTemp == 3
+								sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameHard")
+							else
+								sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameVeryHard")
+							endif
+							SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_BobbyPin.dds"
+
+						endif
+
+						SetUIStringAlt (sUIPath + "\_LocationName") (sTemp)
 
 					endif
-
-					SetUIStringAlt (sUIPath + "\_LocationName") (sTemp)
-
+					SetUIFloatAlt (sUIPath + "\_Icon") 2
+				else
+					SetUIFloatAlt (sUIPath + "\_Icon") 1
 				endif
-				SetUIFloatAlt (sUIPath + "\_LMO+Icon") 2
-			else
-				SetUIFloatAlt (sUIPath + "\_LMO+Icon") 1
-			endif
-			iUITile += 1
-		loop
+				iUITile += 1
+			loop
+
+		else
+			while GetUIFloatAlt ("MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:" + $iUITile + "\visible") != -999
+				sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:%g" iUITile
+				rIcon = StringToRef (GetUIString (sUIPath + "\_RefIDStr"))
+				SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
+				SetUIFloatAlt (sUIPath + "\_Icon") 1
+				iUITile += 1
+			loop
+		endif
 
 		sv_Destruct sUIPath sName sTemp
 

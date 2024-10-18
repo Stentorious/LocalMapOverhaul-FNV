@@ -1,3 +1,8 @@
+<_LMO+SizeL> 1 </_LMO+SizeL>
+<_LMO+SizeW> 1 </_LMO+SizeW>
+<_LMO+DropL> 0 </_LMO+DropL>
+<_LMO+DropW> 0 </_LMO+DropW>
+<_LMO+CropW> 0.22 </_LMO+CropW>
 <_LMO+Dist> 0 </_LMO+Dist>
 <_LMO+DistMode> 0 </_LMO+DistMode>
 <_LMO+SeenData> 0 </_LMO+SeenData>
@@ -86,9 +91,9 @@
 			<mul>
 				<copy> 0.4 </copy>
 				<onlyif src="me()" trait="mouseover" />
-				<add> 1 </add>
+				<add src="io()" trait="_LMO+SizeL" />
 			</mul>
-			<min> 48 </min>
+			<min> 64 </min>
 		</width>
 		<height> <copy src="me()" trait="width" /> </height>
 		<zoom> &scale; </zoom>
@@ -247,7 +252,10 @@
 		</image>
 
 		<image name="DropShadow">
-			<visible> <copy src="sibling(Icon)" trait="visible" /> </visible>
+			<visible>
+				<copy src="sibling(Icon)" trait="visible" />
+				<and src="io()" trait="_LMO+DropL" />
+			</visible>
 			<alpha>
 				<copy src="sibling(Icon)" trait="alpha" />
 				<div> 2 </div>
@@ -282,9 +290,11 @@
 				<div> 2 </div>
 			</x>
 			<y>
-				<copy src="me()" trait="x" />
+				<copy src="parent()" trait="height" />
+				<div> 2 </div>
 				<add>
 					<copy src="parent()" trait="height" />
+					<add src="me()" trait="height" />
 					<div> 1.5 </div>
 					<onlyif>
 						<copy src="parent()" trait="_Level" />
@@ -293,6 +303,7 @@
 				</add>
 				<sub>
 					<copy src="parent()" trait="height" />
+					<add src="me()" trait="height" />
 					<div> 1.5 </div>
 					<onlyif>
 						<copy src="parent()" trait="_Level" />
@@ -304,10 +315,7 @@
 				<copy src="me()" trait="width" />
 				<div> 2 </div>
 			</rotateaxisx>
-			<rotateaxisy>
-				<copy src="me()" trait="height" />
-				<div> 2 </div>
-			</rotateaxisy>
+			<rotateaxisy> 0 </rotateaxisy>
 			<rotateangle>
 				<copy> 3.1416 </copy>
 				<onlyif>

@@ -29,14 +29,12 @@ begin Function {iMenuID}
 	SetUIFloatAlt "MapMenu\_LMO+Deg" (ABS (GetCellNorthRotation (Player.GPC)))
 
 	; Get global settings
-	iBitIcon = Goo1.AuxVarGetFlt "*LocalMap_INI" 0
-	iName = Goo1.AuxVarGetFlt "*LocalMap_INI" 1
 	iDist = GetUIFloatAlt "MapMenu\_LMO+Dist"
+	iName = Goo1.AuxVarGetFlt "*LocalMap_INI" 1
+	iBitIcon = Goo1.AuxVarGetFlt "*LocalMap_INI" 0
 
 	; Door icon loop
-	if eval GetBit iBitIcon 9
-		SetJohnnyOnRenderUpdateEventHandler 1 (CompileScript "LocalMapOverhaul\MenuLoop.gek") 0
-	endif
+	SetJohnnyOnRenderUpdateEventHandler 1 (CompileScript "LocalMapOverhaul\MenuLoop.gek") 0
 
 	; Reset icons
 	UnloadUIComponent "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons"

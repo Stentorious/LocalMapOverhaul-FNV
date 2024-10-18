@@ -5,52 +5,50 @@
 		<add>
 			<copy> 32 </copy>
 			<onlyif>
-				<copy src="me()" trait="_LMO+Icon" />
+				<copy src="me()" trait="_Icon" />
 				<eq> 2 </eq>
 			</onlyif>
 		</add>
 		<add>
-			<copy> 48 </copy>
-			<onlyif>
-				<copy src="me()" trait="_LMO+Icon" />
-				<eq> 1 </eq>
-			</onlyif>
-		</add>
-		<add>
 			<copy> 60 </copy>
-			<onlyifnot src="me()" trait="_LMO+Icon" />
+			<onlyif>
+				<copy src="me()" trait="_Icon" />
+				<lt> 2 </lt>
+			</onlyif>
 		</add>
 	</min>
 	<mul>
 		<copy> 0.4 </copy>
 		<onlyif src="me()" trait="_selected" />
-		<add> 1 </add>
 		<add>
-			<copy> 1 </copy>
-			<onlyif>
-				<copy src="me()" trait="_LMO+Icon" />
-				<eq> 1 </eq>
-			</onlyif>
+			<copy> 0 </copy>
+			<add>
+				<copy src="io()" trait="_LMO+SizeL" />
+				<onlyif>
+					<copy src="me()" trait="_Icon" />
+					<gt> 0 </gt>
+				</onlyif>
+			</add>
+			<add>
+				<copy src="io()" trait="_LMO+SizeW" />
+				<onlyifnot src="me()" trait="_Icon" />
+			</add>
 		</add>
 	</mul>
 	<min>
 		<add>
-			<copy> 48 </copy>
+			<copy> 64 </copy>
 			<onlyif>
-				<copy src="me()" trait="_LMO+Icon" />
+				<copy src="me()" trait="_Icon" />
 				<eq> 2 </eq>
 			</onlyif>
 		</add>
 		<add>
 			<copy> 120 </copy>
 			<onlyif>
-				<copy src="me()" trait="_LMO+Icon" />
-				<eq> 1 </eq>
+				<copy src="me()" trait="_Icon" />
+				<lt> 2 </lt>
 			</onlyif>
-		</add>
-		<add>
-			<copy> 100 </copy>
-			<onlyifnot src="me()" trait="_LMO+Icon" />
 		</add>
 	</min>
 </width>
@@ -59,8 +57,8 @@
 	<add>
 		<copy> &scale; </copy>
 		<onlyif>
-			<copy src="me()" trait="_LMO+Icon" />
-			<gt> 0 </gt>
+			<copy src="me()" trait="_Icon" />
+			<eq> 2 </eq>
 		</onlyif>
 	</add>
 	<add>
@@ -68,28 +66,58 @@
 			<copy src="me()" trait="width" />
 			<div>
 				<copy src="child(dummy)" trait="filewidth" />
-				<mul> 0.546875 </mul>
+				<mul>
+					<copy> 1 </copy>
+					<sub>
+						<copy> 0 </copy>
+						<add>
+							<copy> 0.22 </copy>
+							<onlyif src="me()" trait="_Icon" />
+						</add>
+						<add>
+							<copy src="io()" trait="_LMO+CropW" />
+							<onlyifnot src="me()" trait="_Icon" />
+						</add>
+						<mul> 2 </mul>
+					</sub>
+				</mul>
 			</div>
 			<mul> 100 </mul>
 		</copy>
-		<onlyifnot src="me()" trait="_LMO+Icon" />
+		<onlyif>
+			<copy src="me()" trait="_Icon" />
+			<lt> 2 </lt>
+		</onlyif>
 	</add>
 </zoom>
 <cropx>
 	<copy> 0 </copy>
 	<add>
 		<copy>
-			<copy> 0.21875 </copy>
+			<copy>
+				<copy> 0 </copy>
+				<add>
+					<copy> 0.22 </copy>
+					<onlyif src="me()" trait="_Icon" />
+				</add>
+				<add>
+					<copy src="io()" trait="_LMO+CropW" />
+					<onlyifnot src="me()" trait="_Icon" />
+				</add>
+			</copy>
 			<mul src="child(dummy)" trait="filewidth" />
 			<mul src="me()" trait="zoom" />
 			<div> 100 </div>
 		</copy>
-		<onlyifnot src="me()" trait="_LMO+Icon" />
+		<onlyif>
+			<copy src="me()" trait="_Icon" />
+			<lt> 2 </lt>
+		</onlyif>
 	</add>
 </cropx>
 <cropy> <copy src="me()" trait="cropx" /> </cropy>
 
-<_LMO+Icon> 0 </_LMO+Icon>
+<_Icon> 0 </_Icon>
 <_PosZ> 0 </_PosZ>
 <_PosZOffset>
 	<copy src="me()" trait="_PosZ" />
@@ -113,19 +141,27 @@
 	</add>
 </_Level>
 
-<image name="dummy">
-	<filename> <copy src="parent()" trait="filename" /> </filename>
-</image>
-
 <image name="DropShadow">
-	<visible> <copy src="parent()" trait="visible" /> </visible>
+	<visible>
+		<copy src="parent()" trait="visible" />
+		<and>
+			<or>
+				<copy src="io()" trait="_LMO+DropL" />
+				<and src="parent()" trait="_Icon" />
+			</or>
+			<or>
+				<copy src="io()" trait="_LMO+DropW" />
+				<and> <not src="parent()" trait="_Icon" /> </and>
+			</or>
+		</and>
+	</visible>
 	<alpha>
 		<copy src="parent()" trait="alpha" />
 		<div> 2 </div>
 	</alpha>
 	<depth> -1 </depth>
-	<x>	1 </x>
-	<y> 1 </y>
+	<x>	1.5 </x>
+	<y> 1.5 </y>
 	<height> <copy src="parent()" trait="height" /> </height>
 	<width> <copy src="parent()" trait="width" /> </width>
 	<zoom> <copy src="parent()" trait="zoom" /> </zoom>
@@ -144,6 +180,10 @@
 		<copy src="parent()" trait="_Level" />
 		<gt> 0 </gt>
 		<and src="io()" trait="_LMO+Height"/>
+		<and>
+			<copy src="parent()" trait="_Icon" />
+			<gt> 0 </gt>
+		</and>
 	</visible>
 	<alpha> <copy src="parent()" trait="alpha" /> </alpha>
 	<x>
@@ -153,22 +193,22 @@
 	</x>
 	<y>
 		<copy src="parent()" trait="height" />
-		<sub src="me()" trait="height" />
 		<div> 2 </div>
 		<add>
 			<copy src="parent()" trait="height" />
+			<add src="me()" trait="height" />
 			<div>
 				<add>
 					<copy> 1.5 </copy>
 					<onlyif>
-						<copy src="parent()" trait="_LMO+Icon" />
+						<copy src="parent()" trait="_Icon" />
 						<eq> 2 </eq>
 					</onlyif>
 				</add>
 				<add>
-					<copy> 3 </copy>
+					<copy> 1.75 </copy>
 					<onlyif>
-						<copy src="parent()" trait="_LMO+Icon" />
+						<copy src="parent()" trait="_Icon" />
 						<eq> 1 </eq>
 					</onlyif>
 				</add>
@@ -180,18 +220,19 @@
 		</add>
 		<sub>
 			<copy src="parent()" trait="height" />
+			<add src="me()" trait="height" />
 			<div>
 				<add>
 					<copy> 1.5 </copy>
 					<onlyif>
-						<copy src="parent()" trait="_LMO+Icon" />
+						<copy src="parent()" trait="_Icon" />
 						<eq> 2 </eq>
 					</onlyif>
 				</add>
 				<add>
-					<copy> 3 </copy>
+					<copy> 1.75 </copy>
 					<onlyif>
-						<copy src="parent()" trait="_LMO+Icon" />
+						<copy src="parent()" trait="_Icon" />
 						<eq> 1 </eq>
 					</onlyif>
 				</add>
@@ -206,10 +247,7 @@
 		<copy src="me()" trait="width" />
 		<div> 2 </div>
 	</rotateaxisx>
-	<rotateaxisy>
-		<copy src="me()" trait="height" />
-		<div> 2 </div>
-	</rotateaxisy>
+	<rotateaxisy> 0 </rotateaxisy>
 	<rotateangle>
 		<copy> 0 </copy>
 		<add>
@@ -226,9 +264,9 @@
 		<mul>
 			<copy> 0.4 </copy>
 			<onlyif src="parent()" trait="_selected" />
-			<add> 1 </add>
+			<add src="io()" trait="_LMO+SizeL" />
 		</mul>
-		<min> 48 </min>
+		<min> 64 </min>
 		<div> 4 </div>
 	</height>
 	<width> <copy src="me()" trait="height" /> </width>
