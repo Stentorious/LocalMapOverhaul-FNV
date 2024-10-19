@@ -1,4 +1,4 @@
-; Local Map Overhaul Full 1.5 - Stentorious
+; Local Map Overhaul Full 1.6 - Stentorious
 
 ; On game restart
 if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
@@ -24,6 +24,10 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 	endif
 	if GetPluginVersion "UI Organizer Plugin" < 230
 		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest User Interface Organizer plugin."
+		return
+	endif
+	if eval FileExists "uio\public\JHCTweaks - PipBoy Map - Bigger Icons.txt" || FileExists "uio\public\JHCTweaks - PipBoy Map - Crop Fix.txt"
+		MessageBoxEx "Local Map Overhaul incompatibility detected!%rDisable JHC Map Marker Tweaks."
 		return
 	endif
 	if GetPluginVersion "yUI" < 140
