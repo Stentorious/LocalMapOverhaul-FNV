@@ -138,7 +138,7 @@ begin Function {iMenuID}
 								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Aid_CookedMeal.dds"
 							elseif eval rTemp == VendorClothes
 								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Apparel_Other_Bag.dds"
-							elseif eval rTemp == VendorChems || rTemp == VendorChemsFood
+							elseif eval IsModLoaded "TaleOfTwoWastelands.esm" && (rTemp == (EditorIDToFormID "VendorChems") || rTemp == (EditorIDToFormID "VendorChemsFood"))
 								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Aid_Drug.dds"
 							else
 								SetUIStringAlt (sUIPath + "\filename") "interface\icons\Misc_BottleCap.dds"
