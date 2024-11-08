@@ -275,11 +275,11 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 	SetOnMenuOpenEventHandler (CompileScript "LocalMapOverhaul\OnMenuOpen1023.gek") 1 1023
 	SetOnMouseoverChangeEventHandler (CompileScript "LocalMapOverhaul\OnMouseover1023.gek") 1 1023
 	SetOnMenuClickEventHandler (CompileScript "LocalMapOverhaul\OnIconClick.gek") 1 "MapMenu#50"
-	SetOnMenuCloseEventHandler ({int iMenuID} => SetJohnnyOnRenderUpdateEventHandler 0 (CompileScript "LocalMapOverhaul\MenuLoop.gek")) 1 1023
+	SetOnMenuCloseEventHandler ({int iMenuID} => SetOnRenderUpdateEventHandler 0 (CompileScript "LocalMapOverhaul\MenuLoop.gek")) 1 1023
 
 endif
 
 ; On game load
 if Goo1.AuxVarGetFlt "*LocalMap_Init" 1 == 1
-	SetJohnnyOnRenderUpdateEventHandler 0 (CompileScript "LocalMapOverhaul\MenuLoop.gek")
+	SetOnRenderUpdateEventHandler 0 (CompileScript "LocalMapOverhaul\MenuLoop.gek")
 endif
