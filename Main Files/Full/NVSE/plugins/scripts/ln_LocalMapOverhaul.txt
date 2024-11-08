@@ -1,4 +1,4 @@
-; Local Map Overhaul Full 1.6 - Stentorious
+; Local Map Overhaul Full 1.7 - Stentorious
 
 ; On game restart
 if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
@@ -53,7 +53,7 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 	SetUIFloatAlt "MapMenu\_LMO+Dist" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat "Icons:fIconRadius" "Stentorious\LocalMapOverhaul.ini"))) * 69.99104)
 	if GetINIFloat "Icons:bPerceptionCalc" "Stentorious\LocalMapOverhaul.ini" == 1
 		SetUIFloatAlt "MapMenu\_LMO+DistMode" 1
-		SetOnActorValueChangeEventHandler 1 ({int iAVCode, float fOldValue, float fNewValue} => SetUIFloatAlt "MapMenu\_LMO+PlrAV6" (GetMaxOf 1 (GetMinOf 10 (Player.GetActorValue Perception)))) 0 6
+		SetOnActorValueChangeEventHandler 1 ({int iAVCode, float fOldValue, float fNewValue} => SetUIFloatAlt "MapMenu\_LMO+PlrAV6" (GetMaxOf 1 (GetMinOf 10 (Player.GetAV Perception)))) 0 6
 	endif
 	if GetINIFloat "Icons:bHeightIndicator" "Stentorious\LocalMapOverhaul.ini" == 1
 		SetUIFloatAlt "MapMenu\_LMO+Height" 1
@@ -271,13 +271,15 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 	iBitMask += 2 * (eval (GetINIFloat "Extra:bRemoteTerminals" "Stentorious\LocalMapOverhaul.ini" == 2))
 	Goo1.AuxVarSetFlt "*LocalMap_INI" iBitMask 5
 
-endif
-
-; On game load
-if Goo1.AuxVarGetFlt "*LocalMap_Init" 1 == 1
+	; Event handlers
 	SetOnMenuOpenEventHandler (CompileScript "LocalMapOverhaul\OnMenuOpen1023.gek") 1 1023
 	SetOnMouseoverChangeEventHandler (CompileScript "LocalMapOverhaul\OnMouseover1023.gek") 1 1023
 	SetOnMenuClickEventHandler (CompileScript "LocalMapOverhaul\OnIconClick.gek") 1 "MapMenu#50"
 	SetOnMenuCloseEventHandler ({int iMenuID} => SetJohnnyOnRenderUpdateEventHandler 0 (CompileScript "LocalMapOverhaul\MenuLoop.gek")) 1 1023
+
+endif
+
+; On game load
+if Goo1.AuxVarGetFlt "*LocalMap_Init" 1 == 1
 	SetJohnnyOnRenderUpdateEventHandler 0 (CompileScript "LocalMapOverhaul\MenuLoop.gek")
 endif
