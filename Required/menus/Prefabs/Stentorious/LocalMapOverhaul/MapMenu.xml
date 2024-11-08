@@ -105,7 +105,7 @@
 
 		<_PosX> 0 </_PosX>
 		<_PosY> 0 </_PosY>
-		<_PosZ> 0 </_PosZ>
+		<_PosZ> <copy src="io()" trait="_LMO+PlrZ" /> </_PosZ>
 		<_Deg> -1 </_Deg>
 		<_Dist> 0 </_Dist>
 		<_Hostile> -1 </_Hostile>
