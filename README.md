@@ -73,9 +73,9 @@ Requires the *Full* version of Local Map Overhaul.
 Adding Local Map icons to any Item, Activator, Container, or Projectile is as simple as adding the ***LocalMapIcon*** Keyword to the appropriate form. See the [KEYWORDs](https://www.nexusmods.com/newvegas/mods/83088) mod page for detailed instructions on the different ways you can manage Keywords.
 
 Icons will be automatically assigned based on the ySI - Sorting Icons framework.
-Every inventory item will already have assigned ySI - Sorting Icons textures, but Activators, Containers, and Projectiles will not. 
+Every inventory item will already have assigned ySI - Sorting Icons textures, but Activators, Containers, and Projectiles will not.
 
-You can assign icons to any game form using the same .JSON framework that ySI - Sorting Icons uses for items. Check the Local Map Overhaul installation directory for an example Activator.json, where I have assigned icons to the forms supported by default. 
+You can assign icons to any game form using the same .JSON framework that ySI - Sorting Icons uses for items. Check the Local Map Overhaul installation directory for an example Activator.json, where I have assigned icons to the forms supported by default.
 
 Here is an [in depth guide](https://www.nexusmods.com/newvegas/mods/76521) on the ySI .JSON framework, the information provided can be applied to any form type, not just items.
 
@@ -85,6 +85,7 @@ Here is an [in depth guide](https://www.nexusmods.com/newvegas/mods/76521) on th
 - [ySI - Colorful Icons Support](https://www.nexusmods.com/newvegas/mods/85075)
 
 ## Requirements
+- [xNVSE](https://www.nexusmods.com/newvegas/mods/67883) (6.3.3+)
 - [JIP LN NVSE](https://www.nexusmods.com/newvegas/mods/58277)
 - [JohnnyGuitar NVSE](https://www.nexusmods.com/newvegas/mods/66927)
 - [ShowOff xNVSE](https://www.nexusmods.com/newvegas/mods/72541)
