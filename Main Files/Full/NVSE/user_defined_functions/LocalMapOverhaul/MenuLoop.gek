@@ -19,7 +19,9 @@ begin Function {}
 
 				sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:%g" iUITile
 				rIcon = StringToRef (GetUIString (sUIPath + "\_RefIDStr"))
-				SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
+				if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
+					SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
+				endif
 
 				if rIcon.GetLocked > 0
 					sName = GetUIString (sUIPath + "\_LocationName")
@@ -78,7 +80,9 @@ begin Function {}
 			while GetUIFloatAlt ("MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:" + $iUITile + "\visible") != -999
 				sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:%g" iUITile
 				rIcon = StringToRef (GetUIString (sUIPath + "\_RefIDStr"))
-				SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
+				if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
+					SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
+				endif
 				SetUIFloatAlt (sUIPath + "\_Icon") 1
 				iUITile += 1
 			loop
