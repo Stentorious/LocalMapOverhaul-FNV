@@ -1,4 +1,4 @@
-; Local Map Overhaul Lite 1.8 - Stentorious
+; Local Map Overhaul Lite - Stentorious
 
 ; On game restart
 if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
