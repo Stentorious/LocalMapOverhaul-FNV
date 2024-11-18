@@ -4,7 +4,9 @@ string_var sUIPath
 
 int	iType
 int iBitMask
+int iTemp
 ref rIcon
+string_var sTemp
 
 begin Function {iMenuID, iTileID, sUIPath}
 
@@ -12,26 +14,35 @@ begin Function {iMenuID, iTileID, sUIPath}
 	sUIPath = GetActiveUIComponentFullName
 	if GetUIFloatAlt (sUIPath + "\_ShowName") == 1
 
-		rIcon = StringToRef (GetUIString (sUIPath + "\_RefID"))
-		Goo1.AuxVarSetRef "*LocalMap_Ref" rIcon
-		iType = rIcon.GetType
-		iBitMask = Goo1.AuxVarGetFlt "*LocalMap_INI" 5
+		sTemp = GetUIString (sUIPath + "\_RefID")
+		iTemp = Sv_length sTemp
+		if iTemp < 7
+			rIcon = BuildRef 0 (ToNumber sTemp 1)
+		else
+			rIcon = BuildRef (ToNumber sTemp[0:(iTemp-7)] 1) (ToNumber sTemp[(iTemp-6):-1] 1)
+		endif
 
-		; Display remote terminal access message box
-		if eval iType == 23 && rIcon.GetLocked < 2 && (GetBit iBitMask 0 || (GetBit iBitMask 1 && Player.HasPerk ComputerWhiz))
-			MessageBoxExAlt (begin function {int iButton}
-				if iButton == 0
-					rIcon = Goo1.AuxVarGetRef "*LocalMap_Ref"
-					rIcon.Activate Player
-					if eval rIcon.GetLocked == 0 || (rIcon.GetLocked && ((rIcon.GetLockLevel) * 25) <= Player.GetAV Science)
-						TogglePipBoy
+		if eval IsFormValid rIcon && IsReference rIcon
+			Goo1.AuxVarSetRef "*LocalMap_Ref" rIcon
+			iType = rIcon.GetType
+			iBitMask = Goo1.AuxVarGetFlt "*LocalMap_INI" 5
+
+			; Display remote terminal access message box
+			if eval iType == 23 && rIcon.GetLocked < 2 && (GetBit iBitMask 0 || (GetBit iBitMask 1 && Player.HasPerk ComputerWhiz))
+				MessageBoxExAlt (begin function {int iButton}
+					if iButton == 0
+						rIcon = Goo1.AuxVarGetRef "*LocalMap_Ref"
+						rIcon.Activate Player
+						if eval rIcon.GetLocked == 0 || (rIcon.GetLocked && ((rIcon.GetLockLevel) * 25) <= Player.GetAV Science)
+							TogglePipBoy
+						endif
 					endif
-				endif
-			end) "^Remote Access^Access %n?|%z|%z" rIcon (GetStringSetting "sOk") (GetStringSetting "sCancel")
+				end) "^Remote Access^Access %n?|%z|%z" rIcon (GetStringSetting "sOk") (GetStringSetting "sCancel")
+			endif
 		endif
 
 	endif
 
-	sv_Destruct sUIPath
+	sv_Destruct sUIPath sTemp
 
 end

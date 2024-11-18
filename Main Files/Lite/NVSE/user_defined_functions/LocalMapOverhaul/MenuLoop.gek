@@ -1,6 +1,8 @@
+int iTemp
 int iUITile
 ref rIcon
 string_var sUIPath
+string_var sTemp
 
 begin Function {}
 
@@ -8,7 +10,13 @@ begin Function {}
 	if GetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_Tabline\_CurrentTab" == 0 && GetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:0\_Icon" == 0
 		while GetUIFloatAlt ("MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:" + $iUITile + "\visible") != -999
 			sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:%g" iUITile
-			rIcon = StringToRef (GetUIString (sUIPath + "\_RefIDStr"))
+			sTemp = GetUIString (sUIPath + "\_RefIDStr")
+			iTemp = Sv_length sTemp
+			if iTemp < 7
+				rIcon = BuildRef 0 (ToNumber sTemp 1)
+			else
+				rIcon = BuildRef (ToNumber sTemp[0:(iTemp-7)] 1) (ToNumber sTemp[(iTemp-6):-1] 1)
+			endif
 			if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
 				SetUIFloatAlt (sUIPath + "\_PosZ") (rIcon.GetPos Z)
 			endif
@@ -16,7 +24,7 @@ begin Function {}
 			iUITile += 1
 		loop
 
-		sv_Destruct sUIPath
+		sv_Destruct sUIPath sTemp
 
 	endif
 end
