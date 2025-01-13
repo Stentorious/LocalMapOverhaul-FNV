@@ -25,7 +25,7 @@ begin Function {iMenuID}
 
 	; Get global settings
 	iDist = GetUIFloatAlt "MapMenu\_LMO+Dist"
-	iName = Goo1.AuxVarGetFlt "*LocalMap_INI" 3
+	iName = Goo1.AuxVarGetFlt "*LocalMap_INI" 2
 
 	; Door icon loop
 	SetOnRenderUpdateEventHandler 1 (CompileScript "LocalMapOverhaul\MenuLoop.gek") 0
@@ -35,7 +35,7 @@ begin Function {iMenuID}
 	AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow|Map_Icons|Map_Icons"
 
 	; Actor icons
-	iTemp = Goo1.AuxVarGetFlt "*LocalMap_INI" 1
+	iTemp = Goo1.AuxVarGetFlt "*LocalMap_INI" 0
 	if iTemp > 0
 
 		; Build array of actor refs
@@ -53,7 +53,7 @@ begin Function {iMenuID}
 		if eval iSize > 0
 
 			; Get actor settings
-			iCorpse = Goo1.AuxVarGetFlt "*LocalMap_INI" 2
+			iCorpse = Goo1.AuxVarGetFlt "*LocalMap_INI" 1
 
 			; Process actor refs
 			while (iSize -= 1) > -1

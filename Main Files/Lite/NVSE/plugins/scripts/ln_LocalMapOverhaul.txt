@@ -32,8 +32,6 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 	endif
 	Goo1.AuxVarSetFlt "*LocalMap_Init" 1 1
 
-	Goo1.AuxVarSetFlt "*LocalMap_INI" 0 0
-
 	; Load interface settings
 	SetUIFloatAlt "MapMenu\_LMO+CropW" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat_Cached "Interface:fIconCropWorld" "Stentorious\LocalMapOverhaul.ini")))
 	SetUIFloatAlt "MapMenu\_LMO+SizeL" (GetMaxOf 0.75 (GetMinOf 1.5 (GetINIFloat_Cached "Interface:fIconSizeLocal" "Stentorious\LocalMapOverhaul.ini")))
@@ -56,9 +54,9 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 	if eval GetINIFloat_Cached "Actors:bHostileColor" "Stentorious\LocalMapOverhaul.ini"
 		SetUIFloatAlt "MapMenu\_LMO+Color2" 2
 	endif
-	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat_Cached "Actors:iMode" "Stentorious\LocalMapOverhaul.ini"))) 1
-	Goo1.AuxVarSetFlt "*LocalMap_INI" (eval GetINIFloat_Cached "Actors:bHideEmptyCorpses" "Stentorious\LocalMapOverhaul.ini") 2
-	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat_Cached "Actors:iNameVisibility" "Stentorious\LocalMapOverhaul.ini"))) 3
+	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat_Cached "Actors:iMode" "Stentorious\LocalMapOverhaul.ini"))) 0
+	Goo1.AuxVarSetFlt "*LocalMap_INI" (eval GetINIFloat_Cached "Actors:bHideEmptyCorpses" "Stentorious\LocalMapOverhaul.ini") 1
+	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat_Cached "Actors:iNameVisibility" "Stentorious\LocalMapOverhaul.ini"))) 2
 
 	CloseFileSO "Stentorious\LocalMapOverhaul.ini" 0
 
