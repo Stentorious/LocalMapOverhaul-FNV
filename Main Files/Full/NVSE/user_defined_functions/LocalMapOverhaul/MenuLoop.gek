@@ -10,9 +10,13 @@ string_var sTemp
 
 begin Function {}
 
+	; Processes all of the local map door icons and adds height indicators and locked icons/description
+	; Needs to be in a render loop since Stewie's menu search functionality resets the tiles
+	; Very hacky but no better way to match icons with their refs
+
 	; Door icons have been reset
 	if GetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_Tabline\_CurrentTab" == 0 && GetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:0\_Icon" == 0
-		if eval GetBit (Goo1.AuxVarGetFlt "*LocalMap_INI" 0) 9
+		if eval Goo1.AuxVarGetFlt "*LocalMap_INI" 0 && GetBit (Goo1.AuxVarGetFlt "*LocalMap_INI" 4) 9
 
 			; Dynamic door icons
 			while GetUIFloatAlt ("MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:" + $iUITile + "\visible") != -999

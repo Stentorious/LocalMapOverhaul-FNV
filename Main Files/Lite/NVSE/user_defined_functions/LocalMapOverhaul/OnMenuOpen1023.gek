@@ -1,19 +1,18 @@
 int	iMenuID
 
-int	iIndex
 int	iDist
 int	iName
-int	iCorpse
 int	iTemp
+int	iCorpse
+int iSize
 float fPosX
 float fPosY
 float fPosZ
 ref rIcon
-ref rTemp
-array_var aActors
-array_var aForE
+array_var aRefs
 array_var aTemp
 string_var sUIPath
+string_var sTemp
 
 begin Function {iMenuID}
 
@@ -26,7 +25,7 @@ begin Function {iMenuID}
 
 	; Get global settings
 	iDist = GetUIFloatAlt "MapMenu\_LMO+Dist"
-	iName = Goo1.AuxVarGetFlt "*LocalMap_INI" 1
+	iName = Goo1.AuxVarGetFlt "*LocalMap_INI" 3
 
 	; Door icon loop
 	SetOnRenderUpdateEventHandler 1 (CompileScript "LocalMapOverhaul\MenuLoop.gek") 0
@@ -36,84 +35,81 @@ begin Function {iMenuID}
 	AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow|Map_Icons|Map_Icons"
 
 	; Actor icons
-	iTemp = Goo1.AuxVarGetFlt "*LocalMap_INI" 2
+	iTemp = Goo1.AuxVarGetFlt "*LocalMap_INI" 1
 	if iTemp > 0
 
 		; Build array of actor refs
 		if iTemp == 2
-			aActors = Player.GetRefs 43 2 1 iDist
+			aRefs = Player.GetRefs 43 2 1 iDist
 		else
-			aActors = Player.GetRefs 42 2 1 iDist
+			aRefs = Player.GetRefs 42 2 1 iDist
 			if iTemp == 3
 				aTemp = Player.GetRefs 43 2 1 iDist
-				ar_Cat aActors aTemp
+				ar_Cat aRefs aTemp
 			endif
 		endif
-		if aActors
+
+		iSize = Ar_Size aRefs
+		if eval iSize > 0
 
 			; Get actor settings
-			iCorpse = Goo1.AuxVarGetFlt "*LocalMap_INI" 3
+			iCorpse = Goo1.AuxVarGetFlt "*LocalMap_INI" 2
 
 			; Process actor refs
-			foreach aForE <- aActors
-				rIcon = *aForE
-				if eval IsFormValid rIcon && rIcon.GetDisabled == 0 && rIcon.IsActorsAIOff == 0 && rIcon.IsActorInvisibleToPlayer == 0 && rIcon.GetPlayerTeammate == 0 && rIcon.HasLoaded3D
+			while (iSize -= 1) > -1
+				rIcon = aRefs[iSize]
+				if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.IsActorsAIOff == 0 && rIcon.IsActorInvisibleToPlayer == 0 && rIcon.GetPlayerTeammate == 0
 
 					; Add icon tile
-					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon%g" iIndex
-					sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon%g" iIndex
+					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon"
+					sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon:0\"
 					fPosX = rIcon.GetPos X
 					fPosY = rIcon.GetPos Y
 					fPosZ = rIcon.GetPos Z
-					SetUIFloatAlt (sUIPath + "\_PosX") fPosX
-					SetUIFloatAlt (sUIPath + "\_PosY") fPosY
-					SetUIFloatAlt (sUIPath + "\_PosZ") fPosZ
-					;SetUIFloatAlt (sUIPath + "\_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
-					SetUIFloatAlt (sUIPath + "\_DepthMod") 3
-					SetUIFloatAlt (sUIPath + "\_Dist") (Player.GetDistance3D rIcon)
-					SetUIStringAlt (sUIPath + "\_Name") (rIcon.LNGetName)
-					SetUIStringAlt (sUIPath + "\_RefID") (GetFormIDString rIcon)
-					iIndex += 1
+					SetUIFloatAlt (sUIPath + "_PosX") fPosX
+					SetUIFloatAlt (sUIPath + "_PosY") fPosY
+					SetUIFloatAlt (sUIPath + "_PosZ") fPosZ
+					;SetUIFloatAlt (sUIPath + "_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
+					SetUIFloatAlt (sUIPath + "_DepthMod") 3
+					SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
+					SetUIStringAlt (sUIPath + "_Name") (rIcon.LNGetName)
+					SetUIStringAlt (sUIPath + "_RefID") (GetFormIDString rIcon)
 
-					; Set hostility status and corpse visibility
-					iTemp = rIcon.GetDead
-					if eval rIcon.GetIsCreature
-						if iTemp == 1
-							if eval iCorpse == 1 && rIcon.GetContainerInventoryCount == 0
-								SetUIFloatAlt (sUIPath + "\visible") 0
-							else
-								SetUIStringAlt (sUIPath + "\filename") "Interface\Stentorious\LocalMapOverhaul\ActorDead.dds"
-							endif
-						else
-							SetUIFloatAlt (sUIPath + "\_Deg") (rIcon.GetAngle Z)
-							SetUIFloatAlt (sUIPath + "\_Hostile") (rIcon.IsCompassHostile)
-						endif
-					else
-						if iTemp == 1
-							if eval iCorpse == 1 && rIcon.GetContainerInventoryCount == 0
-								SetUIFloatAlt (sUIPath + "\visible") 0
-							else
-								SetUIStringAlt (sUIPath + "\filename") "Interface\Stentorious\LocalMapOverhaul\ActorDead.dds"
-							endif
-						else
-							SetUIFloatAlt (sUIPath + "\_Deg") (rIcon.GetAngle Z)
-							SetUIFloatAlt (sUIPath + "\_Hostile") (rIcon.IsCompassHostile)
-						endif
+					iTemp = rIcon.GetType
 
-						; Display NPC name
+					; Display NPC name
+					if eval iTemp == 42
 						if iName == 0
-							SetUIFloatAlt (sUIPath + "\_ShowName") 0
+							SetUIFloatAlt (sUIPath + "_ShowName") 0
 						elseif iName == 1 || (iName == 2 && iTemp == 0)
-							SetUIFloatAlt (sUIPath + "\_ShowName") (rIcon.GetTalkedToPC)
+							SetUIFloatAlt (sUIPath + "_ShowName") (rIcon.GetTalkedToPC)
+						endif
+					endif
+
+					; Dead icons
+					if eval rIcon.GetDead
+						if eval iCorpse && rIcon.GetContainerInventoryCount == 0
+							SetUIFloatAlt (sUIPath + "visible") 0
+						else
+							sTemp = "Interface\Stentorious\LocalMapOverhaul\ActorDead.dds"
 						endif
 
+					; Basic Icon
+					else
+						SetUIFloatAlt (sUIPath + "_Deg") (rIcon.GetAngle Z)
+						SetUIFloatAlt (sUIPath + "_Hostile") (rIcon.IsCompassHostile)
+						sTemp = "Interface\Stentorious\LocalMapOverhaul\Actor.dds"
 					endif
+
+					; Set icon
+					SetUIStringAlt (sUIPath + "filename") (sTemp)
+
 				endif
 			loop
 		endif
 	endif
 
-	sv_Destruct sUIPath
-	aActors = aTemp = aForE = ar_Null
+	sv_Destruct sUIPath sTemp
+	aRefs = aTemp = ar_Null
 
 end

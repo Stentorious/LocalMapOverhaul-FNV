@@ -25,7 +25,7 @@ begin Function {iMenuID, iTileID, sUIPath}
 		if eval IsFormValid rIcon && IsReference rIcon
 			Goo1.AuxVarSetRef "*LocalMap_Ref" rIcon
 			iType = rIcon.GetType
-			iBitMask = Goo1.AuxVarGetFlt "*LocalMap_INI" 5
+			iBitMask = Goo1.AuxVarGetFlt "*LocalMap_INI" 6
 
 			; Display remote terminal access message box
 			if eval iType == 23 && rIcon.GetLocked < 2 && (GetBit iBitMask 0 || (GetBit iBitMask 1 && Player.HasPerk ComputerWhiz))

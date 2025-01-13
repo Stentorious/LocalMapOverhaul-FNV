@@ -32,42 +32,39 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 	endif
 	Goo1.AuxVarSetFlt "*LocalMap_Init" 1 1
 
+	Goo1.AuxVarSetFlt "*LocalMap_INI" 0 0
+
 	; Load interface settings
-	SetUIFloatAlt "MapMenu\_LMO+CropW" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "Interface:fIconCropWorld" "Stentorious\LocalMapOverhaul.ini")))
-	SetUIFloatAlt "MapMenu\_LMO+SizeL" (GetMaxOf 0.75 (GetMinOf 1.5 (GetINIFloat "Interface:fIconSizeLocal" "Stentorious\LocalMapOverhaul.ini")))
-	SetUIFloatAlt "MapMenu\_LMO+SizeW" (GetMaxOf 0.5 (GetMinOf 2 (GetINIFloat "Interface:fIconSizeWorld" "Stentorious\LocalMapOverhaul.ini")))
-	SetUIFloatAlt "MapMenu\_LMO+DropL" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "Interface:bDropShadowLocal" "Stentorious\LocalMapOverhaul.ini")))
-	SetUIFloatAlt "MapMenu\_LMO+DropW" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "Interface:bDropShadowWorld" "Stentorious\LocalMapOverhaul.ini")))
-	SetNumericGameSetting "fSeenDataUpdateRadius" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat "Interface:fFogOfWarRadius" "Stentorious\LocalMapOverhaul.ini"))) * 69.99104)
+	SetUIFloatAlt "MapMenu\_LMO+CropW" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat_Cached "Interface:fIconCropWorld" "Stentorious\LocalMapOverhaul.ini")))
+	SetUIFloatAlt "MapMenu\_LMO+SizeL" (GetMaxOf 0.75 (GetMinOf 1.5 (GetINIFloat_Cached "Interface:fIconSizeLocal" "Stentorious\LocalMapOverhaul.ini")))
+	SetUIFloatAlt "MapMenu\_LMO+SizeW" (GetMaxOf 0.5 (GetMinOf 2 (GetINIFloat_Cached "Interface:fIconSizeWorld" "Stentorious\LocalMapOverhaul.ini")))
+	SetUIFloatAlt "MapMenu\_LMO+DropL" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat_Cached "Interface:bDropShadowLocal" "Stentorious\LocalMapOverhaul.ini")))
+	SetUIFloatAlt "MapMenu\_LMO+DropW" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat_Cached "Interface:bDropShadowWorld" "Stentorious\LocalMapOverhaul.ini")))
+	SetNumericGameSetting "fSeenDataUpdateRadius" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat_Cached "Interface:fFogOfWarRadius" "Stentorious\LocalMapOverhaul.ini"))) * 69.99104)
 
 	; Global icon settings
-	SetUIFloatAlt "MapMenu\_LMO+SeenData" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat "Icons:bRespectFogOfWar" "Stentorious\LocalMapOverhaul.ini")))
-	SetUIFloatAlt "MapMenu\_LMO+Dist" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat "Icons:fIconRadius" "Stentorious\LocalMapOverhaul.ini"))) * 69.99104)
-	if GetINIFloat "Icons:bPerceptionCalc" "Stentorious\LocalMapOverhaul.ini" == 1
+	SetUIFloatAlt "MapMenu\_LMO+SeenData" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat_Cached "Icons:bRespectFogOfWar" "Stentorious\LocalMapOverhaul.ini")))
+	SetUIFloatAlt "MapMenu\_LMO+Dist" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat_Cached "Icons:fIconRadius" "Stentorious\LocalMapOverhaul.ini"))) * 69.99104)
+	SetUIFloatAlt "MapMenu\_LMO+Height" (eval GetINIFloat_Cached "Icons:bHeightIndicator" "Stentorious\LocalMapOverhaul.ini")
+	SetUIFloatAlt "MapMenu\_LMO+Fade" (eval GetINIFloat_Cached "Icons:bFadeAlpha" "Stentorious\LocalMapOverhaul.ini")
+	if eval GetINIFloat_Cached "Icons:bPerceptionCalc" "Stentorious\LocalMapOverhaul.ini"
 		SetUIFloatAlt "MapMenu\_LMO+DistMode" 1
 		SetOnActorValueChangeEventHandler 1 ({int iAVCode, float fOldValue, float fNewValue} => SetUIFloatAlt "MapMenu\_LMO+PlrAV6" (GetMaxOf 1 (GetMinOf 10 (Player.GetAV Perception)))) 0 6
 	endif
-	if GetINIFloat "Icons:bHeightIndicator" "Stentorious\LocalMapOverhaul.ini" == 1
-		SetUIFloatAlt "MapMenu\_LMO+Height" 1
-	endif
-	if GetINIFloat "Icons:bFadeAlpha" "Stentorious\LocalMapOverhaul.ini" == 1
-		SetUIFloatAlt "MapMenu\_LMO+Fade" 1
-	endif
 
 	; Actor settings
-	SetUIFloatAlt "MapMenu\_LMO+Color0" 4
-	if GetINIFloat "Actors:bHostileColor" "Stentorious\LocalMapOverhaul.ini" == 1
+	if eval GetINIFloat_Cached "Actors:bHostileColor" "Stentorious\LocalMapOverhaul.ini"
 		SetUIFloatAlt "MapMenu\_LMO+Color2" 2
 	endif
-	Goo1.AuxVarSetFlt "*LocalMap_INI" 0 0
-	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat "Actors:iNameVisibility" "Stentorious\LocalMapOverhaul.ini"))) 1
-	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat "Actors:iMode" "Stentorious\LocalMapOverhaul.ini"))) 2
-	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetINIFloat "Actors:bHideEmptyCorpses" "Stentorious\LocalMapOverhaul.ini") 3
+	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat_Cached "Actors:iMode" "Stentorious\LocalMapOverhaul.ini"))) 1
+	Goo1.AuxVarSetFlt "*LocalMap_INI" (eval GetINIFloat_Cached "Actors:bHideEmptyCorpses" "Stentorious\LocalMapOverhaul.ini") 2
+	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat_Cached "Actors:iNameVisibility" "Stentorious\LocalMapOverhaul.ini"))) 3
+
+	CloseFileSO "Stentorious\LocalMapOverhaul.ini" 0
 
 	; Event handlers
 	SetOnMenuOpenEventHandler (CompileScript "LocalMapOverhaul\OnMenuOpen1023.gek") 1 1023
 	SetOnMouseoverChangeEventHandler (CompileScript "LocalMapOverhaul\OnMouseover1023.gek") 1 1023
-	SetOnMenuClickEventHandler (CompileScript "LocalMapOverhaul\OnIconClick.gek") 1 "MapMenu#50"
 	SetOnMenuCloseEventHandler ({int iMenuID} => SetOnRenderUpdateEventHandler 0 (CompileScript "LocalMapOverhaul\MenuLoop.gek")) 1 1023
 
 endif
