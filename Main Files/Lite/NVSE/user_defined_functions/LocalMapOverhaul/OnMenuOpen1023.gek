@@ -63,9 +63,7 @@ begin Function {iMenuID}
 					; Add icon tile
 					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon"
 					sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon:0\"
-					fPosX = rIcon.GetPos X
-					fPosY = rIcon.GetPos Y
-					fPosZ = rIcon.GetPos Z
+					rIcon.GetPosEx (fPosX) (fPosY) (fPosZ)
 					SetUIFloatAlt (sUIPath + "_PosX") fPosX
 					SetUIFloatAlt (sUIPath + "_PosY") fPosY
 					SetUIFloatAlt (sUIPath + "_PosZ") fPosZ

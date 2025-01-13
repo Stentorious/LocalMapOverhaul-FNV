@@ -76,6 +76,13 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 	; Assign keywords (Crafting stations)
 	if eval Goo1.AuxVarGetFlt "*LocalMap_INI" 0
 
+		int iDeadMoney = (eval IsModLoaded "DeadMoney.esm")
+		int iHonestHearts = (eval IsModLoaded "HonestHearts.esm")
+		int iOldWorldBlues = (eval IsModLoaded "OldWorldBlues.esm")
+		int iLonesomeRoad = (eval IsModLoaded "LonesomeRoad.esm")
+		int iTaleOfTwoWastelands = (eval IsModLoaded "TaleOfTwoWastelands.esm")
+		Goo1.AuxVarSetFlt "*TaleOfTwoWastelands.esm" iTaleOfTwoWastelands
+
 		if eval GetINIFloat_Cached "Objects:bCraftingStation" "Stentorious\LocalMapOverhaul.ini"
 			AssignKeyword WorkBench "LocalMapIcon"
 			AssignKeyword ReloadingBench "LocalMapIcon"
@@ -84,18 +91,19 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 			AssignKeyword CampfireCrafting03 "LocalMapIcon"
 			AssignKeyword CampfireCrafting04 "LocalMapIcon"
 			AssignKeyword VCG03CampfireCrafting03 "LocalMapIcon"
-			if eval IsModLoaded "DeadMoney.esm"
+			if eval iDeadMoney
 				AssignKeyword (EditorIDToFormID "NVDLC01CraftingOven") "LocalMapIcon"
+				AssignKeyword (EditorIDToFormID "NVDLC01VendingArtDeco") "LocalMapIcon"
 			endif
-			if eval IsModLoaded "HonestHearts.esm"
+			if eval iHonestHearts
 				AssignKeyword (EditorIDToFormID "NVDLC02Campfire01") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "NVDLC02Campfire02") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "NVDLC02CraftingOven01") "LocalMapIcon"
 			endif
-			if eval IsModLoaded "OldWorldBlues.esm"
+			if eval iOldWorldBlues
 				AssignKeyword (EditorIDToFormID "NVDLC03HotPlate") "LocalMapIcon"
 			endif
-			if eval IsModLoaded "TaleOfTwoWastelands.esm"
+			if eval iTaleOfTwoWastelands
 				AssignKeyword (EditorIDToFormID "TTWDLC05ControlWB") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "TTWDLC05ControlRB") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "TTWCampGrillCrafting01") "LocalMapIcon"
@@ -122,7 +130,7 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 			AssignKeyword BookSkillSpeech "LocalMapIcon"
 			AssignKeyword BookSkillSurvival "LocalMapIcon"
 			AssignKeyword BookSkillUnarmed "LocalMapIcon"
-			if eval IsModLoaded "TaleOfTwoWastelands.esm"
+			if eval iTaleOfTwoWastelands
 				AssignKeyword (EditorIDToFormID "DLC04GhoulEcologyBook") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "DLC04MirelurkEcologyBook") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "TTWBookSkillBarterVault101d") "LocalMapIcon"
@@ -158,18 +166,18 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 			AssignKeyword SnowglobeTestSite "LocalMapIcon"
 			AssignKeyword SnowglobeNellis "LocalMapIcon"
 			AssignKeyword SnowglobeTheStrip "LocalMapIcon"
-			if eval IsModLoaded "DeadMoney.esm"
+			if eval iDeadMoney
 				AssignKeyword (EditorIDToFormID "NVDLC01Snowglobe") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "NVDLC01DeanSecretStash") "LocalMapIcon"
 			endif
-			if eval IsModLoaded "HonestHearts.esm"
+			if eval iHonestHearts
 				AssignKeyword (EditorIDToFormID "NVDLC02SnowGlobe") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "NVDLC02DuffleBagFORCHALLENGE") "LocalMapIcon"
 			endif
-			if eval IsModLoaded "OldWorldBlues.esm"
+			if eval iOldWorldBlues
 				AssignKeyword (EditorIDToFormID "NVDLC03SnowGlobe") "LocalMapIcon"
 			endif
-			if eval IsModLoaded "LonesomeRoad.esm"
+			if eval iLonesomeRoad
 				AssignKeyword (EditorIDToFormID "NVDLC04Snowglobe") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "NVDLC04RALPHIEPosterActivator") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "NVDLC04Warhead") "LocalMapIcon"
@@ -179,7 +187,7 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 				AssignKeyword (EditorIDToFormID "NVDLC04DivideSniperWarhead02") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "NVDLC04DivideSniperWarhead03") "LocalMapIcon"
 			endif
-			if eval IsModLoaded "TaleOfTwoWastelands.esm"
+			if eval iTaleOfTwoWastelands
 				AssignKeyword (EditorIDToFormID "BobbleheadAGL") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "BobbleheadBART") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "BobbleheadBGUN") "LocalMapIcon"
@@ -209,7 +217,7 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 
 		; Assign keywords (Quest)
 		if eval GetINIFloat_Cached "Objects:bQuest" "Stentorious\LocalMapOverhaul.ini"
-			;if eval IsModLoaded "TaleOfTwoWastelands.esm"
+			;if eval iTaleOfTwoWastelands
 			;	AssignKeyword (EditorIDToFormID "MegatonPipeJointY01ACT") "LocalMapIcon"
 			;	AssignKeyword (EditorIDToFormID "MegatonPipeStraightRegSmlACT") "LocalMapIcon"
 			;	AssignKeyword (EditorIDToFormID "MegatonPipeJointLrgToLrgACT") "LocalMapIcon"
@@ -232,20 +240,24 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 			AssignKeyword SprungTrapBearTrap "LocalMapIcon"
 			AssignKeyword VHDLegionOliverRangerTrapBearTrap "LocalMapIcon"
 			AssignKeyword VHDLegionOliverTrapTripwire "LocalMapIcon"
-			if eval IsModLoaded "DeadMoney.esm"
+			if eval iDeadMoney
 				AssignKeyword (EditorIDToFormID "NVDLC01TrapTripwire") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "NVDLC01TrapBearTrap") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "NVDLC01TrapPressurePlate") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "NVDLC01trapShotgun") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "NVDLC01SprungTrapBearTrap") "LocalMapIcon"
+				AssignKeyword (EditorIDToFormID "NVDLC01Radio") "LocalMapIcon"
+				AssignKeyword (EditorIDToFormID "NVDLC01SpeakerINV") "LocalMapIcon"
+				AssignKeyword (EditorIDToFormID "NVDLC01SpeakerDest") "LocalMapIcon"
+				AssignKeyword (EditorIDToFormID "NVDLC01SpeakerINVOff") "LocalMapIcon"
 			endif
-			if eval IsModLoaded "HonestHearts.esm"
+			if eval iHonestHearts
 				AssignKeyword (EditorIDToFormID "NVDLC02MQ03BearTrap") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "NVDLC02BearTrap") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "NVDLC02TrapTripwire01") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "NVDLC02TrapPressurePlate") "LocalMapIcon"
 			endif
-			if eval IsModLoaded "TaleOfTwoWastelands.esm"
+			if eval iTaleOfTwoWastelands
 				AssignKeyword (EditorIDToFormID "trapShotgunCombat") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "TrapElectrifiedToiletTop01") "LocalMapIcon"
 				AssignKeyword (EditorIDToFormID "TakomaTrapBabyCarriage") "LocalMapIcon"
