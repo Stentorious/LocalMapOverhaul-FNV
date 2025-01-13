@@ -7,6 +7,8 @@
 <_LMO+DistMode> 0 </_LMO+DistMode>
 <_LMO+SeenData> 0 </_LMO+SeenData>
 <_LMO+Deg> 0 </_LMO+Deg>
+<_LMO+DegCos> <cos src="me()" trait="_LMO+Deg" /> </_LMO+DegCos>
+<_LMO+DegSin> <sin src="me()" trait="_LMO+Deg" /> </_LMO+DegSin>
 <_LMO+Fade> 0 </_LMO+Fade>
 <_LMO+Focus> 0 </_LMO+Focus>
 <_LMO+Height> 0 </_LMO+Height>
@@ -57,7 +59,7 @@
 		<id> 50 </id>
 		<visible>
 			<copy src="io()" trait="_LMO+DistCalc" />
-			<gte> <copy src="me()" trait="_Dist" /> </gte>
+			<gte src="me()" trait="_Dist" />
 		</visible>
 		<locus> 1 </locus>
 		<depth>
@@ -117,12 +119,12 @@
 		<_PosXOffset>
 			<copy src="me()" trait="_PosX" />
 			<sub src="io()" trait="_LMO+PlrX" />
-			<mul> 0.0000489 </mul>
+			<div> 20480 </div>
 		</_PosXOffset>
 		<_PosYOffset>
 			<copy src="me()" trait="_PosY" />
 			<sub src="io()" trait="_LMO+PlrY" />
-			<mul> 0.0000489 </mul>
+			<div> 20480 </div>
 		</_PosYOffset>
 		<_PosZOffset>
 			<copy src="me()" trait="_PosZ" />
@@ -154,24 +156,22 @@
 			<copy src="MM_LocalMapCursor" trait="_x" />
 			<add>
 				<copy src="me()" trait="_PosXOffset" />
-				<mul> <cos src="io()" trait="_LMO+Deg" /> </mul>
+				<mul src="io()" trait="_LMO+DegCos" />
 			</add>
 			<sub>
 				<copy src="me()" trait="_PosYOffset" />
-				<mul> <sin src="io()" trait="_LMO+Deg" /> </mul>
+				<mul src="io()" trait="_LMO+DegSin" />
 			</sub>
 		</_x>
 		<_y>
 			<copy src="MM_LocalMapCursor" trait="_y" />
 			<sub>
-				<add>
-					<copy src="me()" trait="_PosXOffset" />
-					<mul> <sin src="io()" trait="_LMO+Deg" /> </mul>
-				</add>
-				<add>
-					<copy src="me()" trait="_PosYOffset" />
-					<mul> <cos src="io()" trait="_LMO+Deg" /> </mul>
-				</add>
+				<copy src="me()" trait="_PosXOffset" />
+				<mul src="io()" trait="_LMO+DegSin" />
+			</sub>
+			<sub>
+				<copy src="me()" trait="_PosYOffset" />
+				<mul src="io()" trait="_LMO+DegCos" />
 			</sub>
 		</_y>
 
