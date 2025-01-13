@@ -76,6 +76,7 @@
 
 	// Mine
 	{ "priority": 200, "tag": "(fjc1)", "mod": "FalloutNV.esm", "form": [ "0043FA", "033C4B", "0403D8", "059449", "109A0D", "130043" ] },
+	{ "priority": 200, "tag": "(fjc1)", "mod": "DeadMoney.esm", "form": "011A47" },
 	{ "priority": 200, "tag": "(fjc1)", "mod": "OldWorldBlues.esm", "form": [ "00E5C1", "00F7F7" ] },
 	{ "priority": 200, "tag": "(fjc1)", "mod": "LonesomeRoad.esm", "form": "0076E9" },
 	{ "priority": 200, "tag": "(fjc1)", "mod": "GunRunnersArsenal.esm", "form": [ "0008EF", "000A91" ] },
@@ -106,7 +107,7 @@
 
 	// Radio
 	{ "priority": 200, "tag": "(hlb2)", "mod": "FalloutNV.esm", "form": [ "02942E", "0842B9", "0ACD55", "10418C", "1343EB", "14ADB7", "152BEA", "152BED", "152BEE", "152BEF", "152BF0", "152BF1", "0770C5", "0CD21B", "0EB3F2", "101F43", "109085", "14B3ED", "153738", "16B668", "16CC0B", "10973F", "0A6FFA", "02D671" ] },
-	{ "priority": 200, "tag": "(hlb2)", "mod": "DeadMoney.esm", "form": [ "00E424", "00E426", "006E8C", "01394B", "005259", "006E94", "00F229", "010E88" ] },
+	{ "priority": 200, "tag": "(hlb2)", "mod": "DeadMoney.esm", "form": [ "00E424", "00E426", "006E8C", "01394B", "005259", "00F229", "010E88" ] },
 	{ "priority": 200, "tag": "(hlb2)", "mod": "OldWorldBlues.esm", "form": "01474A" },
 	{ "priority": 200, "tag": "(hlb2)", "mod": "Fallout3.esm", "form": [ "0842BC", "0842CA", "0842FC", "0842FD", "0842FE", "0842FF", "084303", "084304", "09DEE3", "01A32F", "02B803", "02CC3F", "031425", "031426", "0328FC", "054E8B", "059BB2", "0770C4", "02D671" ] },
 	{ "priority": 200, "tag": "(hlb2)", "mod": "Anchorage.esm", "form": "0013FB" },
@@ -132,6 +133,7 @@
 	{ "priority": 200, "tag": "(aje1)", "mod": "FalloutNV.esm", "form": "053EF3" },
 	{ "priority": 200, "tag": "(aje1)", "mod": "PointLookout.esm", "form": "00D3B2" },
 	{ "priority": 200, "tag": "(ada1)", "mod": "Fallout3.esm", "form": "0C72D5" },
+	{ "priority": 300, "tag": "(hhz2)", "mod": "DeadMoney.esm", "form": [ "006E94", "006E9F", "006E9E", "0109F5" ]},
 
 	// Water
 	{ "priority": 100, "tag": "(jda2)", "formType": 35 },
