@@ -103,7 +103,7 @@ begin Function {iMenuID}
 						if eval iCorpse && rIcon.GetContainerInventoryCount == 0
 							SetUIFloatAlt (sUIPath + "visible") 0
 						else
-							sTemp = "Interface\Stentorious\LocalMapOverhaul\ActorDead.dds"
+							sTemp = "interface\icons\Misc_Skull.dds"
 						endif
 
 					; ySI framework icon
