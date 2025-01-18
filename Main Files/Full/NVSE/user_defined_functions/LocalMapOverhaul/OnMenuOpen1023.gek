@@ -100,7 +100,7 @@ begin Function {iMenuID}
 
 					; Dead icons
 					if eval rIcon.GetDead
-						if eval iCorpse && rIcon.GetContainerInventoryCount == 0
+						if eval iCorpse && rIcon.GetContainerInventoryCount == 0 && Ar_Size (rIcon.GetDroppedRefs) == -1
 							SetUIFloatAlt (sUIPath + "visible") 0
 						else
 							sTemp = "interface\icons\Misc_Skull.dds"
