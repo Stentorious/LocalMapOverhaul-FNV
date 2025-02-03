@@ -135,6 +135,14 @@
 	{ "priority": 200, "tag": "(ada1)", "mod": "Fallout3.esm", "form": "0C72D5" },
 	{ "priority": 300, "tag": "(hhz2)", "mod": "DeadMoney.esm", "form": [ "006E94", "006E9F", "006E9E", "0109F5" ]},
 
+	// Vendor Class
+	{ "priority": 200, "tag": "(dfa1)", "mod": "FalloutNV.esm", "form": "1567A" },						// VendorDrinks
+	{ "priority": 200, "tag": "(dbb2)", "mod": "FalloutNV.esm", "form": "15679" },						// Doctor
+	{ "priority": 200, "tag": "(aba1)", "mod": "FalloutNV.esm", "form": "19462" },						// VendorWeapons
+	{ "priority": 200, "tag": "(dhc1)", "mod": "FalloutNV.esm", "form": "3B75" },						// VendorFood
+	{ "priority": 200, "tag": "(hhc1)", "mod": "FalloutNV.esm", "form": "18738" },						// VendorClothes
+	{ "priority": 200, "tag": "(dda1)", "mod": "TaleOfTwoWastelands.esm", "form": [ "93F5", "93F6" ] },	// VendorChems
+
 	// Water
 	{ "priority": 100, "tag": "(jda2)", "formType": 35 },
 	{ "priority": 100, "tag": "(jda2)", "formType": 78 },
