@@ -100,7 +100,7 @@ begin Function {iMenuID}
 
 					; Dead icons
 					if eval rIcon.GetDead
-						if eval iCorpse && rIcon.GetContainerInventoryCount == 0 && (Ar_Size (rIcon.GetDroppedRefs)) == -1
+						if eval iCorpse && (Ar_Size (rIcon.GetAllItems 0 1 0 0)) == -1 && (Ar_Size (rIcon.GetDroppedRefs)) == -1
 							SetUIFloatAlt (sUIPath + "visible") 0
 						else
 							sTemp = "interface\icons\Misc_Skull.dds"
@@ -112,25 +112,14 @@ begin Function {iMenuID}
 
 					; Vendor icons
 					elseif eval iTemp == 42 && iVendor > 0 && rIcon.GetMerchantContainer
-						rTemp = rIcon.GetClass
-						if iVendor == 1
+						if eval iVendor == 1
 							sTemp = "interface\icons\Misc_BottleCap.dds"
-						elseif eval GetServiceFlag (rIcon.GBO) 131072
-							sTemp = "interface\icons\Aid_WeaponRepairKit.dds"
-						elseif eval rTemp == VendorDrinks
-							sTemp = "interface\icons\Aid_Alcohol.dds"
-						elseif eval rTemp == Doctor
-							sTemp = "interface\icons\Aid_DoctorBag.dds"
-						elseif eval rTemp == VendorWeapons
-							sTemp = "interface\icons\Ammo_Bullet.dds"
-						elseif eval rTemp == VendorFood
-							sTemp = "interface\icons\Aid_CookedMeal.dds"
-						elseif eval rTemp == VendorClothes
-							sTemp = "interface\icons\Apparel_Other_Bag.dds"
-						elseif eval iTaleOfTwoWastelands && (rTemp == rVendorChems || rTemp == rVendorChemsFood)
-							sTemp = "interface\icons\Aid_Drug.dds"
+						elseif eval GetServiceFlag (rCrosshair.GBO) 131072
+							sFilename = "interface\icons\Aid_WeaponRepairKit.dds"
+						elseif eval ySIGetTrait "tag" (rTemp = rCrosshair.GetClass) != ""
+							sFilename = ySIGetTrait "filename" rTemp
 						else
-							sTemp = "interface\icons\Misc_BottleCap.dds"
+							sFilename = "interface\icons\Misc_BottleCap.dds"
 						endif
 
 					; Basic Icon

@@ -86,7 +86,7 @@ begin Function {iMenuID}
 
 					; Dead icons
 					if eval rIcon.GetDead
-						if eval iCorpse && rIcon.GetContainerInventoryCount == 0 && (Ar_Size (rIcon.GetDroppedRefs)) == -1
+						if eval iCorpse && (Ar_Size (rIcon.GetAllItems 0 1 0 0)) == -1 && (Ar_Size (rIcon.GetDroppedRefs)) == -1
 							SetUIFloatAlt (sUIPath + "visible") 0
 						else
 							SetUIFloatAlt (sUIPath + "_Hostile") 0
