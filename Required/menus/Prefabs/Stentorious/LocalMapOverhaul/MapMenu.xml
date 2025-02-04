@@ -65,7 +65,7 @@
 		<depth>
 			<copy src="me()" trait="_DepthMod" />
 			<add>
-				<copy> 6 </copy>
+				<copy> 500 </copy>
 				<onlyif src="me()" trait="mouseover" />
 			</add>
 		</depth>
@@ -202,6 +202,7 @@
 				<max> 0 </max>
 				<min> 255 </min>
 			</alpha>
+			<depth> 0 </depth>
 			<x>	0 </x>
 			<y> 0 </y>
 			<rotateaxisx>
@@ -284,6 +285,7 @@
 				<and src="io()" trait="_LMO+Height"/>
 			</visible>
 			<alpha> <copy src="sibling(Icon)" trait="alpha" /> </alpha>
+			<depth> 0 </depth>
 			<x>
 				<copy src="parent()" trait="width" />
 				<sub src="me()" trait="width" />

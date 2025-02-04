@@ -1,3 +1,4 @@
+<depth> 508 </depth>
 <rect name="MM_HighlightNPCName">
 	<include src="VUI+\outline_rect.xml" />
 	<visible> <copy src="io()" trait="_LMO+Focus" /> </visible>

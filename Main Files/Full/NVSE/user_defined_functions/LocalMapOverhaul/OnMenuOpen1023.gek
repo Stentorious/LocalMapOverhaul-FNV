@@ -8,6 +8,7 @@ int	iBitIcon
 int	iCorpse
 int	iVendor
 int iSize
+int iDepth
 float fPosX
 float fPosY
 float fPosZ
@@ -38,96 +39,6 @@ begin Function {iMenuID}
 	; Reset icons
 	UnloadUIComponent "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons"
 	AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow|Map_Icons|Map_Icons"
-
-	; Actor icons
-	iTemp = Goo1.AuxVarGetFlt "*LocalMap_INI" 0
-	if iTemp > 0
-
-		; Build array of actor refs
-		if iTemp == 2
-			aRefs = Player.GetRefs 43 2 1 iDist
-		else
-			aRefs = Player.GetRefs 42 2 1 iDist
-			if iTemp == 3
-				aTemp = Player.GetRefs 43 2 1 iDist
-				ar_Cat aRefs aTemp
-			endif
-		endif
-
-		iSize = Ar_Size aRefs
-		if eval iSize > 0
-
-			; Get actor settings
-			iCorpse = Goo1.AuxVarGetFlt "*LocalMap_INI" 1
-			iVendor = Goo1.AuxVarGetFlt "*LocalMap_INI" 4
-
-			; Process actor refs
-			while (iSize -= 1) > -1
-				rIcon = aRefs[iSize]
-				if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.IsActorsAIOff == 0 && rIcon.IsActorInvisibleToPlayer == 0 && rIcon.GetPlayerTeammate == 0
-
-					; Add icon tile
-					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon"
-					sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon:0\"
-					rIcon.GetPosEx (fPosX) (fPosY) (fPosZ)
-					SetUIFloatAlt (sUIPath + "_PosX") fPosX
-					SetUIFloatAlt (sUIPath + "_PosY") fPosY
-					SetUIFloatAlt (sUIPath + "_PosZ") fPosZ
-					;SetUIFloatAlt (sUIPath + "_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
-					SetUIFloatAlt (sUIPath + "_DepthMod") 3
-					SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
-					SetUIStringAlt (sUIPath + "_Name") (rIcon.LNGetName)
-					SetUIStringAlt (sUIPath + "_RefID") (GetFormIDString rIcon)
-
-					iTemp = rIcon.GetType
-
-					; Display NPC name
-					if eval iTemp == 42
-						if iName == 0
-							SetUIFloatAlt (sUIPath + "_ShowName") 0
-						elseif iName == 1 || (iName == 2 && iTemp == 0)
-							SetUIFloatAlt (sUIPath + "_ShowName") (rIcon.GetTalkedToPC)
-						endif
-					endif
-
-					; Dead icons
-					if eval rIcon.GetDead
-						if eval iCorpse && (Ar_Size (rIcon.GetAllItems 0 1 0 0)) == -1 && (Ar_Size (rIcon.GetDroppedRefs)) == -1
-							SetUIFloatAlt (sUIPath + "visible") 0
-						else
-							sTemp = "interface\icons\Misc_Skull.dds"
-						endif
-
-					; ySI framework icon
-					elseif eval rIcon.ySIGetTrait "tag" != ""
-						sTemp = rIcon.ySIGetTrait "filename"
-
-					; Vendor icons
-					elseif eval iTemp == 42 && iVendor > 0 && rIcon.GetMerchantContainer
-						if eval iVendor == 1
-							sTemp = "interface\icons\Misc_BottleCap.dds"
-						elseif eval GetServiceFlag (rCrosshair.GBO) 131072
-							sFilename = "interface\icons\Aid_WeaponRepairKit.dds"
-						elseif eval ySIGetTrait "tag" (rTemp = rCrosshair.GetClass) != ""
-							sFilename = ySIGetTrait "filename" rTemp
-						else
-							sFilename = "interface\icons\Misc_BottleCap.dds"
-						endif
-
-					; Basic Icon
-					else
-						SetUIFloatAlt (sUIPath + "_Deg") (rIcon.GetAngle Z)
-						SetUIFloatAlt (sUIPath + "_Hostile") (rIcon.IsCompassHostile)
-						sTemp = "Interface\Stentorious\LocalMapOverhaul\Actor.dds"
-					endif
-
-					; Set icon
-					SetUIStringAlt (sUIPath + "filename") (sTemp)
-
-				endif
-			loop
-		endif
-	endif
 
 	; Item icons
 	; Build array of item refs
@@ -172,6 +83,7 @@ begin Function {iMenuID}
 					SetUIFloatAlt (sUIPath + "_PosY") fPosY
 					SetUIFloatAlt (sUIPath + "_PosZ") fPosZ
 					;SetUIFloatAlt (sUIPath + "_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
+					SetUIFloatAlt (sUIPath + "_DepthMod") (iDepth += 2)
 					SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
 					SetUIStringAlt (sUIPath + "_Name") (rIcon.LNGetName)
 					SetUIStringAlt (sUIPath + "_RefID") (GetFormIDString rIcon)
@@ -203,6 +115,7 @@ begin Function {iMenuID}
 				SetUIFloatAlt (sUIPath + "_PosY") fPosY
 				SetUIFloatAlt (sUIPath + "_PosZ") fPosZ
 				;SetUIFloatAlt (sUIPath + "_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
+				SetUIFloatAlt (sUIPath + "_DepthMod") (iDepth += 2)
 				SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
 				SetUIStringAlt (sUIPath + "_Name") (rIcon.LNGetName)
 				SetUIStringAlt (sUIPath + "_RefID") (GetFormIDString rIcon)
@@ -233,6 +146,7 @@ begin Function {iMenuID}
 					SetUIFloatAlt (sUIPath + "_PosY") fPosY
 					SetUIFloatAlt (sUIPath + "_PosZ") fPosZ
 					;SetUIFloatAlt (sUIPath + "_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
+					SetUIFloatAlt (sUIPath + "_DepthMod") (iDepth += 2)
 					SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
 					SetUIStringAlt (sUIPath + "_Name") (rIcon.LNGetName)
 					SetUIStringAlt (sUIPath + "_RefID") (GetFormIDString rIcon)
@@ -271,6 +185,7 @@ begin Function {iMenuID}
 					SetUIFloatAlt (sUIPath + "_PosY") fPosY
 					SetUIFloatAlt (sUIPath + "_PosZ") fPosZ
 					;SetUIFloatAlt (sUIPath + "_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
+					SetUIFloatAlt (sUIPath + "_DepthMod") (iDepth += 2)
 					SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
 					SetUIStringAlt (sUIPath + "_RefID") (GetFormIDString rIcon)
 
@@ -333,6 +248,7 @@ begin Function {iMenuID}
 					SetUIFloatAlt (sUIPath + "_PosY") fPosY
 					SetUIFloatAlt (sUIPath + "_PosZ") fPosZ
 					;SetUIFloatAlt (sUIPath + "_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
+					SetUIFloatAlt (sUIPath + "_DepthMod") (iDepth += 2)
 					SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
 					SetUIStringAlt (sUIPath + "_Name") (rIcon.LNGetName)
 					SetUIStringAlt (sUIPath + "_RefID") (GetFormIDString rIcon)
@@ -341,6 +257,96 @@ begin Function {iMenuID}
 				endif
 			endif
 		loop
+	endif
+
+	; Actor icons
+	iTemp = Goo1.AuxVarGetFlt "*LocalMap_INI" 0
+	if iTemp > 0
+
+		; Build array of actor refs
+		if iTemp == 2
+			aRefs = Player.GetRefs 43 2 1 iDist
+		else
+			aRefs = Player.GetRefs 42 2 1 iDist
+			if iTemp == 3
+				aTemp = Player.GetRefs 43 2 1 iDist
+				ar_Cat aRefs aTemp
+			endif
+		endif
+
+		iSize = Ar_Size aRefs
+		if eval iSize > 0
+
+			; Get actor settings
+			iCorpse = Goo1.AuxVarGetFlt "*LocalMap_INI" 1
+			iVendor = Goo1.AuxVarGetFlt "*LocalMap_INI" 4
+
+			; Process actor refs
+			while (iSize -= 1) > -1
+				rIcon = aRefs[iSize]
+				if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.IsActorsAIOff == 0 && rIcon.IsActorInvisibleToPlayer == 0 && rIcon.GetPlayerTeammate == 0
+
+					; Add icon tile
+					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon"
+					sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons\Icon:0\"
+					rIcon.GetPosEx (fPosX) (fPosY) (fPosZ)
+					SetUIFloatAlt (sUIPath + "_PosX") fPosX
+					SetUIFloatAlt (sUIPath + "_PosY") fPosY
+					SetUIFloatAlt (sUIPath + "_PosZ") fPosZ
+					;SetUIFloatAlt (sUIPath + "_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
+					SetUIFloatAlt (sUIPath + "_DepthMod") (iDepth += 2)
+					SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
+					SetUIStringAlt (sUIPath + "_Name") (rIcon.LNGetName)
+					SetUIStringAlt (sUIPath + "_RefID") (GetFormIDString rIcon)
+
+					iTemp = rIcon.GetType
+
+					; Display NPC name
+					if eval iTemp == 42
+						if iName == 0
+							SetUIFloatAlt (sUIPath + "_ShowName") 0
+						elseif iName == 1 || (iName == 2 && iTemp == 0)
+							SetUIFloatAlt (sUIPath + "_ShowName") (rIcon.GetTalkedToPC)
+						endif
+					endif
+
+					; Dead icons
+					if eval rIcon.GetDead
+						if eval iCorpse && (Ar_Size (rIcon.GetAllItems 0 1 0 0)) == -1 && (Ar_Size (rIcon.GetDroppedRefs)) == -1
+							SetUIFloatAlt (sUIPath + "visible") 0
+						else
+							sTemp = "interface\icons\Misc_Skull.dds"
+						endif
+
+					; ySI framework icon
+					elseif eval rIcon.ySIGetTrait "tag" != ""
+						sTemp = rIcon.ySIGetTrait "filename"
+
+					; Vendor icons
+					elseif eval iTemp == 42 && iVendor > 0 && rIcon.GetMerchantContainer
+						if eval iVendor == 1
+							sTemp = "interface\icons\Misc_BottleCap.dds"
+						elseif eval GetServiceFlag (rIcon.GBO) 131072
+							sTemp = "interface\icons\Aid_WeaponRepairKit.dds"
+						elseif eval ySIGetTrait "tag" (rTemp = rIcon.GetClass) != ""
+							sTemp = ySIGetTrait "filename" rTemp
+						else
+							sTemp = "interface\icons\Misc_BottleCap.dds"
+						endif
+
+					; Basic Icon
+					else
+						SetUIFloatAlt (sUIPath + "_Deg") (rIcon.GetAngle Z)
+						SetUIFloatAlt (sUIPath + "_Hostile") (rIcon.IsCompassHostile)
+						sTemp = "Interface\Stentorious\LocalMapOverhaul\Actor.dds"
+					endif
+
+					; Set icon
+					SetUIStringAlt (sUIPath + "filename") (sTemp)
+
+				endif
+			loop
+		endif
 	endif
 
 	sv_Destruct sUIPath sTemp

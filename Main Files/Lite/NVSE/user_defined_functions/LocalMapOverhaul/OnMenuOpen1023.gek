@@ -5,6 +5,7 @@ int	iName
 int	iTemp
 int	iCorpse
 int iSize
+int iDepth
 float fPosX
 float fPosY
 float fPosZ
@@ -68,7 +69,7 @@ begin Function {iMenuID}
 					SetUIFloatAlt (sUIPath + "_PosY") fPosY
 					SetUIFloatAlt (sUIPath + "_PosZ") fPosZ
 					;SetUIFloatAlt (sUIPath + "_SeenData") (GetSeenDataAtPos fPosX fPosY fPosZ)
-					SetUIFloatAlt (sUIPath + "_DepthMod") 3
+					SetUIFloatAlt (sUIPath + "_DepthMod") (iDepth += 2)
 					SetUIFloatAlt (sUIPath + "_Dist") (Player.GetDistance3D rIcon)
 					SetUIStringAlt (sUIPath + "_Name") (rIcon.LNGetName)
 					SetUIStringAlt (sUIPath + "_RefID") (GetFormIDString rIcon)

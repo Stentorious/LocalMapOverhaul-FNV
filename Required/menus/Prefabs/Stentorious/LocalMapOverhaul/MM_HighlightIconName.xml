@@ -1,3 +1,4 @@
+<depth> 508 </depth>
 <text name="MM_HighlightNPCName">
 	<visible> <copy src="io()" trait="_LMO+Focus" /> </visible>
 	<x> <copy src="sibling(MM_HighlightLocationName)" trait="x" /> </x>
