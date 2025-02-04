@@ -1,3 +1,35 @@
 <depth> 507 </depth>
 <height> <copy src="me()" trait="width" /> </height>
 <zoom> &scale; </zoom>
+
+<image name="DropShadow">
+	<visible> 1 </visible>
+	<alpha>
+		<copy src="parent()" trait="alpha" />
+		<div> 2 </div>
+	</alpha>
+	<depth>
+		<copy src="parent()" trait="depth" />
+		<sub> 1 </sub>
+	</depth>
+	<x>
+		<copy src="parent()" trait="x" />
+		<add> 1 </add>
+	</x>
+	<y>
+		<copy src="parent()" trait="y" />
+		<add> 1 </add>
+	</y>
+	<rotateaxisx> <copy src="parent()" trait="rotateaxisx" /> </rotateaxisx>
+	<rotateaxisy> <copy src="parent()" trait="rotateaxisy" /> </rotateaxisy>
+	<rotateangle> <copy src="parent()" trait="rotateangle" /> </rotateangle>
+	<height> <copy src="parent()" trait="height" /> </height>
+	<width> <copy src="parent()" trait="width" /> </width>
+	<zoom> &scale; </zoom>
+	<systemcolor> 0 </systemcolor>
+	<red> 0 </red>
+	<green> 0 </green>
+	<blue> 0 </blue>
+	<brightness> <copy src="parent()" trait="brightness" /> </brightness>
+	<filename> <copy src="parent()" trait="filename" /> </filename>
+</image>
