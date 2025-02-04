@@ -39,6 +39,7 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 	SetUIFloatAlt "MapMenu\_LMO+DropL" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat_Cached "Interface:bDropShadowLocal" "Stentorious\LocalMapOverhaul.ini")))
 	SetUIFloatAlt "MapMenu\_LMO+DropW" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat_Cached "Interface:bDropShadowWorld" "Stentorious\LocalMapOverhaul.ini")))
 	SetNumericGameSetting "fSeenDataUpdateRadius" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat_Cached "Interface:fFogOfWarRadius" "Stentorious\LocalMapOverhaul.ini"))) * 69.99104)
+	SetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\brightness" ((GetINIFloat_Cached "Interface:fLocalMapBrightness" "Stentorious\LocalMapOverhaul.ini") * 255)
 
 	; Global icon settings
 	SetUIFloatAlt "MapMenu\_LMO+SeenData" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat_Cached "Icons:bRespectFogOfWar" "Stentorious\LocalMapOverhaul.ini")))
