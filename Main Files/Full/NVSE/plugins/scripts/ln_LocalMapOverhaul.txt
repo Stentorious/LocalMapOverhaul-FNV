@@ -71,7 +71,6 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 	int iOldWorldBlues = (eval IsModLoaded "OldWorldBlues.esm")
 	int iLonesomeRoad = (eval IsModLoaded "LonesomeRoad.esm")
 	int iTaleOfTwoWastelands = (eval IsModLoaded "TaleOfTwoWastelands.esm")
-	Goo1.AuxVarSetFlt "*TaleOfTwoWastelands.esm" iTaleOfTwoWastelands
 
 	; Assign keywords (Crafting stations)
 	if eval GetINIFloat_Cached "Objects:bCraftingStation" "Stentorious\LocalMapOverhaul.ini"

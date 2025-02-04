@@ -8,14 +8,11 @@ int	iBitIcon
 int	iCorpse
 int	iVendor
 int iSize
-int iTaleOfTwoWastelands
 float fPosX
 float fPosY
 float fPosZ
 ref rIcon
 ref rTemp
-ref rVendorChems
-ref rVendorChemsFood
 array_var aRefs
 array_var aTemp
 string_var sUIPath
@@ -63,11 +60,6 @@ begin Function {iMenuID}
 			; Get actor settings
 			iCorpse = Goo1.AuxVarGetFlt "*LocalMap_INI" 1
 			iVendor = Goo1.AuxVarGetFlt "*LocalMap_INI" 4
-			if eval Goo1.AuxVarGetFlt "*TaleOfTwoWastelands.esm"
-				iTaleOfTwoWastelands = 1
-				rVendorChems = EditorIDToFormID "VendorChems"
-				rVendorChemsFood = EditorIDToFormID "VendorChemsFood"
-			endif
 
 			; Process actor refs
 			while (iSize -= 1) > -1
