@@ -157,6 +157,16 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 		AssignKeyword SnowglobeTestSite "LocalMapIcon"
 		AssignKeyword SnowglobeNellis "LocalMapIcon"
 		AssignKeyword SnowglobeTheStrip "LocalMapIcon"
+		AssignKeyword SchematicsDartGunItem "LocalMapIcon"
+		AssignKeyword SchematicsBottlecapMineItem "LocalMapIcon"
+		AssignKeyword SchematicsDeathclawGauntletItem "LocalMapIcon"
+		AssignKeyword SchematicsNukaCocktailItem "LocalMapIcon"
+		AssignKeyword SchematicsRailwayRifleItem "LocalMapIcon"
+		AssignKeyword SchematicsRockItLauncherItem "LocalMapIcon"
+		AssignKeyword SchematicsShishkebabItem "LocalMapIcon"
+		AssignKeyword SchematicsMantisScytheItem "LocalMapIcon"
+		AssignKeyword SchematicsMichaelAngeloProp "LocalMapIcon"
+		AssignKeyword SchematicsPowderChargeItem "LocalMapIcon"
 		if eval iDeadMoney
 			AssignKeyword (EditorIDToFormID "NVDLC01Snowglobe") "LocalMapIcon"
 			AssignKeyword (EditorIDToFormID "NVDLC01DeanSecretStash") "LocalMapIcon"
@@ -202,6 +212,10 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 			AssignKeyword (EditorIDToFormID "BobbleheadUARM") "LocalMapIcon"
 			AssignKeyword (EditorIDToFormID "DLC01SteelPlateActivator") "LocalMapIcon"
 			AssignKeyword (EditorIDToFormID "DLC02FF004Briefcase") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "testPhilSchematicsTrenchKnifeItem") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "SchematicsCryolatorItem") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "SchematicsMolotovCocktailItem") "LocalMapIcon"
+			AssignKeyword (EditorIDToFormID "SchematicsSECtoMPCItem") "LocalMapIcon"
 		endif
 		iBitMask += 128
 	endif
