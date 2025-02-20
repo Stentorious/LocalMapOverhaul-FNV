@@ -32,9 +32,11 @@ begin Function {iMenuID, iTileID, sUIPath}
 				MessageBoxExAlt (begin function {int iButton}
 					if iButton == 0
 						rIcon = Goo1.AuxVarGetRef "*LocalMap_Ref"
-						rIcon.Activate Player
 						if eval rIcon.GetLocked == 0 || (rIcon.GetLocked && ((rIcon.GetLockLevel) * 25) <= Player.GetAV Science)
 							TogglePipBoy
+							CallAfter 0.5 ({ref rTerm} => rTerm.Activate Player) 0 rIcon
+						else
+							rIcon.Activate Player
 						endif
 					endif
 				end) "^Remote Access^Access %n?|%z|%z" rIcon (GetStringSetting "sOk") (GetStringSetting "sCancel")
