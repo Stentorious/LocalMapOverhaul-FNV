@@ -5,9 +5,9 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 	Goo1.AuxVarSetFlt "*LocalMap_Init" 1 0
 
 	; Check for requirements
-	if GetNVSEVersion > 5 && GetNVSERevision > 2 && GetNVSEBeta > 2
+	if GetNVSEVersion > 5 && GetNVSERevision > 2 && GetNVSEBeta > 9
 	else
-		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall xNVSE 6.3.3+."
+		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall xNVSE 6.3.10+."
 		return
 	endif
 	if GetPluginVersion "JohnnyGuitarNVSE" < 390

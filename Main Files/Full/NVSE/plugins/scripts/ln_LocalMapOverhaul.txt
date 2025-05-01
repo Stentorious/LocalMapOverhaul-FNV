@@ -5,9 +5,9 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 	Goo1.AuxVarSetFlt "*LocalMap_Init" 1 0
 
 	; Check for requirements
-	if GetNVSEVersion > 5 && GetNVSERevision > 2 && GetNVSEBeta > 2
+	if GetNVSEVersion > 5 && GetNVSERevision > 2 && GetNVSEBeta > 9
 	else
-		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall xNVSE 6.3.3+."
+		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall xNVSE 6.3.10+."
 		return
 	endif
 	if GetPluginVersion "JohnnyGuitarNVSE" < 390
@@ -287,6 +287,9 @@ if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
 	; Remote terminals
 	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetINIFloat_Cached "Extra:bRemoteTerminals" "Stentorious\LocalMapOverhaul.ini") 5
 	SetOnMenuClickEventHandler (CompileScript "LocalMapOverhaul\OnIconClick.gek") 1 "MapMenu#50"
+	;if Goo1.AuxVarGetFlt "*LocalMap_INI" 5 == 2
+	;	SetFormDescription ComputerWhiz "%z You can also remotely access terminals through the Pip-Boy local map." (GetFormDescription ComputerWhiz)
+	;endif
 
 	CloseFileSO "Stentorious\LocalMapOverhaul.ini" 0
 
