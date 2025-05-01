@@ -10,25 +10,36 @@ begin Function {}
 	; Needs to be in a render loop since Stewie's menu search functionality resets the tiles
 	; Very hacky but no better way to match icons with their refs
 
-	; Door icons have been reset
-	if GetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_Tabline\_CurrentTab" == 0 && GetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:0\_Icon" == 0
-		while GetUIFloatAlt ("MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:" + $iUITile + "\visible") != -999
-			sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:%g\" iUITile
-			sTemp = GetUIString (sUIPath + "_RefIDStr")
-			iTemp = Sv_length sTemp
-			if iTemp < 7
-				rIcon = BuildRef 0 (ToNumber sTemp 1)
-			else
-				rIcon = BuildRef (ToNumber sTemp[0:(iTemp-7)] 1) (ToNumber sTemp[(iTemp-6):-1] 1)
-			endif
-			if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
-				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
-			endif
-			SetUIFloatAlt (sUIPath + "_Icon") 1
-			iUITile += 1
-		loop
-
-		sv_Destruct sUIPath sTemp
-
+	; In Local Map tab
+	if eval GetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_Tabline\_CurrentTab" != 0
+		return
 	endif
+
+	; Update player marker depth
+	if eval GetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\LocalMapQuestMarker:0\depth" == 5
+		SetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\LocalMapQuestMarker:0\depth" 505
+	endif
+
+	; Door icons have been reset
+	if eval GetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:0\_Icon" != 0
+		return
+	endif
+
+	while GetUIFloatAlt ("MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:" + $iUITile + "\visible") != -999
+		sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:%g\" iUITile
+		sTemp = GetUIString (sUIPath + "_RefIDStr")
+		if eval (iTemp = Sv_length sTemp) < 7
+			rIcon = BuildRef 0 (ToNumber sTemp 1)
+		else
+			rIcon = BuildRef (ToNumber sTemp[0:(iTemp-7)] 1) (ToNumber sTemp[(iTemp-6):-1] 1)
+		endif
+		if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
+			SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
+		endif
+		SetUIFloatAlt (sUIPath + "_Icon") 1
+		iUITile += 1
+	loop
+
+	sv_Destruct sUIPath sTemp
+
 end

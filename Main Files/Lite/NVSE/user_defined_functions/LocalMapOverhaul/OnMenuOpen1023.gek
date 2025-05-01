@@ -36,8 +36,7 @@ begin Function {iMenuID}
 	AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow|Map_Icons|Map_Icons"
 
 	; Actor icons
-	iTemp = Goo1.AuxVarGetFlt "*LocalMap_INI" 0
-	if iTemp > 0
+	if eval (iTemp = Goo1.AuxVarGetFlt "*LocalMap_INI" 0) > 0
 
 		; Build array of actor refs
 		if iTemp == 2
@@ -50,8 +49,7 @@ begin Function {iMenuID}
 			endif
 		endif
 
-		iSize = Ar_Size aRefs
-		if eval iSize > 0
+		if eval (iSize = Ar_Size aRefs) > 0
 
 			; Get actor settings
 			iCorpse = Goo1.AuxVarGetFlt "*LocalMap_INI" 1
@@ -59,7 +57,7 @@ begin Function {iMenuID}
 			; Process actor refs
 			while (iSize -= 1) > -1
 				rIcon = aRefs[iSize]
-				if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.IsActorsAIOff == 0 && rIcon.IsActorInvisibleToPlayer == 0 && rIcon.GetPlayerTeammate == 0
+				if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.IsActorsAIOff == 0 && rIcon.IsActorInvisibleToPlayer == 0 && rIcon.GetPlayerTeammate == 0
 
 					; Add icon tile
 					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon"

@@ -67,11 +67,10 @@ begin Function {iMenuID}
 	endif
 
 	; Process item refs
-	iSize = Ar_Size aRefs
-	if eval iSize > 0
+	if eval (iSize = Ar_Size aRefs) > 0
 		while (iSize -= 1) > -1
 			rIcon = aRefs[iSize]
-			if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
+			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
 				iTemp = rIcon.GetType
 				if eval HasKeyword rIcon "LocalMapIcon" || (GetBit iBitIcon 4 && rIcon.IsQuestItem) || (GetBit iBitIcon 3 && IsItemUnique (rIcon.gbo)) || (GetBit iBitIcon 2 && iTemp == 46) || (GetBit iBitIcon 1 && iTemp == 49) || (GetBit iBitIcon 7 && iTemp == 115)
 
@@ -99,11 +98,10 @@ begin Function {iMenuID}
 	aRefs = Player.GetRefs 21 2 1 iDist
 
 	; Process activator refs
-	iSize = Ar_Size aRefs
-	if eval iSize > 0
+	if eval (iSize = Ar_Size aRefs) > 0
 		while (iSize -= 1) > -1
 			rIcon = aRefs[iSize]
-			if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.GetDestroyed == 0 && HasKeyword rIcon "LocalMapIcon"
+			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.GetDestroyed == 0 && HasKeyword rIcon "LocalMapIcon"
 
 				; Add icon tile
 				AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon"
@@ -132,11 +130,10 @@ begin Function {iMenuID}
 		aRefs = Player.GetRefs 51 2 1 iDist
 
 		; Process projectile refs
-		iSize = Ar_Size aRefs
-		if eval iSize > 0
+		if eval (iSize = Ar_Size aRefs) > 0
 			while (iSize -= 1) > -1
 				rIcon = aRefs[iSize]
-				if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.GetMineArmed
+				if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.GetMineArmed
 
 					; Add icon tile
 					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon"
@@ -170,11 +167,10 @@ begin Function {iMenuID}
 	endif
 
 	; Process lockable refs
-	iSize = Ar_Size aRefs
-	if eval iSize > 0
+	if eval (iSize = Ar_Size aRefs) > 0
 		while (iSize -= 1) > -1
 			rIcon = aRefs[iSize]
-			if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
+			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
 				iTemp = rIcon.GetType
 				if eval ((GetBit iBitIcon 6 && iTemp == 27) || (GetBit iBitIcon 8 && iTemp == 23) || (GetBit iBitIcon 9 && iTemp == 28)) && rIcon.GetLocked > 0 && rIcon.GetTeleportDoor == 0
 
@@ -261,8 +257,7 @@ begin Function {iMenuID}
 	endif
 
 	; Actor icons
-	iTemp = Goo1.AuxVarGetFlt "*LocalMap_INI" 0
-	if iTemp > 0
+	if eval (iTemp = Goo1.AuxVarGetFlt "*LocalMap_INI" 0) > 0
 
 		; Build array of actor refs
 		if iTemp == 2
@@ -275,8 +270,7 @@ begin Function {iMenuID}
 			endif
 		endif
 
-		iSize = Ar_Size aRefs
-		if eval iSize > 0
+		if eval (iSize = Ar_Size aRefs) > 0
 
 			; Get actor settings
 			iCorpse = Goo1.AuxVarGetFlt "*LocalMap_INI" 1
@@ -285,7 +279,7 @@ begin Function {iMenuID}
 			; Process actor refs
 			while (iSize -= 1) > -1
 				rIcon = aRefs[iSize]
-				if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.IsActorsAIOff == 0 && rIcon.IsActorInvisibleToPlayer == 0 && rIcon.GetPlayerTeammate == 0
+				if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.IsActorsAIOff == 0 && rIcon.IsActorInvisibleToPlayer == 0 && rIcon.GetPlayerTeammate == 0
 
 					; Add icon tile
 					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon"

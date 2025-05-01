@@ -2,7 +2,6 @@ int	iMenuID
 int	iTileID
 string_var sUIPath
 
-int	iType
 int iBitMask
 int iTemp
 ref rIcon
@@ -15,20 +14,18 @@ begin Function {iMenuID, iTileID, sUIPath}
 	if GetUIFloatAlt (sUIPath + "\_ShowName") == 1
 
 		sTemp = GetUIString (sUIPath + "\_RefID")
-		iTemp = Sv_length sTemp
-		if iTemp < 7
+		if eval (iTemp = Sv_length sTemp) < 7
 			rIcon = BuildRef 0 (ToNumber sTemp 1)
 		else
 			rIcon = BuildRef (ToNumber sTemp[0:(iTemp-7)] 1) (ToNumber sTemp[(iTemp-6):-1] 1)
 		endif
 
-		if eval IsFormValid rIcon && IsReference rIcon
+		if eval IsReference rIcon
 			Goo1.AuxVarSetRef "*LocalMap_Ref" rIcon
-			iType = rIcon.GetType
 			iBitMask = Goo1.AuxVarGetFlt "*LocalMap_INI" 5
 
 			; Display remote terminal access message box
-			if eval iType == 23 && rIcon.GetLocked < 2 && (GetBit iBitMask 0 || (GetBit iBitMask 1 && Player.HasPerk ComputerWhiz))
+			if eval rIcon.GetType == 23 && rIcon.GetLocked < 2 && (GetBit iBitMask 0 || (GetBit iBitMask 1 && Player.HasPerk ComputerWhiz))
 				MessageBoxExAlt (begin function {int iButton}
 					if iButton == 0
 						rIcon = Goo1.AuxVarGetRef "*LocalMap_Ref"

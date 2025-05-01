@@ -14,97 +14,107 @@ begin Function {}
 	; Needs to be in a render loop since Stewie's menu search functionality resets the tiles
 	; Very hacky but no better way to match icons with their refs
 
+	; In Local Map tab
+	if eval GetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_Tabline\_CurrentTab" != 0
+		return
+	endif
+
+	; Update player marker depth
+	if eval GetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\LocalMapQuestMarker:0\depth" == 5
+		SetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\LocalMapQuestMarker:0\depth" 505
+	endif
+
 	; Door icons have been reset
-	if GetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_Tabline\_CurrentTab" == 0 && GetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:0\_Icon" == 0
-		if eval GetBit (Goo1.AuxVarGetFlt "*LocalMap_INI" 3) 9
+	if eval GetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:0\_Icon" != 0
+		return
+	endif
 
-			; Dynamic door icons
-			while GetUIFloatAlt ("MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:" + $iUITile + "\visible") != -999
+	if eval GetBit (Goo1.AuxVarGetFlt "*LocalMap_INI" 3) 9
 
-				sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:%g\" iUITile
-				sTemp = GetUIString (sUIPath + "_RefIDStr")
-				iTemp = Sv_length sTemp
-				if iTemp < 7
-					rIcon = BuildRef 0 (ToNumber sTemp 1)
+		; Dynamic door icons
+		while GetUIFloatAlt ("MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:" + $iUITile + "\visible") != -999
+
+			sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:%g\" iUITile
+			sTemp = GetUIString (sUIPath + "_RefIDStr")
+			if eval (iTemp = Sv_length sTemp) < 7
+				rIcon = BuildRef 0 (ToNumber sTemp 1)
+			else
+				rIcon = BuildRef (ToNumber sTemp[0:(iTemp-7)] 1) (ToNumber sTemp[(iTemp-6):-1] 1)
+			endif
+			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
+				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
+			endif
+
+			if rIcon.GetLocked > 0
+				sName = GetUIString (sUIPath + "_LocationName")
+
+				; Has key
+				if eval rIcon.PlayerHasKey
+					SetUIStringAlt (sUIPath + "filename") "interface\icons\Misc_Keychain.dds"
+					rTemp = rIcon.GetOpenKey
+					SetUIStringAlt (sUIPath + "_LocationName") "%z%r[%n]" sName rTemp
+
+				; Locked
 				else
-					rIcon = BuildRef (ToNumber sTemp[0:(iTemp-7)] 1) (ToNumber sTemp[(iTemp-6):-1] 1)
-				endif
-				if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
-					SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
-				endif
+					iTemp = rIcon.GetLockLevel
+					if rIcon.GetType == 28
+						iTemp /= 25
+					endif
 
-				if rIcon.GetLocked > 0
-					sName = GetUIString (sUIPath + "_LocationName")
-
-					; Has key
-					if eval rIcon.PlayerHasKey
-						SetUIStringAlt (sUIPath + "filename") "interface\icons\Misc_Keychain.dds"
-						rTemp = rIcon.GetOpenKey
-						SetUIStringAlt (sUIPath + "_LocationName") "%z%r[%n]" sName rTemp
-
-					; Locked
-					else
-						iTemp = rIcon.GetLockLevel
-						if rIcon.GetType == 28
-							iTemp /= 25
-						endif
-
-						; Requires key
-						iLocked = rIcon.GetLocked
-						if eval iTemp > 4 || iLocked == 2
-							if eval iLocked == 2
-								sTemp = sv_Construct "%z%r%z" sName (GetStringSetting "sBroken")
-							else
-								sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameImpossible")
-							endif
-							SetUIStringAlt (sUIPath + "filename") "interface\icons\Misc_Key.dds"
-
-						; Pickable
+					; Requires key
+					iLocked = rIcon.GetLocked
+					if eval iTemp > 4 || iLocked == 2
+						if eval iLocked == 2
+							sTemp = sv_Construct "%z%r%z" sName (GetStringSetting "sBroken")
 						else
-							if iTemp == 0
-								sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameVeryEasy")
-							elseif iTemp == 1
-								sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameEasy")
-							elseif iTemp == 2
-								sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameAverage")
-							elseif iTemp == 3
-								sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameHard")
-							else
-								sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameVeryHard")
-							endif
-							SetUIStringAlt (sUIPath + "filename") "interface\icons\Misc_BobbyPin.dds"
-
+							sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameImpossible")
 						endif
+						SetUIStringAlt (sUIPath + "filename") "interface\icons\Misc_Key.dds"
 
-						SetUIStringAlt (sUIPath + "_LocationName") (sTemp)
+					; Pickable
+					else
+						if iTemp == 0
+							sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameVeryEasy")
+						elseif iTemp == 1
+							sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameEasy")
+						elseif iTemp == 2
+							sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameAverage")
+						elseif iTemp == 3
+							sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameHard")
+						else
+							sTemp = sv_Construct "%z%r[%z - %z]" sName (GetStringSetting "sLocked") (GetStringSetting "sLockLevelNameVeryHard")
+						endif
+						SetUIStringAlt (sUIPath + "filename") "interface\icons\Misc_BobbyPin.dds"
 
 					endif
-					SetUIFloatAlt (sUIPath + "_Icon") 2
-				else
-					SetUIFloatAlt (sUIPath + "_Icon") 1
-				endif
-				iUITile += 1
-			loop
 
-		else
-			while GetUIFloatAlt ("MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:" + $iUITile + "\visible") != -999
-				sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:%g\" iUITile
-				sTemp = GetUIString (sUIPath + "_RefIDStr")
-				iTemp = Sv_length sTemp
-				if iTemp < 7
-					rIcon = BuildRef 0 (ToNumber sTemp 1)
-				else
-					rIcon = BuildRef (ToNumber sTemp[0:(iTemp-7)] 1) (ToNumber sTemp[(iTemp-6):-1] 1)
+					SetUIStringAlt (sUIPath + "_LocationName") (sTemp)
+
 				endif
-				if eval IsFormValid rIcon && IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
-					SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
-				endif
+				SetUIFloatAlt (sUIPath + "_Icon") 2
+			else
 				SetUIFloatAlt (sUIPath + "_Icon") 1
-				iUITile += 1
-			loop
-		endif
+			endif
+			iUITile += 1
+		loop
 
-		sv_Destruct sUIPath sName sTemp
-
+	else
+		while GetUIFloatAlt ("MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:" + $iUITile + "\visible") != -999
+			sUIPath = Sv_Construct "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\MapMarker:%g\" iUITile
+			sTemp = GetUIString (sUIPath + "_RefIDStr")
+			if eval (iTemp = Sv_length sTemp) < 7
+				rIcon = BuildRef 0 (ToNumber sTemp 1)
+			else
+				rIcon = BuildRef (ToNumber sTemp[0:(iTemp-7)] 1) (ToNumber sTemp[(iTemp-6):-1] 1)
+			endif
+			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
+				SetUIFloatAlt (sUIPath + "_PosZ") (rIcon.GetPos Z)
+			endif
+			SetUIFloatAlt (sUIPath + "_Icon") 1
+			iUITile += 1
+		loop
 	endif
+
+	sv_Destruct sUIPath sName sTemp
+
 end
