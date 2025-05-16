@@ -1,74 +1,70 @@
 ; Local Map Overhaul Lite - Stentorious
 
+SetOnRenderUpdateEventHandler 0 (CompileScript "LocalMapOverhaul\MenuLoop.gek")
+
 ; On game restart
-if Goo1.AuxVarGetFlt "*LocalMap_Init" != 1
-	Goo1.AuxVarSetFlt "*LocalMap_Init" 1 0
+if Goo1.AuxVarGetFlt "*LocalMap_Init"
+	return
+endif
+Goo1.AuxVarSetFlt "*LocalMap_Init" 1
 
-	; Check for requirements
-	if GetNVSEVersion > 5 && GetNVSERevision > 2 && GetNVSEBeta > 9
-	else
-		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall xNVSE 6.3.10+."
-		return
-	endif
-	if GetPluginVersion "JohnnyGuitarNVSE" < 390
-		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest JohnnyGuitar NVSE plugin."
-		return
-	endif
-	if GetPluginVersion "ShowOffNVSE Plugin" < 180
-		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest ShowOff NVSE plugin."
-		return
-	endif
-	if GetPluginVersion "lStewieAl's Tweaks" < 930
-		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest lStewieAl's Tweaks."
-		return
-	endif
-	if GetPluginVersion "UI Organizer Plugin" < 230
-		MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest User Interface Organizer plugin."
-		return
-	endif
-	if eval FileExists "uio\public\JHCTweaks - PipBoy Map - Bigger Icons.txt" || FileExists "uio\public\JHCTweaks - PipBoy Map - Crop Fix.txt"
-		MessageBoxEx "Local Map Overhaul incompatibility detected!%rDisable JHC Map Marker Tweaks."
-		return
-	endif
-	Goo1.AuxVarSetFlt "*LocalMap_Init" 1 1
-
-	; Load interface settings
-	SetUIFloatAlt "MapMenu\_LMO+CropW" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat_Cached "Interface:fIconCropWorld" "Stentorious\LocalMapOverhaul.ini")))
-	SetUIFloatAlt "MapMenu\_LMO+SizeL" (GetMaxOf 0.75 (GetMinOf 1.5 (GetINIFloat_Cached "Interface:fIconSizeLocal" "Stentorious\LocalMapOverhaul.ini")))
-	SetUIFloatAlt "MapMenu\_LMO+SizeW" (GetMaxOf 0.5 (GetMinOf 2 (GetINIFloat_Cached "Interface:fIconSizeWorld" "Stentorious\LocalMapOverhaul.ini")))
-	SetUIFloatAlt "MapMenu\_LMO+DropL" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat_Cached "Interface:bDropShadowLocal" "Stentorious\LocalMapOverhaul.ini")))
-	SetUIFloatAlt "MapMenu\_LMO+DropW" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat_Cached "Interface:bDropShadowWorld" "Stentorious\LocalMapOverhaul.ini")))
-	SetNumericGameSetting "fSeenDataUpdateRadius" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat_Cached "Interface:fFogOfWarRadius" "Stentorious\LocalMapOverhaul.ini"))) * 69.99104)
-	SetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\brightness" ((GetINIFloat_Cached "Interface:fLocalMapBrightness" "Stentorious\LocalMapOverhaul.ini") * 255)
-
-	; Global icon settings
-	SetUIFloatAlt "MapMenu\_LMO+SeenData" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat_Cached "Icons:bRespectFogOfWar" "Stentorious\LocalMapOverhaul.ini")))
-	SetUIFloatAlt "MapMenu\_LMO+Dist" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat_Cached "Icons:fIconRadius" "Stentorious\LocalMapOverhaul.ini"))) * 69.99104)
-	SetUIFloatAlt "MapMenu\_LMO+Height" (eval GetINIFloat_Cached "Icons:bHeightIndicator" "Stentorious\LocalMapOverhaul.ini")
-	SetUIFloatAlt "MapMenu\_LMO+Fade" (eval GetINIFloat_Cached "Icons:bFadeAlpha" "Stentorious\LocalMapOverhaul.ini")
-	if eval GetINIFloat_Cached "Icons:bPerceptionCalc" "Stentorious\LocalMapOverhaul.ini"
-		SetUIFloatAlt "MapMenu\_LMO+DistMode" 1
-		SetOnActorValueChangeEventHandler 1 ({int iAVCode, float fOldValue, float fNewValue} => SetUIFloatAlt "MapMenu\_LMO+PlrAV6" (GetMaxOf 1 (GetMinOf 10 (Player.GetAV Perception)))) 0 6
-	endif
-
-	; Actor settings
-	if eval GetINIFloat_Cached "Actors:bHostileColor" "Stentorious\LocalMapOverhaul.ini"
-		SetUIFloatAlt "MapMenu\_LMO+Color2" 2
-	endif
-	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat_Cached "Actors:iMode" "Stentorious\LocalMapOverhaul.ini"))) 0
-	Goo1.AuxVarSetFlt "*LocalMap_INI" (eval GetINIFloat_Cached "Actors:bHideEmptyCorpses" "Stentorious\LocalMapOverhaul.ini") 1
-	Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat_Cached "Actors:iNameVisibility" "Stentorious\LocalMapOverhaul.ini"))) 2
-
-	CloseFileSO "Stentorious\LocalMapOverhaul.ini" 0
-
-	; Event handlers
-	SetOnMenuOpenEventHandler (CompileScript "LocalMapOverhaul\OnMenuOpen1023.gek") 1 1023
-	SetOnMouseoverChangeEventHandler (CompileScript "LocalMapOverhaul\OnMouseover1023.gek") 1 1023
-	SetOnMenuCloseEventHandler ({int iMenuID} => SetOnRenderUpdateEventHandler 0 (CompileScript "LocalMapOverhaul\MenuLoop.gek")) 1 1023
-
+; Check for requirements
+if GetNVSEVersion > 5 && GetNVSERevision > 2 && GetNVSEBeta > 9
+else
+	MessageBoxEx "Local Map Overhaul missing requirement!%rInstall xNVSE 6.3.10+."
+	return
+endif
+if GetPluginVersion "JohnnyGuitarNVSE" < 390
+	MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest JohnnyGuitar NVSE plugin."
+	return
+endif
+if GetPluginVersion "ShowOffNVSE Plugin" < 180
+	MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest ShowOff NVSE plugin."
+	return
+endif
+if GetPluginVersion "lStewieAl's Tweaks" < 930
+	MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest lStewieAl's Tweaks."
+	return
+endif
+if GetPluginVersion "UI Organizer Plugin" < 230
+	MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest User Interface Organizer plugin."
+	return
+endif
+if eval FileExists "uio\public\JHCTweaks - PipBoy Map - Bigger Icons.txt" || FileExists "uio\public\JHCTweaks - PipBoy Map - Crop Fix.txt"
+	MessageBoxEx "Local Map Overhaul incompatibility detected!%rDisable JHC Map Marker Tweaks."
+	return
 endif
 
-; On game load
-if Goo1.AuxVarGetFlt "*LocalMap_Init" 1 == 1
-	SetOnRenderUpdateEventHandler 0 (CompileScript "LocalMapOverhaul\MenuLoop.gek")
+; Load interface settings
+SetUIFloatAlt "MapMenu\_LMO+CropW" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat_Cached "Interface:fIconCropWorld" "Stentorious\LocalMapOverhaul.ini")))
+SetUIFloatAlt "MapMenu\_LMO+SizeL" (GetMaxOf 0.75 (GetMinOf 1.5 (GetINIFloat_Cached "Interface:fIconSizeLocal" "Stentorious\LocalMapOverhaul.ini")))
+SetUIFloatAlt "MapMenu\_LMO+SizeW" (GetMaxOf 0.5 (GetMinOf 2 (GetINIFloat_Cached "Interface:fIconSizeWorld" "Stentorious\LocalMapOverhaul.ini")))
+SetUIFloatAlt "MapMenu\_LMO+DropL" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat_Cached "Interface:bDropShadowLocal" "Stentorious\LocalMapOverhaul.ini")))
+SetUIFloatAlt "MapMenu\_LMO+DropW" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat_Cached "Interface:bDropShadowWorld" "Stentorious\LocalMapOverhaul.ini")))
+SetNumericGameSetting "fSeenDataUpdateRadius" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat_Cached "Interface:fFogOfWarRadius" "Stentorious\LocalMapOverhaul.ini"))) * 69.99104)
+SetUIFloatAlt "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\MM_LocalMap_ParentImage\brightness" ((GetINIFloat_Cached "Interface:fLocalMapBrightness" "Stentorious\LocalMapOverhaul.ini") * 255)
+
+; Global icon settings
+SetUIFloatAlt "MapMenu\_LMO+SeenData" (GetMaxOf 0 (GetMinOf 1 (GetINIFloat_Cached "Icons:bRespectFogOfWar" "Stentorious\LocalMapOverhaul.ini")))
+SetUIFloatAlt "MapMenu\_LMO+Dist" ((GetMaxOf 5 (GetMinOf 100 (GetINIFloat_Cached "Icons:fIconRadius" "Stentorious\LocalMapOverhaul.ini"))) * 69.99104)
+SetUIFloatAlt "MapMenu\_LMO+Height" (eval GetINIFloat_Cached "Icons:bHeightIndicator" "Stentorious\LocalMapOverhaul.ini")
+SetUIFloatAlt "MapMenu\_LMO+Fade" (eval GetINIFloat_Cached "Icons:bFadeAlpha" "Stentorious\LocalMapOverhaul.ini")
+if eval GetINIFloat_Cached "Icons:bPerceptionCalc" "Stentorious\LocalMapOverhaul.ini"
+	SetUIFloatAlt "MapMenu\_LMO+DistMode" 1
+	SetOnActorValueChangeEventHandler 1 ({int iAVCode, float fOldValue, float fNewValue} => SetUIFloatAlt "MapMenu\_LMO+PlrAV6" (GetMaxOf 1 (GetMinOf 10 (Player.GetAV Perception)))) 0 6
 endif
+
+; Actor settings
+if eval GetINIFloat_Cached "Actors:bHostileColor" "Stentorious\LocalMapOverhaul.ini"
+	SetUIFloatAlt "MapMenu\_LMO+Color2" 2
+endif
+Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat_Cached "Actors:iMode" "Stentorious\LocalMapOverhaul.ini"))) 0
+Goo1.AuxVarSetFlt "*LocalMap_INI" (eval GetINIFloat_Cached "Actors:bHideEmptyCorpses" "Stentorious\LocalMapOverhaul.ini") 1
+Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat_Cached "Actors:iNameVisibility" "Stentorious\LocalMapOverhaul.ini"))) 2
+
+CloseFileSO "Stentorious\LocalMapOverhaul.ini" 0
+
+; Event handlers
+SetOnMenuOpenEventHandler (CompileScript "LocalMapOverhaul\OnMenuOpen1023.gek") 1 1023
+SetOnMouseoverChangeEventHandler (CompileScript "LocalMapOverhaul\OnMouseover1023.gek") 1 1023
+SetOnMenuCloseEventHandler ({int iMenuID} => SetOnRenderUpdateEventHandler 0 (CompileScript "LocalMapOverhaul\MenuLoop.gek")) 1 1023
