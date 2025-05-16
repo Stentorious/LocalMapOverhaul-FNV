@@ -1,5 +1,6 @@
 ; Local Map Overhaul Full - Stentorious
 
+; On game load
 SetOnRenderUpdateEventHandler 0 (CompileScript "LocalMapOverhaul\MenuLoop.gek")
 
 ; On game restart
