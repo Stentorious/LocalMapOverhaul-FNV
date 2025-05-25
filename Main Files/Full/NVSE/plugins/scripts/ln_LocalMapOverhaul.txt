@@ -68,7 +68,7 @@ if eval GetINIFloat_Cached "Actors:bHostileColor" "Stentorious\LocalMapOverhaul.
 	SetUIFloatAlt "MapMenu\_LMO+Color2" 2
 endif
 Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat_Cached "Actors:iMode" "Stentorious\LocalMapOverhaul.ini"))) 0
-Goo1.AuxVarSetFlt "*LocalMap_INI" (eval GetINIFloat_Cached "Actors:bHideEmptyCorpses" "Stentorious\LocalMapOverhaul.ini") 1
+Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 2 (GetINIFloat_Cached "Actors:iCorpse" "Stentorious\LocalMapOverhaul.ini"))) 1
 Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat_Cached "Actors:iNameVisibility" "Stentorious\LocalMapOverhaul.ini"))) 2
 
 int iDeadMoney = (eval IsModLoaded "DeadMoney.esm")
