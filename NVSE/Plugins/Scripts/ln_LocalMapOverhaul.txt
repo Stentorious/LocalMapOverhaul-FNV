@@ -1,0 +1,118 @@
+; Local Map Overhaul Full - Stentorious
+
+; On game load
+SetOnRenderUpdateEventHandler 0 (CompileScript "LocalMapOverhaul\MenuLoop.gek")
+
+; On game restart
+if Goo1.AuxVarGetFlt "*LocalMap_Init"
+	return
+endif
+Goo1.AuxVarSetFlt "*LocalMap_Init" 1
+
+; Check for requirements
+if eval GetNVSEVersion < 6 || (GetNVSEVersion == 6 && GetNVSERevision < 4)
+	MessageBoxEx "Local Map Overhaul missing requirement!%rInstall xNVSE 6.4.0+."
+	return
+endif
+if GetPluginVersion "JohnnyGuitarNVSE" < 519
+	MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest JohnnyGuitar NVSE plugin."
+	return
+endif
+if GetPluginVersion "ShowOffNVSE Plugin" < 180
+	MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest ShowOff NVSE plugin."
+	return
+endif
+if GetPluginVersion "lStewieAl's Tweaks" < 930
+	MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest lStewieAl's Tweaks."
+	return
+endif
+if GetPluginVersion "UI Organizer Plugin" < 230
+	MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest User Interface Organizer plugin."
+	return
+endif
+if eval FileExists "uio\public\JHCTweaks - PipBoy Map - Bigger Icons.txt" || FileExists "uio\public\JHCTweaks - PipBoy Map - Crop Fix.txt"
+	MessageBoxEx "Local Map Overhaul incompatibility detected!%rDisable JHC Map Marker Tweaks."
+	return
+endif
+
+; Load interface settings
+SetUIFloatAlt "MapMenu\_LMO+CropW" (Clamp (GetINIFloat_Cached "Icons:fIconCropWorld" "Stentorious\LocalMapOverhaul.ini" 0.15) 0 1)
+SetUIFloatAlt "MapMenu\_LMO+SizeL" (Clamp (GetINIFloat_Cached "Icons:fIconSizeLocal" "Stentorious\LocalMapOverhaul.ini" 1) 0.75 1.5)
+SetUIFloatAlt "MapMenu\_LMO+SizeW" (Clamp (GetINIFloat_Cached "Icons:fIconSizeWorld" "Stentorious\LocalMapOverhaul.ini" 1.25) 0.5 2)
+
+; Global icon settings
+SetUIFloatAlt "MapMenu\_LMO+SeenData" (eval GetINIFloat_Cached "Icons:bRespectFogOfWar" "Stentorious\LocalMapOverhaul.ini" 0)
+SetUIFloatAlt "MapMenu\_LMO+DistanceMax" (Clamp (GetINIFloat_Cached "Icons:fRadius" "Stentorious\LocalMapOverhaul.ini" 30) 5 100)
+SetUIFloatAlt "MapMenu\_LMO+DistanceMode" (eval GetINIFloat_Cached "Icons:bPerceptionCalc" "Stentorious\LocalMapOverhaul.ini" 0)
+SetUIFloatAlt "MapMenu\_LMO+Height" (eval GetINIFloat_Cached "Icons:bHeightIndicator" "Stentorious\LocalMapOverhaul.ini" 1)
+SetUIFloatAlt "MapMenu\_LMO+Hostile" (eval GetINIFloat_Cached "Actors:bHostileColor" "Stentorious\LocalMapOverhaul.ini" 1)
+
+; Update player perception
+SetUIFloatAlt "MapMenu\_LMO+PlrAV6" (Player.GetThresholdAV Perception)
+SetOnActorValueChangeEventHandler 1 ({int iAVCode, float fOldValue, float fNewValue} => SetUIFloatAlt "MapMenu\_LMO+PlrAV6" (Player.GetThresholdAV Perception)) 0 6
+
+; Actor settings
+Goo1.AuxVarSetFlt "*LocalMap_INI" (eval GetINIFloat_Cached "Actors:bNPC" "Stentorious\LocalMapOverhaul.ini" 1) 0
+Goo1.AuxVarSetFlt "*LocalMap_INI" (eval GetINIFloat_Cached "Actors:bCreature" "Stentorious\LocalMapOverhaul.ini" 1) 1
+Goo1.AuxVarSetFlt "*LocalMap_INI" (Clamp (GetINIFloat_Cached "Actors:iCorpse" "Stentorious\LocalMapOverhaul.ini" 1) 0 2) 2
+Goo1.AuxVarSetFlt "*LocalMap_INI" (GetMaxOf 0 (GetMinOf 3 (GetINIFloat_Cached "Actors:iNameVisibility" "Stentorious\LocalMapOverhaul.ini" 2))) 3
+Goo1.AuxVarSetFlt "*LocalMap_INI" (Clamp (GetINIFloat_Cached "Map:fFogOfWarRadius" "Stentorious\LocalMapOverhaul.ini" 15) 5 50) 4
+Goo1.AuxVarSetFlt "*LocalMap_INI" (eval GetINIFloat_Cached "Actors:bShowHealth" "Stentorious\LocalMapOverhaul.ini" 0) 5
+SetNumericGameSetting "fSeenDataUpdateRadius" ((Goo1.AuxVarGetFlt "*LocalMap_INI" 4) * 69.99104)
+
+; Load map settings
+SetUIFloatAlt "MapMenu\_LMO+RenderBrightness" (GetINIFloat_Cached "Map:fLocalMapBrightness" "Stentorious\LocalMapOverhaul.ini" 1.6)
+
+; Fog of war
+Goo1.AuxVarSetFlt "*LocalMap_INI" (eval GetINIFloat_Cached "Map:bFogOfWar" "Stentorious\LocalMapOverhaul.ini" 0) 6
+Goo1.AuxVarSetFlt "*LocalMap_INI" (Goo1.AuxVarGetFlt "*LocalMap_INI" 6) 7
+if eval Goo1.AuxVarGetFlt "*LocalMap_INI" 6 == 0
+	Console "TFOW"
+endif
+
+; Event handlers
+SetOnMouseoverChangeEventHandler (CompileScript "LocalMapOverhaul\OnMouseover1023.gek") 1 1023
+SetOnMenuCloseEventHandler ({int iMenuID} => SetOnRenderUpdateEventHandler 0 (CompileScript "LocalMapOverhaul\MenuLoop.gek")) 1 1023
+
+; MCM update event
+SetEventHandler "MCMExtUpdate" (CompileScript "LocalMapOverhaul\MCMExtender\UpdateMenu.gek")
+
+; ySI support
+if eval FileExists "menus\ySI\ySI.xml" == 0 || GetPluginVersion "yUI" < 140
+	CloseFileSO "Stentorious\LocalMapOverhaul.ini" 0
+	SetOnMenuOpenEventHandler (CompileScript "..\CompileScript\LocalMapOverhaul\OnMenuOpen1023.gek") 1 1023
+	return
+endif
+
+Goo1.AuxVarSetFlt "*_ySI-SortingIcons" 1
+
+; Event handlers
+SetOnMenuOpenEventHandler (CompileScript "..\CompileScript\LocalMapOverhaul\OnMenuOpen1023ySI.gek") 1 1023
+SetOnMenuClickEventHandler (CompileScript "LocalMapOverhaul\OnIconClick.gek") 1 "MapMenu#50"
+
+; Load ySI icon settings
+Goo1.AuxVarSetFlt "*LocalMap_ySI" (Clamp (GetINIFloat_Cached "Vendors:iMode" "Stentorious\LocalMapOverhaul.ini" 2) 0 2) 0
+Goo1.AuxVarSetFlt "*LocalMap_ySI" (eval GetINIFloat_Cached "Objects:bBook" "Stentorious\LocalMapOverhaul.ini" 1) 1
+Goo1.AuxVarSetFlt "*LocalMap_ySI" (eval GetINIFloat_Cached "Objects:bMagazine" "Stentorious\LocalMapOverhaul.ini" 1) 2
+Goo1.AuxVarSetFlt "*LocalMap_ySI" (eval GetINIFloat_Cached "Objects:bNote" "Stentorious\LocalMapOverhaul.ini" 1) 3
+Goo1.AuxVarSetFlt "*LocalMap_ySI" (eval GetINIFloat_Cached "Objects:bKey" "Stentorious\LocalMapOverhaul.ini" 1) 4
+Goo1.AuxVarSetFlt "*LocalMap_ySI" (eval GetINIFloat_Cached "Objects:bUnique" "Stentorious\LocalMapOverhaul.ini" 1) 5
+Goo1.AuxVarSetFlt "*LocalMap_ySI" (eval GetINIFloat_Cached "Objects:bCollectable" "Stentorious\LocalMapOverhaul.ini" 1) 6
+Goo1.AuxVarSetFlt "*LocalMap_ySI" (eval GetINIFloat_Cached "Objects:bQuest" "Stentorious\LocalMapOverhaul.ini" 1) 7
+Goo1.AuxVarSetFlt "*LocalMap_ySI" (eval GetINIFloat_Cached "Objects:bDoor" "Stentorious\LocalMapOverhaul.ini" 1) 8
+Goo1.AuxVarSetFlt "*LocalMap_ySI" (eval GetINIFloat_Cached "Objects:bContainer" "Stentorious\LocalMapOverhaul.ini" 1) 9
+Goo1.AuxVarSetFlt "*LocalMap_ySI" (eval GetINIFloat_Cached "Objects:bTerminal" "Stentorious\LocalMapOverhaul.ini" 1) 10
+Goo1.AuxVarSetFlt "*LocalMap_ySI" (eval GetINIFloat_Cached "Objects:bCrafting" "Stentorious\LocalMapOverhaul.ini" 1) 11
+Goo1.AuxVarSetFlt "*LocalMap_ySI" (eval GetINIFloat_Cached "Objects:bMine" "Stentorious\LocalMapOverhaul.ini" 1) 12
+Goo1.AuxVarSetFlt "*LocalMap_ySI" (eval GetINIFloat_Cached "Objects:bTrap" "Stentorious\LocalMapOverhaul.ini" 1) 13
+Goo1.AuxVarSetFlt "*LocalMap_ySI" (Clamp (GetINIFloat_Cached "Actions:iRemoteTerminals" "Stentorious\LocalMapOverhaul.ini" 0) 0 2) 14
+Goo1.AuxVarSetFlt "*LocalMap_ySI" (Clamp (GetINIFloat_Cached "Actions:iRemoteDetonation" "Stentorious\LocalMapOverhaul.ini" 0) 0 2) 15
+
+Call (CompileScript "LocalMapOverhaul\UpdateForms.gek")
+
+; Remote terminals
+;if Goo1.AuxVarGetFlt "*LocalMap_INI" 5 == 2
+;	SetFormDescription ComputerWhiz "%z You can also remotely access terminals through the Pip-Boy local map." (GetFormDescription ComputerWhiz)
+;endif
+
+CloseFileSO "Stentorious\LocalMapOverhaul.ini" 0

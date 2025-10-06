@@ -1,0 +1,4 @@
+<brightness>
+	<copy src="io()" trait="_LMO+RenderBrightness" />
+	<mul> 255 </mul>
+</brightness>

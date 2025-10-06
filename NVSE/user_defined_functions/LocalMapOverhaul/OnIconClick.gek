@@ -1,0 +1,66 @@
+int	iMenuID
+int	iTileID
+string_var sUIPath
+
+int iBitMask
+int iTemp
+ref rIcon
+string_var sTemp
+
+begin Function {iMenuID, iTileID, sUIPath}
+
+	; Clickable icon functionality
+	sUIPath = GetActiveUIComponentFullName
+	if GetUIFloatAlt (sUIPath + "\_ShowName") == 1
+
+		sTemp = GetUIString (sUIPath + "\_RefID")
+		if eval (iTemp = Sv_length sTemp) < 7
+			rIcon = BuildRef 0 (ToNumber sTemp 1)
+		else
+			rIcon = BuildRef (ToNumber sTemp[0:(iTemp-7)] 1) (ToNumber sTemp[(iTemp-6):-1] 1)
+		endif
+
+		if eval IsReference rIcon
+			Goo1.AuxVarSetRef "*LocalMap_Ref" rIcon
+			Goo1.AuxVarSetStr "*LocalMap_Str" (sUIPath)
+			iBitMask = Goo1.AuxVarGetFlt "*LocalMap_ySI" 14
+
+			; Display remote terminal access message box
+			if eval rIcon.GetType == 23 && rIcon.GetLocked < 2 && (Goo1.AuxVarGetFlt "*LocalMap_ySI" 14 == 1 || (Goo1.AuxVarGetFlt "*LocalMap_ySI" 14 == 2 && Player.HasPerk ComputerWhiz))
+				MessageBoxExAlt (begin function {int iButton}
+					if eval iButton != 0
+						return
+					endif
+					rIcon = Goo1.AuxVarGetRef "*LocalMap_Ref"
+					if eval rIcon.GetLocked == 0 || (rIcon.GetLocked && ((rIcon.GetLockLevel) * 25) <= Player.GetAV Science)
+						TogglePipBoy
+						CallAfter 0.5 ({ref rTerm} => rTerm.Activate Player) 0 rIcon
+					else
+						rIcon.Activate Player
+					endif
+				end) "^Remote Access^Access %n?|%z|%z" rIcon (GetStringSetting "sOk") (GetStringSetting "sCancel")
+
+			; Display remote detonation message box
+			elseif eval rIcon.GetType == 51 && (rIcon.GetOwner == PlayerFaction || rIcon.IsOwner == 1) && rIcon.IsGrabbable == 0 && rIcon.GetDestroyed == 0 && (rIcon.GetDetonationTimer > 99999 || rIcon.GetDetonationTimer == -1) && (Goo1.AuxVarGetFlt "*LocalMap_ySI" 15 == 1 || (Goo1.AuxVarGetFlt "*LocalMap_ySI" 15 == 2 && Player.HasPerk ComputerWhiz))
+				MessageBoxExAlt (begin function {int iButton}
+					if eval iButton != 0
+						return
+					endif
+					rIcon = Goo1.AuxVarGetRef "*LocalMap_Ref"
+					if eval (float fTemp = rIcon.GetDetonationTimer) == -1
+						rIcon.DamageObject 1000
+						fTemp = 0
+					else
+						rIcon.SetDetonationTimer 1
+						fTemp = 1
+					endif
+					SetUIStringAlt ((Goo1.AuxVarGetStr "*LocalMap_Str") + "\_Name") "%z%r[%.1fs]" (rIcon.LNGetName) fTemp
+				end) "^Remote Detonation^Detonate %n?|%z|%z" rIcon (GetStringSetting "sOk") (GetStringSetting "sCancel")
+			endif
+		endif
+
+	endif
+
+	sv_Destruct sUIPath sTemp
+
+end

@@ -1,0 +1,337 @@
+{
+	"modName": "LocalMapOverhaul",
+	"displayName": "$modDisplayName",
+	"description": "$modDescription",
+	"saveFile": "Stentorious/LocalMapOverhaul.ini",
+	"minMCMVersion": 1.00,
+	"minModVersion": 1.00,
+	"requirements": [
+		{ "type": "file", "file": "NVSE/plugins/scripts/ln_LocalMapOverhaul.txt" }
+	],
+	"submenus": {
+		"1": {
+			"listTitle": "$Interface",
+			"pageTitle": "$Interface",
+			"columns": 2,
+			"enable": 1,
+			"active": 1,
+			"options": {
+				"1": {
+					"title": "$Map",
+					"enable": 1,
+					"type": 0
+				},
+				"3": {
+					"title": "$FogOfWar",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$FogOfWarMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 6, "configINI": "Map:bFogOfWar", "default": 1 }]
+				},
+				"5": {
+					"title": "$FogOfWarRadius",
+					"type": 2,
+					"enable": 1,
+					"suffix": "m",
+					"mouse": "$FogOfWarRadiusMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 4, "configINI": "Map:fFogOfWarRadius", "default": 15 }],
+					"scale": {
+						"valueDecimal": 0,
+						"valueIncrement": 1,
+						"valueMin": 5,
+						"valueMax": 50,
+						"suffix": "m"
+					}
+				},
+				"7": {
+					"title": "$RenderBrightness",
+					"type": 2,
+					"enable": 1,
+					"suffix": "x",
+					"mouse": "$RenderBrightnessMouse",
+					"vars": [ { "uiTrait": "MapMenu/_LMO+RenderBrightness", "configINI": "Map:fRenderBrightness", "default": 1.6 }],
+					"scale": {
+						"valueDecimal": 1,
+						"valueIncrement": 0.1,
+						"valueMin": 1,
+						"valueMax": 3,
+						"suffix": "x"
+					}
+				},
+				"11": {
+					"title": "$Icon",
+					"enable": 1,
+					"type": 0
+				},
+				"13": {
+					"title": "$SizeLocal",
+					"type": 2.5,
+					"enable": 1,
+					"suffix": "x",
+					"mouse": "$SizeLocalMouse",
+					"vars": [ { "uiTrait": "MapMenu/_LMO+SizeL", "configINI": "Icons:fIconSizeLocal", "default": 1 }],
+					"scale": {
+						"valueDecimal": 2,
+						"valueIncrement": 0.01,
+						"valueMin": 0.75,
+						"valueMax": 1.5,
+						"suffix": "x"
+					}
+				},
+				"15": {
+					"title": "$SizeWorld",
+					"type": 2.5,
+					"enable": 1,
+					"suffix": "x",
+					"mouse": "$SizeWorldMouse",
+					"vars": [ { "uiTrait": "MapMenu/_LMO+SizeW", "configINI": "Icons:fIconSizeWorld", "default": 1.25 }],
+					"scale": {
+						"valueDecimal": 2,
+						"valueIncrement": 0.01,
+						"valueMin": 0.5,
+						"valueMax": 2,
+						"suffix": "x"
+					}
+				},
+				"17": {
+					"title": "$CropWorld",
+					"type": 2.5,
+					"enable": 1,
+					"suffix": "x",
+					"mouse": "$CropWorldMouse",
+					"vars": [ { "uiTrait": "MapMenu/_LMO+CropW", "configINI": "Icons:fIconCropWorld", "default": 0.15 }],
+					"scale": {
+						"valueDecimal": 2,
+						"valueIncrement": 0.01,
+						"valueMin": 0,
+						"valueMax": 1,
+						"suffix": "x"
+					}
+				},
+				"19": {
+					"title": "$Distance",
+					"type": 2,
+					"enable": 1,
+					"suffix": "m",
+					"mouse": "$DistanceMouse",
+					"vars": [ { "uiTrait": "MapMenu/_LMO+DistanceMax", "configINI": "Icons:fRadius", "default": 30 }],
+					"scale": {
+						"valueDecimal": 0,
+						"valueIncrement": 1,
+						"valueMin": 0,
+						"valueMax": 100,
+						"suffix": "m"
+					}
+				},
+				"21": {
+					"title": "$DistanceCalculation",
+					"type": 6,
+					"enable": 1,
+					"mouse": "$DistanceCalculationMouse",
+					"vars": [ { "uiTrait": "MapMenu/_LMO+DistanceMode", "configINI": "Icons:bPerceptionCalc", "default": 0 }],
+					"textOff": "$Default",
+					"textOn": "$Perception"
+				},
+				"23": {
+					"title": "$HeightIndicator",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$HeightIndicatorMouse",
+					"vars": [ { "uiTrait": "MapMenu/_LMO+Height", "configINI": "Icons:bHeightIndicator", "default": 1 }]
+				},
+				"2": {
+					"title": "$Actor",
+					"enable": 1,
+					"type": 0
+				},
+				"4": {
+					"title": "$NPC",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$NPCMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 0, "configINI": "Actors:bNPC", "default": 1 }]
+				},
+				"6": {
+					"title": "$Creature",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$CreatureMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 1, "configINI": "Actors:bCreature", "default": 1 }]
+				},
+				"8": {
+					"title": "$Hostile",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$HostileMouse",
+					"vars": [ { "uiTrait": "MapMenu/_LMO+Hostile", "configINI": "Actors:bHostileColor", "default": 1 }]
+				},
+				"10": {
+					"title": "$Corpse",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$CorpseMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 2, "configINI": "Actors:iCorpse", "default": 1 }],
+					"strings": [ "$Disabled", "$HideEmpty", "$ShowAlways" ]
+				},
+				"12": {
+					"title": "$NameVisibility",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$NameVisibilityMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 3, "configINI": "Actors:iNameVisibility", "default": 2 }],
+					"strings": [ "$Never", "$MetPlayer", "$MetPlayerDead", "$Always" ]
+				},
+				"14": {
+					"title": "$ShowHealth",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$ShowHealthMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 5, "configINI": "Actors:bShowHealth", "default": 0 }]
+				}
+			}
+		},
+		"2": {
+			"listTitle": "$IconsySI",
+			"pageTitle": "$IconsySI",
+			"columns": 2,
+			"state": { "form": "Goo1", "auxVar": "*_ySI-SortingIcons", "key": 0, "value": 1 },
+			"options": {
+				"1": {
+					"title": "$Items",
+					"enable": 1,
+					"type": 0
+				},
+				"3": {
+					"title": "$Book",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$BookMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_ySI", "key": 1, "configINI": "Objects:bBook", "default": 1 }]
+				},
+				"5": {
+					"title": "$Magazine",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$MagazineMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_ySI", "key": 2, "configINI": "Objects:bMagazine", "default": 1 }]
+				},
+				"7": {
+					"title": "$Note",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$NoteMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_ySI", "key": 3, "configINI": "Objects:bNote", "default": 1 }]
+				},
+				"9": {
+					"title": "$Key",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$KeyMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_ySI", "key": 4, "configINI": "Objects:bKey", "default": 1 }]
+				},
+				"11": {
+					"title": "$Quest",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$QuestMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_ySI", "key": 7, "configINI": "Objects:bQuest", "default": 1 }]
+				},
+				"13": {
+					"title": "$Unique",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$UniqueMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_ySI", "key": 5, "configINI": "Objects:bUnique", "default": 1 }]
+				},
+				"15": {
+					"title": "$Collectable",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$CollectableMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_ySI", "key": 6, "configINI": "Objects:bCollectable", "default": 1 }]
+				},
+				"19": {
+					"title": "$Actors",
+					"enable": 1,
+					"type": 0
+				},
+				"21": {
+					"title": "$Vendor",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$VendorMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_ySI", "key": 0, "configINI": "Vendors:iMode", "default": 2 }],
+					"strings": [ "$Disabled", "$BottleCap", "$Dynamic" ]
+				},
+				"2": {
+					"title": "$Objects",
+					"enable": 1,
+					"type": 0
+				},
+				"4": {
+					"title": "$Door",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$DoorMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_ySI", "key": 8, "configINI": "Objects:bDoor", "default": 1 }]
+				},
+				"6": {
+					"title": "$Container",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$ContainerMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_ySI", "key": 9, "configINI": "Objects:bContainer", "default": 1 }]
+				},
+				"8": {
+					"title": "$Terminal",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$TerminalMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_ySI", "key": 10, "configINI": "Objects:bTerminal", "default": 1 }]
+				},
+				"10": {
+					"title": "$Crafting",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$CraftingMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_ySI", "key": 11, "configINI": "Objects:bCrafting", "default": 1 }]
+				},
+				"12": {
+					"title": "$Mine",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$MineMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_ySI", "key": 12, "configINI": "Objects:bMine", "default": 1 }]
+				},
+				"14": {
+					"title": "$Trap",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$TrapMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_ySI", "key": 13, "configINI": "Objects:bTrap", "default": 1 }]
+				},
+				"20": {
+					"title": "$Actions",
+					"enable": 1,
+					"type": 0
+				},
+				"22": {
+					"title": "$RemoteTerminals",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$RemoteTerminalsMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_ySI", "key": 14, "configINI": "Actions:iRemoteTerminals", "default": 0 }],
+					"strings": [ "$Disabled", "$Enabled", "$RequirePerk" ]
+				},
+				"24": {
+					"title": "$RemoteDetonation",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$RemoteDetonationMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_ySI", "key": 15, "configINI": "Actions:iRemoteDetonation", "default": 0 }],
+					"strings": [ "$Disabled", "$Enabled", "$RequirePerk" ]
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,203 @@
+int iDeadMoney
+int iHonestHearts
+int iOldWorldBlues
+int iLonesomeRoad
+int iTaleOfTwoWastelands
+int iToggle
+
+begin Function {}
+
+	iDeadMoney = (eval IsModLoaded "DeadMoney.esm")
+	iHonestHearts = (eval IsModLoaded "HonestHearts.esm")
+	iOldWorldBlues = (eval IsModLoaded "OldWorldBlues.esm")
+	iLonesomeRoad = (eval IsModLoaded "LonesomeRoad.esm")
+	iTaleOfTwoWastelands = (eval IsModLoaded "TaleOfTwoWastelands.esm")
+
+	; Assign keywords (Crafting stations)
+	iToggle = Goo1.AuxVarGetFlt "*LocalMap_ySI" 11
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 WorkBench
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 ReloadingBench
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 CampfireCrafting01
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 CampfireCrafting02
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 CampfireCrafting03
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 CampfireCrafting04
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 VCG03CampfireCrafting03
+	if eval iDeadMoney
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC01CraftingOven")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC01VendingArtDeco")
+	endif
+	if eval iHonestHearts
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC02Campfire01")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC02Campfire02")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC02CraftingOven01")
+	endif
+	if eval iOldWorldBlues
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC03HotPlate")
+	endif
+	if eval iTaleOfTwoWastelands
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "TTWDLC05ControlWB")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "TTWDLC05ControlRB")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "TTWCampGrillCrafting01")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "TTWGrillBBQDirtyCrafting")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "TTWGrillBBQCleanCrafting")
+	endif
+
+	; Assign keywords (Skill books)
+	iToggle = Goo1.AuxVarGetFlt "*LocalMap_ySI" 1
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 BookSkillBarter
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 BookSkillBigGuns
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 BookSkillEnergyWeapons
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 BookSkillExplosives
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 BookSkillGuns
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 BookSkillLockpicking
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 BookSkillMedicine
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 BookSkillMelee
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 BookSkillRepair
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 BookSkillScience
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 BookSkillSneak
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 BookSkillSpeech
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 BookSkillSurvival
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 BookSkillUnarmed
+	if eval iTaleOfTwoWastelands
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "DLC04GhoulEcologyBook")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "DLC04MirelurkEcologyBook")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "TTWBookSkillBarterVault101d")
+	endif
+
+	; Assign keywords (Skill magazines)
+	iToggle = Goo1.AuxVarGetFlt "*LocalMap_ySI" 2
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 MagazineNVBarter
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 MagazineNVCritical
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 MagazineNVEnergyWeapons
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 MagazineNVExplosives
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 MagazineNVGuns
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 MagazineNVLockpick
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 MagazineNVMedicine
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 MagazineNVMeleeWeapons
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 MagazineNVRepair
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 MagazineNVScience
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 MagazineNVSneak
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 MagazineNVSpeech
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 MagazineNVSurvival
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 MagazineNVUnarmed
+
+	; Assign keywords (Collectables)
+	iToggle = Goo1.AuxVarGetFlt "*LocalMap_ySI" 6
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 NVStarBottleCap
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SnowglobeFortmormon
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SnowglobeMtCharleston
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SnowglobeHooverDam
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SnowglobeGoodsprings
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SnowglobeTestSite
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SnowglobeNellis
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SnowglobeTheStrip
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SchematicsDartGunItem
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SchematicsBottlecapMineItem
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SchematicsDeathclawGauntletItem
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SchematicsNukaCocktailItem
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SchematicsRailwayRifleItem
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SchematicsRockItLauncherItem
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SchematicsShishkebabItem
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SchematicsMantisScytheItem
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SchematicsMichaelAngeloProp
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SchematicsPowderChargeItem
+	if eval iDeadMoney
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC01Snowglobe")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC01DeanSecretStash")
+	endif
+	if eval iHonestHearts
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC02SnowGlobe")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC02DuffleBagFORCHALLENGE")
+	endif
+	if eval iOldWorldBlues
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC03SnowGlobe")
+	endif
+	if eval iLonesomeRoad
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC04Snowglobe")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC04RALPHIEPosterActivator")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC04Warhead")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC04DivideBldgWarhead")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC04DivideDeathclawWarhead")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC04DivideSniperWarhead01")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC04DivideSniperWarhead02")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC04DivideSniperWarhead03")
+	endif
+	if eval iTaleOfTwoWastelands
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadAGL")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadBART")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadBGUN")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadCHA")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadEND")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadERGW")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadEXPL")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadINT")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadLOCK")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadLUK")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadMEDI")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadMELE")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadPER")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadREPR")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadSCNC")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadSGUN")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadSNEK")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadSPCH")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadSTR")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadSUR")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "BobbleheadUARM")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "DLC01SteelPlateActivator")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "DLC02FF004Briefcase")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "testPhilSchematicsTrenchKnifeItem")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "SchematicsCryolatorItem")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "SchematicsMolotovCocktailItem")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "SchematicsSECtoMPCItem")
+	endif
+
+	; Assign keywords (Trap)
+	iToggle = Goo1.AuxVarGetFlt "*LocalMap_ySI" 13
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 TrapGrenadeBunch
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 TrapBearTrap
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 TrapTripwire01
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 trapShotgun
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 TrapComputer
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 trapMineBuried01
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 TrapBabyCarriage
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 TrapPressurePlate
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 TrapPitchingMachine01
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 TrapMailboxBomb01
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SprungTrapBearTrap
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 VHDLegionOliverRangerTrapBearTrap
+	AuxVarSetFlt "*LocalMapIcon" iToggle 0 VHDLegionOliverTrapTripwire
+	if eval iDeadMoney
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC01TrapTripwire")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC01TrapBearTrap")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC01TrapPressurePlate")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC01trapShotgun")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC01SprungTrapBearTrap")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC01Radio")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC01SpeakerINV")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC01SpeakerDest")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC01SpeakerINVOff")
+	endif
+	if eval iHonestHearts
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC02MQ03BearTrap")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC02BearTrap")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC02TrapTripwire01")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC02TrapPressurePlate")
+	endif
+	if eval iTaleOfTwoWastelands
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "trapShotgunCombat")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "TrapElectrifiedToiletTop01")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "TakomaTrapBabyCarriage")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "DLC04LabTrapComputer")
+		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "DLC04TrapPitchingMachine")
+	endif
+
+	; Assign keywords (Quest)
+	;iToggle = Goo1.AuxVarGetFlt "*LocalMap_ySI" 7
+	;if eval iTaleOfTwoWastelands
+	;	AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "MegatonPipeJointY01ACT")
+	;	AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "MegatonPipeStraightRegSmlACT")
+	;	AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "MegatonPipeJointLrgToLrgACT")
+	;endif
+
+end

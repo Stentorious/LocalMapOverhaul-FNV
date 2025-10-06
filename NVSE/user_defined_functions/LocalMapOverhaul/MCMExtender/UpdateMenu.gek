@@ -1,0 +1,22 @@
+array_var aTemp
+
+begin Function {aTemp}
+
+	if eval (Ar_Find "LocalMapOverhaul" aTemp) != Ar_BadNumericIndex
+
+		; Update ySI icons
+		if eval Goo1.AuxVarGetFlt "*_ySI-SortingIcons"
+			Call (CompileScript "LocalMapOverhaul\UpdateForms.gek")
+		endif
+
+		; Update Fog of War
+		SetNumericGameSetting "fSeenDataUpdateRadius" ((Goo1.AuxVarGetFlt "*LocalMap_INI" 4) * 69.99104)
+		if eval (Goo1.AuxVarGetFlt "*LocalMap_INI" 6) != (Goo1.AuxVarGetFlt "*LocalMap_INI" 7)
+			Console "TFOW"
+			Goo1.AuxVarSetFlt "*LocalMap_INI" (Goo1.AuxVarGetFlt "*LocalMap_INI" 6) 7
+		endif
+
+	endif
+	aTemp = ar_Null
+
+end

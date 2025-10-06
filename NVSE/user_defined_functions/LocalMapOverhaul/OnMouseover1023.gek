@@ -1,0 +1,19 @@
+int	iMenuID
+
+string_var sUIPath
+
+begin Function {iMenuID}
+
+	; Display icon name on mouseover
+	if GetActiveUIComponentID == 50
+		sUIPath = GetActiveUIComponentFullName
+		if GetUIFloatAlt (sUIPath + "\_ShowName") == 1
+			SetUIStringAlt "MapMenu\_LMO+Name" "%z" (GetUIString (sUIPath + "\_Name"))
+			SetUIFloatAlt "MapMenu\_LMO+Focus" 1
+		endif
+		sv_Destruct sUIPath
+	else
+		SetUIFloatAlt "MapMenu\_LMO+Focus" 0
+	endif
+
+end
