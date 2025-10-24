@@ -116,3 +116,17 @@ Call (CompileScript "LocalMapOverhaul\UpdateForms.gek")
 ;endif
 
 CloseFileSO "Stentorious\LocalMapOverhaul.ini" 0
+
+; Assign aux to keyword forms
+array_var aForms = GetKeywordForms "LocalMapIcon"
+int iSize = 0
+if eval (iSize = Ar_Size aForms) > 0
+	while (iSize -= 1) > -1
+		ref rIcon = aForms[iSize]
+		if eval IsReference rIcon
+			rIcon = rIcon.GBO
+		endif
+		AuxVarSetFlt "*LocalMapIcon" 1 0 rIcon
+	loop
+endif
+aForms = ar_Null

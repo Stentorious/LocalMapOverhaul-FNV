@@ -72,7 +72,7 @@ begin Function {iMenuID}
 			rIcon = aRefs[iSize]
 			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D
 				iTemp = rIcon.GetType
-				if eval AuxVarGetFlt "*LocalMapIcon" 0 (rIcon.GBO) || HasKeyword rIcon "LocalMapIcon" || (Goo1.AuxVarGetFlt "*LocalMap_ySI" 7 && rIcon.IsQuestItem) || (Goo1.AuxVarGetFlt "*LocalMap_ySI" 5 && IsItemUnique (rIcon.GBO)) || (Goo1.AuxVarGetFlt "*LocalMap_ySI" 4 && iTemp == 46) || (Goo1.AuxVarGetFlt "*LocalMap_ySI" 3 && iTemp == 49) || (Goo1.AuxVarGetFlt "*LocalMap_ySI" 6 && iTemp == 115)
+				if eval AuxVarGetFlt "*LocalMapIcon" 0 (rIcon.GBO) || (Goo1.AuxVarGetFlt "*LocalMap_ySI" 7 && rIcon.IsQuestItem) || (Goo1.AuxVarGetFlt "*LocalMap_ySI" 5 && IsItemUnique (rIcon.GBO)) || (Goo1.AuxVarGetFlt "*LocalMap_ySI" 4 && iTemp == 46) || (Goo1.AuxVarGetFlt "*LocalMap_ySI" 3 && iTemp == 49) || (Goo1.AuxVarGetFlt "*LocalMap_ySI" 6 && iTemp == 115)
 
 					; Add icon tile
 					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon"
@@ -101,7 +101,7 @@ begin Function {iMenuID}
 	if eval (iSize = Ar_Size aRefs) > 0
 		while (iSize -= 1) > -1
 			rIcon = aRefs[iSize]
-			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.GetDestroyed == 0 && (AuxVarGetFlt "*LocalMapIcon" 0 (rIcon.GBO) || HasKeyword rIcon "LocalMapIcon")
+			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.GetDestroyed == 0 && AuxVarGetFlt "*LocalMapIcon" 0 (rIcon.GBO)
 
 				; Add icon tile
 				AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon"
@@ -252,7 +252,7 @@ begin Function {iMenuID}
 						SetUIStringAlt (sUIPath + "filename") (rIcon.ySIGetTrait "filename")
 					endif
 
-				elseif eval rIcon.GetType == 23 || AuxVarGetFlt "*LocalMapIcon" 0 (rIcon.GBO) || HasKeyword rIcon "LocalMapIcon"
+				elseif eval iTemp == 23 || AuxVarGetFlt "*LocalMapIcon" 0 (rIcon.GBO)
 
 					; Add icon tile
 					AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon"

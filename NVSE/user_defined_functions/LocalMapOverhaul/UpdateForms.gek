@@ -13,7 +13,7 @@ begin Function {}
 	iLonesomeRoad = (eval IsModLoaded "LonesomeRoad.esm")
 	iTaleOfTwoWastelands = (eval IsModLoaded "TaleOfTwoWastelands.esm")
 
-	; Assign keywords (Crafting stations)
+	; Assign aux (Crafting stations)
 	iToggle = Goo1.AuxVarGetFlt "*LocalMap_ySI" 11
 	AuxVarSetFlt "*LocalMapIcon" iToggle 0 WorkBench
 	AuxVarSetFlt "*LocalMapIcon" iToggle 0 ReloadingBench
@@ -42,7 +42,7 @@ begin Function {}
 		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "TTWGrillBBQCleanCrafting")
 	endif
 
-	; Assign keywords (Skill books)
+	; Assign aux (Skill books)
 	iToggle = Goo1.AuxVarGetFlt "*LocalMap_ySI" 1
 	AuxVarSetFlt "*LocalMapIcon" iToggle 0 BookSkillBarter
 	AuxVarSetFlt "*LocalMapIcon" iToggle 0 BookSkillBigGuns
@@ -64,7 +64,7 @@ begin Function {}
 		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "TTWBookSkillBarterVault101d")
 	endif
 
-	; Assign keywords (Skill magazines)
+	; Assign aux (Skill magazines)
 	iToggle = Goo1.AuxVarGetFlt "*LocalMap_ySI" 2
 	AuxVarSetFlt "*LocalMapIcon" iToggle 0 MagazineNVBarter
 	AuxVarSetFlt "*LocalMapIcon" iToggle 0 MagazineNVCritical
@@ -81,7 +81,7 @@ begin Function {}
 	AuxVarSetFlt "*LocalMapIcon" iToggle 0 MagazineNVSurvival
 	AuxVarSetFlt "*LocalMapIcon" iToggle 0 MagazineNVUnarmed
 
-	; Assign keywords (Collectables)
+	; Assign aux (Collectables)
 	iToggle = Goo1.AuxVarGetFlt "*LocalMap_ySI" 6
 	AuxVarSetFlt "*LocalMapIcon" iToggle 0 NVStarBottleCap
 	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SnowglobeFortmormon
@@ -152,7 +152,7 @@ begin Function {}
 		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "SchematicsSECtoMPCItem")
 	endif
 
-	; Assign keywords (Trap)
+	; Assign aux (Trap)
 	iToggle = Goo1.AuxVarGetFlt "*LocalMap_ySI" 13
 	AuxVarSetFlt "*LocalMapIcon" iToggle 0 TrapGrenadeBunch
 	AuxVarSetFlt "*LocalMapIcon" iToggle 0 TrapBearTrap
@@ -192,7 +192,7 @@ begin Function {}
 		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "DLC04TrapPitchingMachine")
 	endif
 
-	; Assign keywords (Quest)
+	; Assign aux (Quest)
 	;iToggle = Goo1.AuxVarGetFlt "*LocalMap_ySI" 7
 	;if eval iTaleOfTwoWastelands
 	;	AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "MegatonPipeJointY01ACT")
