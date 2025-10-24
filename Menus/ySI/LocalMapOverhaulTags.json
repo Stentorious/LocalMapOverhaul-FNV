@@ -171,6 +171,12 @@
 	{ "priority": 200, "tag": "(jfc1)", "mod": "FalloutNV.esm", "form": "075005" },
 	{ "priority": 200, "tag": "(fjc1)", "mod": "TaleOfTwoWastelands.esm", "form": "008E2E" },
 
+	// Shovel
+	{ "priority": 200, "tag": "(flz3)", "mod": "FalloutNV.esm", "form": [ "0CB515", "0CB511", "0CB50B", "15737F", "11E667" ] },
+	{ "priority": 200, "tag": "(flz3)", "mod": "HonestHearts.esm", "form": [ "0111B1", "0111B0", "0111AF", "00AB84", "00AB83", "00AB82" ] },
+	{ "priority": 200, "tag": "(flz3)", "mod": "OldWorldBlues.esm", "form": "010C97" },
+	{ "priority": 200, "tag": "(flz3)", "mod": "TaleOfTwoWastelands.esm", "form": [ "01C77C", "007F87" ] },
+
 	// Anchorage
 	{ "priority": 200, "tag": "(dda1)", "mod": "Anchorage.esm", "form": "00C8C9" },						// Psycho
 	{ "priority": 200, "tag": "(aba1)", "mod": "Anchorage.esm", "form": "00CB32" },						// Ammo Dispenser
