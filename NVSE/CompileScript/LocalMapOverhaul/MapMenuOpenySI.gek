@@ -212,7 +212,7 @@ begin Function {iMenuID}
 					; Locked
 					else
 						iTemp = rIcon.GetLockLevel
-						if rIcon.GetType == 27
+						if rIcon.GetType != 23
 							iTemp /= 25
 						endif
 
@@ -267,6 +267,11 @@ begin Function {iMenuID}
 					SetUIStringAlt (sUIPath + "_Name") (rIcon.LNGetName)
 					SetUIStringAlt (sUIPath + "_RefID") (GetFormIDString rIcon)
 					SetUIStringAlt (sUIPath + "filename") (rIcon.ySIGetTrait "filename")
+
+					; Check if terminal has been opened before
+					if eval ABS ((FMod (rIcon.GetScale) 0.01) - 0.00555) < 0.0000001
+						SetUIFloatAlt (sUIPath + "Icon\systemcolor") 2
+					endif
 
 				endif
 			endif
