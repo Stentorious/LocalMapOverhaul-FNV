@@ -1,0 +1,13 @@
+int	iMenuID
+
+float fScale
+ref rTerminal
+
+begin Function {iMenuID}
+
+	if eval IsReference (rTerminal = GetMenuTargetRef 1057)
+		fScale = ((Floor (rTerminal.GetScale * 100)) / 100) + 0.00555
+		rTerminal.SetScale fScale
+	endif
+
+end

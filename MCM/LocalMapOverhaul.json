@@ -6,7 +6,12 @@
 	"minMCMVersion": 1.00,
 	"minModVersion": 1.00,
 	"requirements": [
-		{ "type": "file", "file": "NVSE/plugins/scripts/ln_LocalMapOverhaul.txt" }
+		{ "type": "file", "file": "NVSE/plugins/scripts/ln_LocalMapOverhaul.txt" },
+		{ "type": "nvse", "version": 6.48, "notify": 1 },
+		{ "type": "dll", "file": "JohnnyGuitarNVSE", "version": 528, "notify": 1 },
+		{ "type": "dll", "file": "ShowOffNVSE Plugin", "version": 184, "notify": 1 },
+		{ "type": "dll", "file": "lStewieAl's Tweaks", "version": 906, "notify": 1 },
+		{ "type": "dll", "file": "UI Organizer Plugin", "version": 230, "notify": 1 }
 	],
 	"submenus": {
 		"1": {
@@ -43,7 +48,14 @@
 						"suffix": "m"
 					}
 				},
-				"7": {
+				"4": {
+					"title": "$ColorTintWorld",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$ColorTintWorldMouse",
+					"vars": [ { "uiTrait": "MapMenu/_LMO+ColorTintWorld", "configINI": "Map:bColorTintWorld", "default": 1 }]
+				},
+				"6": {
 					"title": "$RenderBrightness",
 					"type": 2,
 					"enable": 1,
@@ -58,12 +70,63 @@
 						"suffix": "x"
 					}
 				},
-				"11": {
+
+				"10": {
+					"title": "$Actor",
+					"enable": 1,
+					"type": 0
+				},
+				"12": {
+					"title": "$NPC",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$NPCMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 0, "configINI": "Actors:bNPC", "default": 1 }]
+				},
+				"14": {
+					"title": "$Creature",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$CreatureMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 1, "configINI": "Actors:bCreature", "default": 1 }]
+				},
+				"16": {
+					"title": "$Hostile",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$HostileMouse",
+					"vars": [ { "uiTrait": "MapMenu/_LMO+Hostile", "configINI": "Actors:bHostileColor", "default": 1 }]
+				},
+				"18": {
+					"title": "$Corpse",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$CorpseMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 2, "configINI": "Actors:iCorpse", "default": 1 }],
+					"strings": [ "$Disabled", "$HideEmpty", "$ShowAlways" ]
+				},
+				"20": {
+					"title": "$NameVisibility",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$NameVisibilityMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 3, "configINI": "Actors:iNameVisibility", "default": 2 }],
+					"strings": [ "$Never", "$MetPlayer", "$MetPlayerDead", "$Always" ]
+				},
+				"22": {
+					"title": "$ShowHealth",
+					"type": 5,
+					"enable": 1,
+					"mouse": "$ShowHealthMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 5, "configINI": "Actors:bShowHealth", "default": 0 }]
+				},
+
+				"9": {
 					"title": "$Icon",
 					"enable": 1,
 					"type": 0
 				},
-				"13": {
+				"11": {
 					"title": "$SizeLocal",
 					"type": 2.5,
 					"enable": 1,
@@ -78,7 +141,7 @@
 						"suffix": "x"
 					}
 				},
-				"15": {
+				"13": {
 					"title": "$SizeWorld",
 					"type": 2.5,
 					"enable": 1,
@@ -93,7 +156,7 @@
 						"suffix": "x"
 					}
 				},
-				"17": {
+				"15": {
 					"title": "$CropWorld",
 					"type": 2.5,
 					"enable": 1,
@@ -108,7 +171,7 @@
 						"suffix": "x"
 					}
 				},
-				"19": {
+				"17": {
 					"title": "$Distance",
 					"type": 2,
 					"enable": 1,
@@ -123,7 +186,7 @@
 						"suffix": "m"
 					}
 				},
-				"21": {
+				"19": {
 					"title": "$DistanceCalculation",
 					"type": 6,
 					"enable": 1,
@@ -132,61 +195,12 @@
 					"textOff": "$Default",
 					"textOn": "$Perception"
 				},
-				"23": {
+				"21": {
 					"title": "$HeightIndicator",
 					"type": 5,
 					"enable": 1,
 					"mouse": "$HeightIndicatorMouse",
 					"vars": [ { "uiTrait": "MapMenu/_LMO+Height", "configINI": "Icons:bHeightIndicator", "default": 1 }]
-				},
-				"2": {
-					"title": "$Actor",
-					"enable": 1,
-					"type": 0
-				},
-				"4": {
-					"title": "$NPC",
-					"type": 5,
-					"enable": 1,
-					"mouse": "$NPCMouse",
-					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 0, "configINI": "Actors:bNPC", "default": 1 }]
-				},
-				"6": {
-					"title": "$Creature",
-					"type": 5,
-					"enable": 1,
-					"mouse": "$CreatureMouse",
-					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 1, "configINI": "Actors:bCreature", "default": 1 }]
-				},
-				"8": {
-					"title": "$Hostile",
-					"type": 5,
-					"enable": 1,
-					"mouse": "$HostileMouse",
-					"vars": [ { "uiTrait": "MapMenu/_LMO+Hostile", "configINI": "Actors:bHostileColor", "default": 1 }]
-				},
-				"10": {
-					"title": "$Corpse",
-					"type": 1,
-					"enable": 1,
-					"mouse": "$CorpseMouse",
-					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 2, "configINI": "Actors:iCorpse", "default": 1 }],
-					"strings": [ "$Disabled", "$HideEmpty", "$ShowAlways" ]
-				},
-				"12": {
-					"title": "$NameVisibility",
-					"type": 1,
-					"enable": 1,
-					"mouse": "$NameVisibilityMouse",
-					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 3, "configINI": "Actors:iNameVisibility", "default": 2 }],
-					"strings": [ "$Never", "$MetPlayer", "$MetPlayerDead", "$Always" ]
-				},
-				"14": {
-					"title": "$ShowHealth",
-					"type": 5,
-					"enable": 1,
-					"mouse": "$ShowHealthMouse",
-					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 5, "configINI": "Actors:bShowHealth", "default": 0 }]
 				}
 			}
 		},

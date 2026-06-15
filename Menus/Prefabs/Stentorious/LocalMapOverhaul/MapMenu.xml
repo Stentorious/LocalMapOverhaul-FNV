@@ -1,3 +1,5 @@
+<_LMO+ColorTintWorld> 1 </_LMO+ColorTintWorld>
+<_LMO+RenderBrightness> 1.6 </_LMO+RenderBrightness>
 <_LMO+SizeL> 1 </_LMO+SizeL>
 <_LMO+SizeW> 1 </_LMO+SizeW>
 <_LMO+CropW> 0.22 </_LMO+CropW>
@@ -19,8 +21,7 @@
 <_LMO+PlrZ> 0 </_LMO+PlrZ>
 <_LMO+PlrAV6> 0 </_LMO+PlrAV6>
 <_LMO+DistCalc>
-	<copy> 0 </copy>
-	<add src="io()" trait="_LMO+Distance" />
+	<copy src="io()" trait="_LMO+Distance" />
 	<onlyifnot src="io()" trait="_LMO+DistanceMode" />
 	<add>
 		<copy src="io()" trait="_LMO+Distance" />
@@ -36,8 +37,7 @@
 	</add>
 </_LMO+DistCalc>
 <_LMO+Color0>
-	<copy> 0 </copy>
-	<add src="io()" trait="systemcolor" />
+	<copy src="io()" trait="systemcolor" />
 	<onlyifnot src="io()" trait="_ySIColorFulIconsFix" />
 </_LMO+Color0>
 <_LMO+Color2> &pipboy;
@@ -141,14 +141,8 @@
 			<div> 360 </div>
 		</_DegOffset>
 		<_Level>
-			<copy> 0 </copy>
-			<add>
-				<copy> 1 </copy>
-				<onlyif>
-					<copy src="me()" trait="_PosZOffset" />
-					<gt> 175 </gt>
-				</onlyif>
-			</add>
+			<copy src="me()" trait="_PosZOffset" />
+			<gt> 175 </gt>
 			<add>
 				<copy> 2 </copy>
 				<onlyif>
@@ -193,16 +187,16 @@
 					</div>
 					<mul> 255 </mul>
 				</sub>
+				<!--
 				<mul>
-					<add>
-						<copy src="parent()" trait="_SeenData" />
-						<onlyif src="io()" trait="_LMO+SeenData" />
-					</add>
+					<copy src="parent()" trait="_SeenData" />
+					<onlyif src="io()" trait="_LMO+SeenData" />
 					<add>
 						<copy> 1 </copy>
 						<onlyifnot src="io()" trait="_LMO+SeenData" />
 					</add>
 				</mul>
+				-->
 				<max> 0 </max>
 				<min> 255 </min>
 			</alpha>
@@ -229,14 +223,11 @@
 			<width> <copy src="parent()" trait="width" /> </width>
 			<zoom> &scale; </zoom>
 			<systemcolor>
-				<copy> 0 </copy>
-				<add>
-					<copy src="io()" trait="_LMO+Color0" />
-					<onlyif>
-						<copy src="parent()" trait="_Hostile" />
-						<eq> -1 </eq>
-					</onlyif>
-				</add>
+				<copy src="io()" trait="_LMO+Color0" />
+				<onlyif>
+					<copy src="parent()" trait="_Hostile" />
+					<eq> -1 </eq>
+				</onlyif>
 				<add>
 					<copy> &pipboy; </copy>
 					<onlyif>
@@ -283,7 +274,7 @@
 			<visible>
 				<copy src="parent()" trait="_Level" />
 				<gt> 0 </gt>
-				<and src="io()" trait="_LMO+Height"/>
+				<and src="io()" trait="_LMO+Height" />
 			</visible>
 			<alpha> <copy src="sibling(Icon)" trait="alpha" /> </alpha>
 			<depth> 0 </depth>

@@ -24,3 +24,5 @@ Stentorious\LocalMapOverhaul\DepthOverlay.xml::MapMenu::MM_Tabline
 true
 Stentorious\LocalMapOverhaul\MM_LocalMap_ParentImage.xml::MapMenu::MM_LocalMap_ParentImage
 true
+Stentorious\LocalMapOverhaul\MM_WorldMap_ClipWindow.xml::MapMenu::MM_WorldMap_ClipWindow
+true

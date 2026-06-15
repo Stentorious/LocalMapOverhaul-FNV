@@ -10,26 +10,6 @@ endif
 Goo1.AuxVarSetFlt "*LocalMap_Init" 1
 
 ; Check for requirements
-if eval GetNVSEVersion < 6 || (GetNVSEVersion == 6 && GetNVSERevision < 4)
-	MessageBoxEx "Local Map Overhaul missing requirement!%rInstall xNVSE 6.4.0+."
-	return
-endif
-if GetPluginVersion "JohnnyGuitarNVSE" < 519
-	MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest JohnnyGuitar NVSE plugin."
-	return
-endif
-if GetPluginVersion "ShowOffNVSE Plugin" < 180
-	MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest ShowOff NVSE plugin."
-	return
-endif
-if GetPluginVersion "lStewieAl's Tweaks" < 930
-	MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest lStewieAl's Tweaks."
-	return
-endif
-if GetPluginVersion "UI Organizer Plugin" < 230
-	MessageBoxEx "Local Map Overhaul missing requirement!%rInstall latest User Interface Organizer plugin."
-	return
-endif
 if eval FileExists "uio\public\JHCTweaks - PipBoy Map - Bigger Icons.txt" || FileExists "uio\public\JHCTweaks - PipBoy Map - Crop Fix.txt"
 	MessageBoxEx "Local Map Overhaul incompatibility detected!%rDisable JHC Map Marker Tweaks."
 	return
@@ -62,6 +42,7 @@ SetNumericGameSetting "fSeenDataUpdateRadius" ((Goo1.AuxVarGetFlt "*LocalMap_INI
 
 ; Load map settings
 SetUIFloatAlt "MapMenu\_LMO+RenderBrightness" (GetINIFloat_Cached "Map:fLocalMapBrightness" "Stentorious\LocalMapOverhaul.ini" 1.6)
+SetUIFloatAlt "MapMenu\_LMO+ColorTintWorld" (eval GetINIFloat_Cached "Map:bColorTintWorld" "Stentorious\LocalMapOverhaul.ini" 1)
 
 ; Fog of war
 Goo1.AuxVarSetFlt "*LocalMap_INI" (eval GetINIFloat_Cached "Map:bFogOfWar" "Stentorious\LocalMapOverhaul.ini" 0) 6
@@ -71,7 +52,8 @@ if eval Goo1.AuxVarGetFlt "*LocalMap_INI" 6 == 0
 endif
 
 ; Event handlers
-SetOnMouseoverChangeEventHandler (CompileScript "LocalMapOverhaul\OnMouseover1023.gek") 1 1023
+SetOnMenuOpenEventHandler (CompileScript "LocalMapOverhaul\TerminalMenuOpen.gek") 1 1057
+SetOnMouseoverChangeEventHandler (CompileScript "LocalMapOverhaul\MouseMapMenu.gek") 1 1023
 SetOnMenuCloseEventHandler ({int iMenuID} => SetOnRenderUpdateEventHandler 0 (CompileScript "LocalMapOverhaul\MenuLoop.gek")) 1 1023
 
 ; MCM update event
@@ -80,15 +62,15 @@ SetEventHandler "MCMExtUpdate" (CompileScript "LocalMapOverhaul\MCMExtender\Upda
 ; ySI support
 if eval FileExists "menus\ySI\ySI.xml" == 0 || GetPluginVersion "yUI" < 140
 	CloseFileSO "Stentorious\LocalMapOverhaul.ini" 0
-	SetOnMenuOpenEventHandler (CompileScript "..\CompileScript\LocalMapOverhaul\OnMenuOpen1023.gek") 1 1023
+	SetOnMenuOpenEventHandler (CompileScript "..\CompileScript\LocalMapOverhaul\MapMenuOpen.gek") 1 1023
 	return
 endif
 
 Goo1.AuxVarSetFlt "*_ySI-SortingIcons" 1
 
 ; Event handlers
-SetOnMenuOpenEventHandler (CompileScript "..\CompileScript\LocalMapOverhaul\OnMenuOpen1023ySI.gek") 1 1023
-SetOnMenuClickEventHandler (CompileScript "LocalMapOverhaul\OnIconClick.gek") 1 "MapMenu#50"
+SetOnMenuOpenEventHandler (CompileScript "..\CompileScript\LocalMapOverhaul\MapMenuOpenySI.gek") 1 1023
+SetOnMenuClickEventHandler (CompileScript "LocalMapOverhaul\MenuClick.gek") 1 "MapMenu#50"
 
 ; Load ySI icon settings
 Goo1.AuxVarSetFlt "*LocalMap_ySI" (Clamp (GetINIFloat_Cached "Vendors:iMode" "Stentorious\LocalMapOverhaul.ini" 2) 0 2) 0

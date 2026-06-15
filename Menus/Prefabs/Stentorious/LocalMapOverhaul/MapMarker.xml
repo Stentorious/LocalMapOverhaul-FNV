@@ -167,7 +167,7 @@
 	<visible>
 		<copy src="parent()" trait="_Level" />
 		<gt> 0 </gt>
-		<and src="io()" trait="_LMO+Height"/>
+		<and src="io()" trait="_LMO+Height" />
 		<and>
 			<copy src="parent()" trait="_Icon" />
 			<gt> 0 </gt>

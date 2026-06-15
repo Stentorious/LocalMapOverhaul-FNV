@@ -1,0 +1,4 @@
+<systemcolor>
+	<copy src="io()" trait="systemcolor" />
+	<onlyif src="io()" trait="_LMO+ColorTintWorld" />
+</systemcolor>
