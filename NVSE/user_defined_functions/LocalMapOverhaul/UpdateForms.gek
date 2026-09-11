@@ -167,6 +167,24 @@ begin Function {}
 	AuxVarSetFlt "*LocalMapIcon" iToggle 0 SprungTrapBearTrap
 	AuxVarSetFlt "*LocalMapIcon" iToggle 0 VHDLegionOliverRangerTrapBearTrap
 	AuxVarSetFlt "*LocalMapIcon" iToggle 0 VHDLegionOliverTrapTripwire
+	AuxVarSetStr "*LocalMapTrap" "disarmed" 0 TrapBearTrap
+	AuxVarSetFlt "*LocalMapTrap" 1 1 TrapBearTrap
+	AuxVarSetStr "*LocalMapTrap" "armed" 0 TrapTripwire01
+	AuxVarSetFlt "*LocalMapTrap" 0 1 TrapTripwire01
+	;AuxVarSetStr "*LocalMapTrap" "defuse" 0 TrapComputerBack
+	;AuxVarSetFlt "*LocalMapTrap" 2 1 TrapComputerBack
+	AuxVarSetStr "*LocalMapTrap" "trapDisarmed" 0 TrapBabyCarriage
+	AuxVarSetFlt "*LocalMapTrap" 1 1 TrapBabyCarriage
+	AuxVarSetStr "*LocalMapTrap" "armed" 0 TrapPressurePlate
+	AuxVarSetFlt "*LocalMapTrap" 0 1 TrapPressurePlate
+	AuxVarSetStr "*LocalMapTrap" "isArmed" 0 TrapPitchingMachine01
+	AuxVarSetFlt "*LocalMapTrap" 0 1 TrapPitchingMachine01
+	AuxVarSetStr "*LocalMapTrap" "trapDisarmed" 0 TrapMailboxBomb01
+	AuxVarSetFlt "*LocalMapTrap" 1 1 TrapMailboxBomb01
+	AuxVarSetStr "*LocalMapTrap" "disarmed" 0 SprungTrapBearTrap
+	AuxVarSetFlt "*LocalMapTrap" 1 1 SprungTrapBearTrap
+	AuxVarSetStr "*LocalMapTrap" "disarmed" 0 VHDLegionOliverRangerTrapBearTrap
+	AuxVarSetFlt "*LocalMapTrap" 1 1 VHDLegionOliverRangerTrapBearTrap
 	if eval iDeadMoney
 		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC01TrapTripwire")
 		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC01TrapBearTrap")
@@ -177,12 +195,28 @@ begin Function {}
 		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC01SpeakerINV")
 		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC01SpeakerDest")
 		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC01SpeakerINVOff")
+		AuxVarSetStr "*LocalMapTrap" "armed" 0 (EditorIDToFormID "NVDLC01TrapTripwire")
+		AuxVarSetFlt "*LocalMapTrap" 0 1 (EditorIDToFormID "NVDLC01TrapTripwire")
+		AuxVarSetStr "*LocalMapTrap" "disarmed" 0 (EditorIDToFormID "NVDLC01TrapBearTrap")
+		AuxVarSetFlt "*LocalMapTrap" 1 1 (EditorIDToFormID "NVDLC01TrapBearTrap")
+		AuxVarSetStr "*LocalMapTrap" "armed" 0 (EditorIDToFormID "NVDLC01TrapPressurePlate")
+		AuxVarSetFlt "*LocalMapTrap" 0 1 (EditorIDToFormID "NVDLC01TrapPressurePlate")
+		AuxVarSetStr "*LocalMapTrap" "disarmed" 0 (EditorIDToFormID "NVDLC01SprungTrapBearTrap")
+		AuxVarSetFlt "*LocalMapTrap" 1 1 (EditorIDToFormID "NVDLC01SprungTrapBearTrap")
 	endif
 	if eval iHonestHearts
 		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC02MQ03BearTrap")
 		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC02BearTrap")
 		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC02TrapTripwire01")
 		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "NVDLC02TrapPressurePlate")
+		AuxVarSetStr "*LocalMapTrap" "disarmed" 0 (EditorIDToFormID "NVDLC02MQ03BearTrap")
+		AuxVarSetFlt "*LocalMapTrap" 1 1 (EditorIDToFormID "NVDLC02MQ03BearTrap")
+		AuxVarSetStr "*LocalMapTrap" "disarmed" 0 (EditorIDToFormID "NVDLC02BearTrap")
+		AuxVarSetFlt "*LocalMapTrap" 1 1 (EditorIDToFormID "NVDLC02BearTrap")
+		AuxVarSetStr "*LocalMapTrap" "armed" 0 (EditorIDToFormID "NVDLC02TrapTripwire01")
+		AuxVarSetFlt "*LocalMapTrap" 0 1 (EditorIDToFormID "NVDLC02TrapTripwire01")
+		AuxVarSetStr "*LocalMapTrap" "armed" 0 (EditorIDToFormID "NVDLC02TrapPressurePlate")
+		AuxVarSetFlt "*LocalMapTrap" 0 1 (EditorIDToFormID "NVDLC02TrapPressurePlate")
 	endif
 	if eval iTaleOfTwoWastelands
 		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "trapShotgunCombat")
@@ -190,6 +224,12 @@ begin Function {}
 		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "TakomaTrapBabyCarriage")
 		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "DLC04LabTrapComputer")
 		AuxVarSetFlt "*LocalMapIcon" iToggle 0 (EditorIDToFormID "DLC04TrapPitchingMachine")
+		AuxVarSetStr "*LocalMapTrap" "armed" 0 (EditorIDToFormID "TrapElectrifiedToiletTop01")
+		AuxVarSetFlt "*LocalMapTrap" 0 1 (EditorIDToFormID "TrapElectrifiedToiletTop01")
+		AuxVarSetStr "*LocalMapTrap" "trapDisarmed" 0 (EditorIDToFormID "TakomaTrapBabyCarriage")
+		AuxVarSetFlt "*LocalMapTrap" 1 1 (EditorIDToFormID "TakomaTrapBabyCarriage")
+		AuxVarSetStr "*LocalMapTrap" "isArmed" 0 (EditorIDToFormID "DLC04TrapPitchingMachine")
+		AuxVarSetFlt "*LocalMapTrap" 0 1 (EditorIDToFormID "DLC04TrapPitchingMachine")
 	endif
 
 	; Assign aux (Quest)

@@ -101,7 +101,12 @@ begin Function {iMenuID}
 	if eval (iSize = Ar_Size aRefs) > 0
 		while (iSize -= 1) > -1
 			rIcon = aRefs[iSize]
-			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.GetDestroyed == 0 && AuxVarGetFlt "*LocalMapIcon" 0 (rIcon.GBO)
+			if eval IsReference rIcon && rIcon.GetDisabled == 0 && rIcon.HasLoaded3D && rIcon.GetDestroyed == 0 && AuxVarGetFlt "*LocalMapIcon" 0 (rTemp = rIcon.GBO)
+
+				; Check for disarmed traps
+				if eval AuxVarType "*LocalMapTrap" 0 rTemp == 4 && rIcon.HasVariable (AuxVarGetStr "*LocalMapTrap" 0 rTemp) && rIcon.GetVariable (AuxVarGetStr "*LocalMapTrap" 0 rTemp) == AuxVarGetFlt "*LocalMapTrap" 1 rTemp
+					continue
+				endif
 
 				; Add icon tile
 				AddTileFromTemplate "MapMenu\GLOW_BRANCH\MM_MainRect\MM_LocalMap_ClipWindow\Map_Icons|Icon_Template|Icon"
