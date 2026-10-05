@@ -40,6 +40,7 @@
 					"suffix": "m",
 					"mouse": "$FogOfWarRadiusMouse",
 					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 4, "configINI": "Map:fFogOfWarRadius", "default": 15 }],
+					"state": { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 6, "value": 1, "disable": 1 },
 					"scale": {
 						"valueDecimal": 0,
 						"valueIncrement": 1,
