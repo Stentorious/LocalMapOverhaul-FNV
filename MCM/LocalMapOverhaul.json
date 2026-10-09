@@ -49,14 +49,14 @@
 						"suffix": "m"
 					}
 				},
-				"4": {
+				"7": {
 					"title": "$ColorTintWorld",
 					"type": 5,
 					"enable": 1,
 					"mouse": "$ColorTintWorldMouse",
 					"vars": [ { "uiTrait": "MapMenu/_LMO+ColorTintWorld", "configINI": "Map:bColorTintWorld", "default": 1 }]
 				},
-				"6": {
+				"9": {
 					"title": "$RenderBrightness",
 					"type": 2,
 					"enable": 1,
@@ -72,33 +72,33 @@
 					}
 				},
 
-				"10": {
+				"2": {
 					"title": "$Actor",
 					"enable": 1,
 					"type": 0
 				},
-				"12": {
+				"4": {
 					"title": "$NPC",
 					"type": 5,
 					"enable": 1,
 					"mouse": "$NPCMouse",
 					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 0, "configINI": "Actors:bNPC", "default": 1 }]
 				},
-				"14": {
+				"6": {
 					"title": "$Creature",
 					"type": 5,
 					"enable": 1,
 					"mouse": "$CreatureMouse",
 					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 1, "configINI": "Actors:bCreature", "default": 1 }]
 				},
-				"16": {
-					"title": "$Hostile",
+				"8": {
+					"title": "$ShowHealth",
 					"type": 5,
 					"enable": 1,
-					"mouse": "$HostileMouse",
-					"vars": [ { "uiTrait": "MapMenu/_LMO+Hostile", "configINI": "Actors:bHostileColor", "default": 1 }]
+					"mouse": "$ShowHealthMouse",
+					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 5, "configINI": "Actors:bShowHealth", "default": 0 }]
 				},
-				"18": {
+				"10": {
 					"title": "$Corpse",
 					"type": 1,
 					"enable": 1,
@@ -106,7 +106,7 @@
 					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 2, "configINI": "Actors:iCorpse", "default": 1 }],
 					"strings": [ "$Disabled", "$HideEmpty", "$ShowAlways" ]
 				},
-				"20": {
+				"12": {
 					"title": "$NameVisibility",
 					"type": 1,
 					"enable": 1,
@@ -114,50 +114,92 @@
 					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 3, "configINI": "Actors:iNameVisibility", "default": 2 }],
 					"strings": [ "$Never", "$MetPlayer", "$MetPlayerDead", "$Always" ]
 				},
-				"22": {
-					"title": "$ShowHealth",
-					"type": 5,
+				"14": {
+					"title": "$ColorFriendly",
+					"type": 1,
 					"enable": 1,
-					"mouse": "$ShowHealthMouse",
-					"vars": [ { "form": "Goo1", "auxVar": "*LocalMap_INI", "key": 5, "configINI": "Actors:bShowHealth", "default": 0 }]
+					"mouse": "$ColorFriendlyMouse",
+					"vars": [{ "uiTrait": "MapMenu/_LMO+Systemcolor_1", "configINI": "Color:iFriendlySystemcolor", "default": 4 }],
+					"strings": [ "$Custom", "$HUD", "$HUDAlt", "$Terminal", "$PipBoy", "$PauseMenu"]
+				},
+				"16": {
+					"title": "$ColorHostile",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$ColorHostileMouse",
+					"vars": [{ "uiTrait": "MapMenu/_LMO+Systemcolor_2", "configINI": "Color:iHostileSystemcolor", "default": 2 }],
+					"strings": [ "$Custom", "$HUD", "$HUDAlt", "$Terminal", "$PipBoy", "$PauseMenu"]
+				},
+				"18": {
+					"title": "$ColorFollower",
+					"type": 1,
+					"enable": 1,
+					"mouse": "$ColorFollowerMouse",
+					"vars": [{ "uiTrait": "MapMenu/_LMO+Systemcolor_3", "configINI": "Color:iFollowerSystemcolor", "default": 0 }],
+					"strings": [ "$Custom", "$HUD", "$HUDAlt", "$Terminal", "$PipBoy", "$PauseMenu"]
+				},
+				"20": {
+					"title": "$CustomColorFriendly",
+					"type": 9,
+					"state": { "uiTrait": "MapMenu/_LMO+Systemcolor_1", "value": 0, "disable": 4 },
+					"mouse": "$CustomColorFriendlyMouse",
+					"vars": [
+						{ "uiTrait": "MapMenu/_LMO+Red_1", "configINI": "Color:iFriendlyRed", "default": 0 },
+						{ "uiTrait": "MapMenu/_LMO+Green_1", "configINI": "Color:iFriendlyGreen", "default": 0 },
+						{ "uiTrait": "MapMenu/_LMO+Blue_1", "configINI": "Color:iFriendlyBlue", "default": 0 }
+					]
+				},
+				"22": {
+					"title": "$CustomColorHostile",
+					"type": 9,
+					"state": { "uiTrait": "MapMenu/_LMO+Systemcolor_2", "value": 0, "disable": 1 },
+					"mouse": "$CustomColorHostileMouse",
+					"vars": [
+						{ "uiTrait": "MapMenu/_LMO+Red_2", "configINI": "Color:iHostileRed", "default": 0 },
+						{ "uiTrait": "MapMenu/_LMO+Green_2", "configINI": "Color:iHostileGreen", "default": 0 },
+						{ "uiTrait": "MapMenu/_LMO+Blue_2", "configINI": "Color:iHostileBlue", "default": 0 }
+					]
+				},
+				"24": {
+					"title": "$CustomColorFollower",
+					"type": 9,
+					"state": { "uiTrait": "MapMenu/_LMO+Systemcolor_3", "value": 0, "disable": 1 },
+					"mouse": "$CustomColorFollowerMouse",
+					"vars": [
+						{ "uiTrait": "MapMenu/_LMO+Red_3", "configINI": "Color:iFollowerRed", "default": 46 },
+						{ "uiTrait": "MapMenu/_LMO+Green_3", "configINI": "Color:iFollowerGreen", "default": 206 },
+						{ "uiTrait": "MapMenu/_LMO+Blue_3", "configINI": "Color:iFollowerBlue", "default": 255 }
+					]
 				},
 
-				"9": {
+				"13": {
 					"title": "$Icon",
 					"enable": 1,
 					"type": 0
 				},
-				"11": {
-					"title": "$SizeLocal",
-					"type": 2.5,
-					"enable": 1,
-					"suffix": "x",
-					"mouse": "$SizeLocalMouse",
-					"vars": [ { "uiTrait": "MapMenu/_LMO+SizeL", "configINI": "Icons:fIconSizeLocal", "default": 1 }],
-					"scale": {
-						"valueDecimal": 2,
-						"valueIncrement": 0.01,
-						"valueMin": 0.75,
-						"valueMax": 1.5,
-						"suffix": "x"
-					}
-				},
-				"13": {
-					"title": "$SizeWorld",
-					"type": 2.5,
-					"enable": 1,
-					"suffix": "x",
-					"mouse": "$SizeWorldMouse",
-					"vars": [ { "uiTrait": "MapMenu/_LMO+SizeW", "configINI": "Icons:fIconSizeWorld", "default": 1.25 }],
-					"scale": {
-						"valueDecimal": 2,
-						"valueIncrement": 0.01,
-						"valueMin": 0.5,
-						"valueMax": 2,
-						"suffix": "x"
-					}
-				},
 				"15": {
+					"title": "$Size",
+					"type": 8,
+					"enable": 1,
+					"mouse": "$SizeMouse",
+					"vars": [
+						{ "uiTrait": "MapMenu/_LMO+SizeL", "configINI": "Icons:fIconSizeLocal", "default": 1 },
+						{ "uiTrait": "MapMenu/_LMO+SizeW", "configINI": "Icons:fIconSizeWorld", "default": 1.25 }
+					],
+					"scale": {
+						"setting1": "Local Map:",
+						"setting2": "World Map:",
+						"value1Decimal": 2,
+						"value2Decimal": 2,
+						"value1Increment": 0.01,
+						"value2Increment": 0.01,
+						"value1Min": 0.75,
+						"value2Min": 0.5,
+						"value1Max": 1.5,
+						"value2Max": 2
+					}
+				},
+				"17": {
 					"title": "$CropWorld",
 					"type": 2.5,
 					"enable": 1,
@@ -172,7 +214,7 @@
 						"suffix": "x"
 					}
 				},
-				"17": {
+				"19": {
 					"title": "$Distance",
 					"type": 2,
 					"enable": 1,
@@ -187,7 +229,7 @@
 						"suffix": "m"
 					}
 				},
-				"19": {
+				"21": {
 					"title": "$DistanceCalculation",
 					"type": 6,
 					"enable": 1,
@@ -196,7 +238,7 @@
 					"textOff": "$Default",
 					"textOn": "$Perception"
 				},
-				"21": {
+				"23": {
 					"title": "$HeightIndicator",
 					"type": 5,
 					"enable": 1,

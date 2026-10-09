@@ -25,7 +25,21 @@ SetUIFloatAlt "MapMenu\_LMO+SeenData" (eval GetINIFloat_Cached "Icons:bRespectFo
 SetUIFloatAlt "MapMenu\_LMO+DistanceMax" (Clamp (GetINIFloat_Cached "Icons:fRadius" "Stentorious\LocalMapOverhaul.ini" 30) 5 100)
 SetUIFloatAlt "MapMenu\_LMO+DistanceMode" (eval GetINIFloat_Cached "Icons:bPerceptionCalc" "Stentorious\LocalMapOverhaul.ini" 0)
 SetUIFloatAlt "MapMenu\_LMO+Height" (eval GetINIFloat_Cached "Icons:bHeightIndicator" "Stentorious\LocalMapOverhaul.ini" 1)
-SetUIFloatAlt "MapMenu\_LMO+Hostile" (eval GetINIFloat_Cached "Actors:bHostileColor" "Stentorious\LocalMapOverhaul.ini" 1)
+
+; Color
+SetUIFloatAlt "MapMenu\_LMO+Systemcolor_1" (GetINIFloat_Cached "Color:iFriendlySystemcolor" "Stentorious\LocalMapOverhaul.ini" 4)
+SetUIFloatAlt "MapMenu\_LMO+Red_1" (GetINIFloat_Cached "Color:iFriendlyRed" "Stentorious\LocalMapOverhaul.ini" 0)
+SetUIFloatAlt "MapMenu\_LMO+Green_1" (GetINIFloat_Cached "Color:iFriendlyGreen" "Stentorious\LocalMapOverhaul.ini" 0)
+SetUIFloatAlt "MapMenu\_LMO+Blue_1" (GetINIFloat_Cached "Color:iFriendlyBlue" "Stentorious\LocalMapOverhaul.ini" 0)
+SetUIFloatAlt "MapMenu\_LMO+Systemcolor_2" (GetINIFloat_Cached "Color:iHostileSystemcolor" "Stentorious\LocalMapOverhaul.ini" 2)
+SetUIFloatAlt "MapMenu\_LMO+Red_2" (GetINIFloat_Cached "Color:iHostileRed" "Stentorious\LocalMapOverhaul.ini" 0)
+SetUIFloatAlt "MapMenu\_LMO+Green_2" (GetINIFloat_Cached "Color:iHostileGreen" "Stentorious\LocalMapOverhaul.ini" 0)
+SetUIFloatAlt "MapMenu\_LMO+Blue_2" (GetINIFloat_Cached "Color:iHostileBlue" "Stentorious\LocalMapOverhaul.ini" 0)
+SetUIFloatAlt "MapMenu\_LMO+Systemcolor_3" (GetINIFloat_Cached "Color:iFollowerSystemcolor" "Stentorious\LocalMapOverhaul.ini" 0)
+SetUIFloatAlt "MapMenu\_LMO+Red_3" (GetINIFloat_Cached "Color:iFollowerRed" "Stentorious\LocalMapOverhaul.ini" 46)
+SetUIFloatAlt "MapMenu\_LMO+Green_3" (GetINIFloat_Cached "Color:iFollowerGreen" "Stentorious\LocalMapOverhaul.ini" 206)
+SetUIFloatAlt "MapMenu\_LMO+Blue_3" (GetINIFloat_Cached "Color:iFollowerBlue" "Stentorious\LocalMapOverhaul.ini" 255)
+
 
 ; Update player perception
 SetUIFloatAlt "MapMenu\_LMO+PlrAV6" (Player.GetThresholdAV Perception)

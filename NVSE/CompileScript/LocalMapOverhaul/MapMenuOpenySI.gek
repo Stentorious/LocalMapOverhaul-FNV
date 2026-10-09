@@ -16,6 +16,7 @@ float fPosZ
 ref rIcon
 ref rTemp
 array_var aRefs
+array_var aFollowers
 array_var aTemp
 string_var sUIPath
 string_var sTemp
@@ -328,6 +329,16 @@ begin Function {iMenuID}
 			iCorpse = Goo1.AuxVarGetFlt "*LocalMap_INI" 2
 			iVendor = Goo1.AuxVarGetFlt "*LocalMap_ySI" 0
 
+			; Build array of followers
+			aFollowers = Player.GetFollowers
+			aTemp = Player.GetTeammates
+			if aFollowers
+				ar_Cat aFollowers aTemp
+			else
+				aFollowers = aTemp
+			endif
+			aFollowers = Ar_Unique aFollowers
+
 			; Process actor refs
 			while (iSize -= 1) > -1
 				rIcon = aRefs[iSize]
@@ -391,7 +402,11 @@ begin Function {iMenuID}
 					; Basic Icon
 					else
 						SetUIFloatAlt (sUIPath + "_Deg") (rIcon.GetAngle Z)
-						SetUIFloatAlt (sUIPath + "_Hostile") (rIcon.IsCompassHostile)
+						if eval (Ar_Find rIcon aFollowers) == Ar_BadNumericIndex
+							SetUIFloatAlt (sUIPath + "_IconState") (rIcon.IsCompassHostile + 1)
+						else
+							SetUIFloatAlt (sUIPath + "_IconState") 3
+						endif
 						sTemp = "Interface\Stentorious\LocalMapOverhaul\Actor.dds"
 					endif
 
@@ -404,6 +419,6 @@ begin Function {iMenuID}
 	endif
 
 	sv_Destruct sUIPath sTemp
-	aRefs = aTemp = ar_Null
+	aRefs = aFollowers = aTemp = ar_Null
 
 end
